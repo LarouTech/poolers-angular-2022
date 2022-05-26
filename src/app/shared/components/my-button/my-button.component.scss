@@ -1,0 +1,44 @@
+:host {
+  width: 100%;
+}
+
+.container {
+  width: 100%;
+}
+
+.btn {
+  background-color: transparent;
+  padding: 0;
+  margin: 0;
+  outline: 0;
+  border: none;
+  background-color: var(--primary500);
+  color: var(--light500);
+  padding: 1rem;
+  width: 100%;
+  border-radius: 0.4rem;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.2rem;
+  cursor: pointer;
+  box-shadow: 0 0.3rem 0.3rem rgba(#000, 0.4);
+
+  &__icon {
+    height: 1.6rem;
+    width: 1.6rem;
+    margin-right: 0.5rem;
+    margin-bottom: 0.2rem;
+  }
+
+  &__mouseover {
+    opacity: 0.8;
+    box-shadow: 0 0rem 0rem rgba(#000, 0);
+    letter-spacing: 0.25rem;
+  }
+
+  &__box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

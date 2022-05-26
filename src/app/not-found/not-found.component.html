@@ -1,0 +1,13 @@
+<primary-layout [alignItems]="alignItems" [justifyContent]="justifyContent">
+  <div content class="error">
+    <mat-icon class="error__icon" svgIcon="stop"></mat-icon>
+    <div class="">
+      <p class="error__text">Stop here!</p>
+      <p class="error__subText">404 Page not found</p>
+    </div>
+
+    <div class="error__counter">
+      <span class="error__counter--num">{{ counter$ | async }}</span>
+    </div>
+  </div>
+</primary-layout>

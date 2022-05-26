@@ -1,0 +1,35 @@
+<card class="card">
+  <div
+    header
+    class="card__header animate__animated animate__fadeIn animate__fast"
+  >
+    <mat-icon
+      class="card__header--icon"
+      [svgIcon]="(currentTab | async)!"
+    ></mat-icon>
+    <h3 class="card__header--text">
+      {{ currentTab | async }}
+    </h3>
+  </div>
+
+  <div content class="card__content">
+    <login-form
+      *ngIf="(currentTab | async) === 'login'"
+      class="form animate__animated animate__fadeIn animate__fast"
+    ></login-form>
+    <signin-form
+      (cacheValues)="getCacheValues($event)"
+      *ngIf="(currentTab | async) === 'signin'"
+      class="form animate__animated animate__fadeIn animate__fast"
+    ></signin-form>
+    <validate-form
+      [cacheValues]="cacheValues"
+      *ngIf="(currentTab | async) === 'validate'"
+      class="form animate__animated animate__fadeIn animate__fast"
+    ></validate-form>
+  </div>
+
+  <div actions class="card__actions">
+    <bottom-navigator></bottom-navigator>
+  </div>
+</card>

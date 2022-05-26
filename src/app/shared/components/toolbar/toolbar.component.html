@@ -1,0 +1,12 @@
+<div class="container" #toolbarEl>
+  <div class="innerContainer">
+    <div class="branding">
+      <mat-icon color="" class="branding__icon" svgIcon="logo"></mat-icon>
+      <h1 class="branding__text">poolers</h1>
+    </div>
+
+    <div (click)="onLogoutHandler()" *ngIf="isAuth$ | async" class="hamburger">
+      <mat-icon svgIcon="hamburger"></mat-icon>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,41 @@
+<form [formGroup]="signinForm" (ngSubmit)="onSigninHandler()" class="container">
+  <inputfield
+    class="inputfield"
+    label="email"
+    icon="email"
+    type="email"
+    formControlName="email"
+    [form]="signinForm"
+    name="signin-email"
+    message="Please enter a valid email address"
+    [autocomplete]="emailAutocomplete"
+  ></inputfield>
+
+  <inputfield
+    class="inputfield"
+    label="password"
+    icon="lock"
+    type="password"
+    formControlName="password"
+    [form]="signinForm"
+    name="signin-password"
+    message="Please enter a valid password"
+    [autocomplete]="passwordAutocomplete"
+  ></inputfield>
+
+  <auth-error-toast
+    (clearErrorEmitter)="onClearErrorHanlder($event)"
+    [message]="error"
+  ></auth-error-toast>
+
+  <my-button
+    matRipple
+    type="submit"
+    width="85%"
+    class="btn"
+    text="signin"
+    icon="right-arrow"
+    [ngClass]="{ disabled: signinForm.invalid }"
+    [disabled]="signinForm.invalid"
+  ></my-button>
+</form>

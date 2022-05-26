@@ -1,0 +1,32 @@
+<div class="inputfield">
+  <div *ngIf="label || icon" class="inputfield__label">
+    <mat-icon
+      *ngIf="icon"
+      [svgIcon]="icon"
+      class="inputfield__label--icon"
+    ></mat-icon>
+    <label *ngIf="label" [for]="name" class="inputfield__label--text">{{
+      label
+    }}</label>
+  </div>
+
+  <input
+    class="inputfield__input"
+    [name]="name"
+    [value]="value ? value : null"
+    [type]="type"
+    (input)="onChange()"
+    (change)="onChange()"
+    (blur)="onTouchedFn()"
+    [(ngModel)]="value"
+    [autocomplete]="autocomplete"
+    [id]="name"
+  />
+
+  <div
+    *ngIf="form.get(name)?.invalid && form!.get(name)?.touched"
+    class="error animate__animated animate__fadeIn"
+  >
+    <span class="">{{ message }}</span>
+  </div>
+</div>

@@ -1,0 +1,51 @@
+:host {
+  // min-height: 6rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.errorContainer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: 6rem;
+  background-color: rgba(red, 0.3);
+  margin-bottom: 3rem;
+  border-radius: 0.4rem;
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  width: 85%;
+  position: relative;
+  &__text {
+    color: #ffffff;
+    font-size: 1.3rem;
+    letter-spacing: 0.1rem;
+    line-height: 1.2;
+    text-align: left;
+  }
+
+  &__icon {
+    height: 4rem;
+    width: 4rem;
+    color: var(--red500);
+    margin-right: 2.5rem;
+  }
+}
+
+.close {
+  height: 1.5rem;
+  width: 1.5rem;
+  color: #ffffff;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  cursor: pointer;
+
+  &__hide {
+    display: none;
+  }
+}

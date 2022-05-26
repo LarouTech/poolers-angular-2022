@@ -1,0 +1,47 @@
+:host {
+  width: 100%;
+}
+
+.inputfield {
+  width: 100%;
+  &__label {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 0.3rem;
+
+    &--icon {
+      margin-right: 0.7rem;
+      color: var(--primary500);
+      margin-bottom: 0.1rem;
+      height: 1.8rem;
+      width: 1.8rem;
+    }
+    &--text {
+      text-transform: capitalize;
+      font-size: 1.6rem;
+      color: var(--primary500);
+      font-weight: 500;
+    }
+  }
+
+  &__input {
+    outline: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    border: 0.2rem solid rgba(#101359, 0.5);
+    padding: 0.7rem 1rem;
+    border-radius: 0.4rem;
+    font-size: 1.4rem;
+    color: var(--primary500);
+    opacity: 0.9;
+  }
+}
+
+.error {
+  display: flex;
+  margin-top: 0.5rem;
+  font-size: 1.2rem;
+  color: var(--red500);
+}

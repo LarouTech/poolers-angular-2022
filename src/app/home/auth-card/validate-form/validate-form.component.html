@@ -1,0 +1,44 @@
+<form
+  [formGroup]="validateForm"
+  (ngSubmit)="onValidateHandler()"
+  class="container"
+>
+  <inputfield
+    class="inputfield"
+    label="email"
+    icon="email"
+    type="email"
+    formControlName="email"
+    [form]="validateForm"
+    name="validate-email"
+    message="Please enter a valid email address"
+    [autocomplete]="emailAutocomplete"
+  ></inputfield>
+
+  <inputfield
+    class="inputfield"
+    label="code"
+    icon="validate"
+    type="number"
+    formControlName="code"
+    [form]="validateForm"
+    name="validate-code"
+    message="Please enter a valid code"
+  ></inputfield>
+
+  <auth-error-toast
+    (clearErrorEmitter)="onClearErrorHanlder($event)"
+    [message]="error"
+  ></auth-error-toast>
+
+  <my-button
+    matRipple
+    type="submit"
+    width="85%"
+    class="btn"
+    text="validate"
+    icon="right-arrow"
+    [ngClass]="{ disabled: validateForm.invalid }"
+    [disabled]="validateForm.invalid"
+  ></my-button>
+</form>

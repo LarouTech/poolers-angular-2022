@@ -1,0 +1,17 @@
+<ul class="menu">
+  <li
+    [ngClass]="{ 'menu__item--selected': item.selected }"
+    (click)="onSelectItem(item)"
+    *ngFor="let item of menuItems$ | async; index as i"
+    class="menu__item"
+    sideMenuItemEffect
+  >
+    <mat-icon [svgIcon]="item.icon" class="menu__item--icon"></mat-icon>
+    <span
+      [ngClass]="{ 'menu__item--text-hide': menuState === 'opened' }"
+      class="menu__item--text"
+    >
+      {{ item.name }}
+    </span>
+  </li>
+</ul>

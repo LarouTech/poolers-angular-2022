@@ -1,0 +1,44 @@
+.bottom-control {
+  width: 100%;
+  height: 4rem;
+
+  display: flex;
+  // flex: 2;
+
+  &__tab:not(:last-child) {
+    border-right: groove 0.1rem rgba(#000, 0.1);
+    // border-right-style: ;
+  }
+
+  &__tab {
+    width: 100%;
+    // height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-top: solid 0.1rem rgba(#000, 0.2);
+    background-color: var(--light500);
+
+    cursor: pointer;
+
+    &--text {
+      font-size: 1.6rem;
+      text-transform: capitalize;
+      color: var(--primary500);
+    }
+
+    &--icon {
+      height: 1.8rem;
+      width: 1.8rem;
+      margin-right: 0.6rem;
+      color: var(--primary500);
+    }
+  }
+}
+
+.tab__mouseover {
+  background-color: var(--light500);
+}
+.selected {
+  background-color: var(--grey200);
+}

@@ -1,0 +1,24 @@
+<div #containerEl class="container">
+  <toolbar *ngIf="isToolbar" [height]="toolbarHeight" class="toolbar"></toolbar>
+
+  <div #contentEl class="content">
+    <div
+      [@openClose]="sideMenuState"
+      *ngIf="isSideMenu"
+      #sideMenuEl
+      class="sidemenu"
+    >
+      <side-menu-list [menuState]="sideMenuState"></side-menu-list>
+
+      <mat-icon
+        (click)="onToggle()"
+        class="sidemenu__caret"
+        svgIcon="caret"
+      ></mat-icon>
+    </div>
+
+    <ng-content class="content__ng" #content></ng-content>
+  </div>
+
+  <!-- <footer></footer> -->
+</div>

@@ -1,0 +1,13 @@
+<div #cardEl class="container">
+  <div *ngIf="headerShown === true" class="container__header">
+    <ng-content select="[header]"></ng-content>
+  </div>
+
+  <div *ngIf="contentShown === true" class="container__content">
+    <ng-content select="[content]"></ng-content>
+  </div>
+
+  <div *ngIf="actionsShown === true" class="container__actions">
+    <ng-content select="[actions]"></ng-content>
+  </div>
+</div>

@@ -1,0 +1,22 @@
+<div
+  [ngClass]="{
+    'animate__animated animate__fadeOut': !(message | async),
+    'errorContainer animate__animated animate__fadeIn': message | async
+  }"
+>
+  <mat-icon
+    *ngIf="message | async"
+    class="errorContainer__icon"
+    svgIcon="exclamation"
+  ></mat-icon>
+  <span class="errorContainer__text animate__animated animate__fadeIn">{{
+    message | async
+  }}</span>
+
+  <mat-icon
+    *ngIf="message | async"
+    (click)="onClose()"
+    class="close"
+    svgIcon="close"
+  ></mat-icon>
+</div>

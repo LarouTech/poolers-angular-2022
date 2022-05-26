@@ -1,0 +1,52 @@
+.error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0.7rem solid rgba(#000, 0.2);
+  border-radius: 4rem;
+  padding: 3rem 7em;
+  transform: translateY(-5rem);
+  position: relative;
+
+  &__icon {
+    height: 13rem;
+    width: 13rem;
+    color: var(--primary500);
+    margin-right: 3rem;
+  }
+
+  &__text {
+    font-size: 5rem;
+    font-weight: 700;
+    color: var(--primary500);
+    letter-spacing: 0.1rem;
+    padding-bottom: 2rem;
+    margin-top: 3rem;
+  }
+
+  &__subText {
+    letter-spacing: 0.1rem;
+    font-weight: 600;
+    color: var(--red500);
+  }
+
+  &__counter {
+    position: absolute;
+    bottom: 2rem;
+    right: 4rem;
+    border: 0.3rem solid rgba(#b33f40, 0.8);
+    padding: 1.3rem;
+    border-radius: 4rem;
+    height: 2.5rem;
+    width: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &--num {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--primary500);
+    }
+  }
+}
