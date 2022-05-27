@@ -1,43 +1,60 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  Input,
+  OnInit,
+  Renderer2,
+  ViewChild,
+} from '@angular/core';
 import { LoadAwesomeStyleSheets } from './load-awesome-spinner-metadata';
-import { SpinnerColor, SpinnerSize, SpinnerType } from './load-awesome-spinner.enums';
+import {
+  SpinnerColor,
+  SpinnerSize,
+  SpinnerType,
+} from './load-awesome-spinner.enums';
 
 export interface LoadAwesomeSpinner {
-  size: SpinnerSize,
-  color: SpinnerColor,
-  type: SpinnerType
+  size: SpinnerSize;
+  color: SpinnerColor;
+  type: SpinnerType;
 }
 
 @Component({
   selector: 'load-awesome-spinner',
   templateUrl: './load-awesome-spinner.component.html',
-  styleUrls: [...LoadAwesomeStyleSheets]
+  styleUrls: [...LoadAwesomeStyleSheets],
 })
-export class LoadAwesomeSpinnerComponent implements OnInit {
-  @Input('spinnerType') spinnerType!: SpinnerType | string
+export class LoadAwesomeSpinnerComponent implements OnInit, AfterViewInit {
+  @ViewChild('spinnerEl') spinnerEl!: ElementRef;
+  @Input('spinnerType') spinnerType!: SpinnerType | string;
   @Input('size') size?: SpinnerSize | string;
   @Input('color') color?: SpinnerColor | string;
   numberOfDivRows!: any[];
 
-  constructor() { }
+  constructor(private renderer: Renderer2) {}
 
   ngOnInit(): void {
     this.initSpinner();
-    this.setDivRows()
+    this.setDivRows();
+  }
+  ngAfterViewInit(): void {
+    if (this.color != SpinnerColor.dark && this.color != SpinnerColor.normal) {
+      this.renderer.setStyle(this.spinnerEl, 'color', this.color);
+    }
   }
 
   private initSpinner() {
-    !this.size ? this.size = SpinnerSize.default : this.size
-    !this.color ? this.color = SpinnerColor.normal : this.color
+    !this.size ? (this.size = SpinnerSize.default) : this.size;
+    !this.color ? (this.color = SpinnerColor.normal) : this.color;
   }
 
   private setRows(rows: number) {
-    this.numberOfDivRows = Array(rows)
+    this.numberOfDivRows = Array(rows);
   }
 
   private setDivRows() {
     switch (this.spinnerType) {
-
       case SpinnerType['ball-clip-rotate']:
       case SpinnerType['ball-rotate']:
       case SpinnerType['ball-scale']:
@@ -47,8 +64,8 @@ export class LoadAwesomeSpinnerComponent implements OnInit {
       case SpinnerType['square-spin']:
       case SpinnerType.timer:
       case SpinnerType['triangle-skew-spin']:
-        this.setRows(1)
-        break
+        this.setRows(1);
+        break;
 
       case SpinnerType['ball-clip-rotate-multiple']:
       case SpinnerType['ball-clip-rotate-pulse']:
@@ -58,8 +75,8 @@ export class LoadAwesomeSpinnerComponent implements OnInit {
       case SpinnerType['ball-zig-zag-deflect']:
       case SpinnerType['cube-transition']:
       case SpinnerType['square-jelly-box']:
-        this.setRows(2)
-        break
+        this.setRows(2);
+        break;
 
       case SpinnerType['ball-beat']:
       case SpinnerType['ball-scale-ripple-multiple']:
@@ -69,15 +86,15 @@ export class LoadAwesomeSpinnerComponent implements OnInit {
       case SpinnerType['ball-scale-multiple']:
       case SpinnerType['ball-triangle-path']:
       case SpinnerType.fire:
-        this.setRows(3)
-        break
+        this.setRows(3);
+        break;
 
       case SpinnerType['ball-atom']:
       case SpinnerType['ball-climbing-dot']:
       case SpinnerType['ball-fussion']:
       case SpinnerType['ball-newton-cradle']:
-        this.setRows(4)
-        break
+        this.setRows(4);
+        break;
 
       case SpinnerType['ball-circus']:
       case SpinnerType['ball-elastic-dots']:
@@ -87,12 +104,12 @@ export class LoadAwesomeSpinnerComponent implements OnInit {
       case SpinnerType['line-scale-party']:
       case SpinnerType['line-scale-pulse-out']:
       case SpinnerType['line-scale-pulse-out-rapid']:
-        this.setRows(5)
-        break
+        this.setRows(5);
+        break;
 
       case SpinnerType.pacman:
-        this.setRows(6)
-        break
+        this.setRows(6);
+        break;
 
       case SpinnerType['ball-spin']:
       case SpinnerType['ball-spin-clockwise']:
@@ -106,17 +123,17 @@ export class LoadAwesomeSpinnerComponent implements OnInit {
       case SpinnerType['line-spin-clockwise-fade-rotating']:
       case SpinnerType['line-spin-fade']:
       case SpinnerType['line-spin-fade-rotating']:
-        this.setRows(8)
-        break
+        this.setRows(8);
+        break;
 
       case SpinnerType['ball-grid-beat']:
       case SpinnerType['ball-grid-pulse']:
-        this.setRows(9)
-        break
+        this.setRows(9);
+        break;
 
       case SpinnerType['ball-8bits']:
-        this.setRows(16)
-        break
+        this.setRows(16);
+        break;
     }
   }
 }

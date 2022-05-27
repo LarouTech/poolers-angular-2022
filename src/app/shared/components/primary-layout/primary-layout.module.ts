@@ -6,6 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { FooterModule } from '../footer/footer.module';
 import { SideMenuListComponent } from './side-menu-list/side-menu-list.component';
 import { OnOverMenuItemDirective } from './side-menu-list/side-menu-item-effect.directive';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [

@@ -18,6 +18,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
+import { RouterModule } from '@angular/router';
 
 export function StartupServiceFactory(configService: ConfigurationService) {
   return () => configService.getConfig().subscribe((data) => console.log(data));
@@ -36,6 +37,7 @@ export function StartupServiceFactory(configService: ConfigurationService) {
     MatButtonModule,
     MatSidenavModule,
     MatListModule,
+    RouterModule,
   ],
   providers: [
     IconService,

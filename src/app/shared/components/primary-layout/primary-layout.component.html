@@ -3,12 +3,15 @@
 
   <div #contentEl class="content">
     <div
-      [@openClose]="sideMenuState"
+      [@openClose]="sideMenuState$ | async"
       *ngIf="isSideMenu"
       #sideMenuEl
       class="sidemenu"
     >
-      <side-menu-list [menuState]="sideMenuState"></side-menu-list>
+      <side-menu-list
+        (resetMenu)="onResetMenu()"
+        [menuState]="sideMenuState$"
+      ></side-menu-list>
 
       <mat-icon
         (click)="onToggle()"

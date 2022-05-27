@@ -1,8 +1,6 @@
 .menu {
-  // &__item:not(:last-child) {
   padding-bottom: 1rem;
   padding-top: 1rem;
-  // }
 
   &__item {
     padding: 1rem 1.2rem;
@@ -16,7 +14,6 @@
 
     &--selected {
       background-color: var(--grey300);
-      // padding-left: 1.5rem;
     }
 
     display: flex;
@@ -33,7 +30,6 @@
     }
 
     &--text {
-      // margin-top: 1.5rem;
       font-size: 1.8rem;
       text-transform: capitalize;
       letter-spacing: 0.1rem;

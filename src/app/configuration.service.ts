@@ -65,6 +65,10 @@ export class ConfigurationService {
           return config;
         }),
         catchError((error) => {
+          if (error.name === 'HttpErrorResponse') {
+            this.router.navigateByUrl('503');
+          }
+
           return throwError(() => new Error(error.message).message);
         })
       );

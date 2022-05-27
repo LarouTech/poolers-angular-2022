@@ -24,7 +24,29 @@ const routes: Routes = [
     resolve: { config: ConfigResolver },
   },
   {
-    path: '**',
+    path: 'stats',
+    loadChildren: () =>
+      import('./stats/stats.module').then((m) => m.StatsModule),
+  },
+  {
+    path: 'standing',
+    loadChildren: () =>
+      import('./standing/standing.module').then((m) => m.StandingModule),
+  },
+  {
+    path: 'settings',
+    loadChildren: () =>
+      import('./settings/settings.module').then((m) => m.SettingsModule),
+  },
+  {
+    path: '503',
+    loadChildren: () =>
+      import('./network-error/network-error.module').then(
+        (m) => m.NetworkErrorModule
+      ),
+  },
+  {
+    path: '***',
     redirectTo: '404',
   },
   {
@@ -35,7 +57,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { onSameUrlNavigation: 'reload' })],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

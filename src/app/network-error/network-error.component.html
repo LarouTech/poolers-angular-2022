@@ -1,0 +1,14 @@
+<primary-layout
+  [flexDirection]="flexDirection"
+  [alignItems]="alignItems"
+  [justifyContent]="justifyContent"
+>
+  <div content class="error">
+    <mat-icon class="error__icon" svgIcon="stop"></mat-icon>
+    <div class="">
+      <p class="error__text">503</p>
+      <p class="error__subText">Network Connnection Error</p>
+      <my-button (click)="onReload()" text="back" width="13rem"></my-button>
+    </div>
+  </div>
+</primary-layout>

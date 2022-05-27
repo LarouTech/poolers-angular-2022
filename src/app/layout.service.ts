@@ -27,7 +27,6 @@ export class LayoutService implements OnDestroy {
   private getSizeWidth(): Observable<number> {
     return fromEvent(window, 'resize').pipe(
       map((event: any) => {
-        console.log(event);
         this._innerWidth.next(event.target!.innerWidth);
         return event.target!.innerWidth;
       })

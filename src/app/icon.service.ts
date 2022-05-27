@@ -39,4 +39,5 @@ export const Icons: string[] = [
   'logout',
   'standing',
   'stats',
+  'lobby',
 ];

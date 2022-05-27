@@ -8,7 +8,7 @@
   >
     <mat-icon [svgIcon]="item.icon" class="menu__item--icon"></mat-icon>
     <span
-      [ngClass]="{ 'menu__item--text-hide': menuState === 'opened' }"
+      [ngClass]="{ 'menu__item--text-hide': (menuState | async) === 'opened' }"
       class="menu__item--text"
     >
       {{ item.name }}

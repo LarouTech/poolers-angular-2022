@@ -5,6 +5,7 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
+import { Location } from '@angular/common';
 import {
   AfterViewInit,
   Component,
@@ -14,7 +15,15 @@ import {
   Renderer2,
   ViewChild,
 } from '@angular/core';
-import { lastValueFrom, map } from 'rxjs';
+import { ActivatedRoute, Route } from '@angular/router';
+import {
+  BehaviorSubject,
+  lastValueFrom,
+  map,
+  switchMap,
+  take,
+  tap,
+} from 'rxjs';
 import { LayoutService } from 'src/app/layout.service';
 
 export enum AlignItemsTypes {
@@ -68,19 +77,38 @@ export class PrimaryLayoutComponent implements OnInit, AfterViewInit {
   @Input('toolbarHeightRem') toolbarHeight!: number;
   @Input('overlay') overlay!: boolean;
 
-  sideMenuState: SideMenuState;
+  _sideMenuState = new BehaviorSubject<SideMenuState>(SideMenuState.CLOSED);
+
+  get sideMenuState$() {
+    return this._sideMenuState.asObservable();
+  }
 
   constructor(
+    private location: Location,
+    private route: ActivatedRoute,
     private layoutService: LayoutService,
     private renderer: Renderer2
   ) {
     this.isToolbar = this.isToolbar ? this.isToolbar : true;
     this.isSideMenu = this.isSideMenu ? this.isSideMenu : false;
     this.toolbarHeight = this.toolbarHeight ? this.toolbarHeight : 68;
-    this.sideMenuState = SideMenuState.CLOSED;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.route.queryParams
+      .pipe(
+        tap((res) => {
+          if (res['menustate'] === 'opened') {
+            this._sideMenuState.next(SideMenuState.OPENED);
+          }
+
+          if (res['menustate'] === 'closed') {
+            this._sideMenuState.next(SideMenuState.CLOSED);
+          }
+        })
+      )
+      .subscribe();
+  }
 
   ngAfterViewInit(): void {
     this.setLayoutWidth();
@@ -88,6 +116,10 @@ export class PrimaryLayoutComponent implements OnInit, AfterViewInit {
     this.setSideMenuHeight();
     this.setcontentAreaHeight();
     this.overlay ? this.setOverlay() : null;
+  }
+
+  onResetMenu() {
+    this._sideMenuState.next(SideMenuState.CLOSED);
   }
 
   private setSideMenuHeight(): void {
@@ -109,18 +141,19 @@ export class PrimaryLayoutComponent implements OnInit, AfterViewInit {
   }
 
   onToggle() {
-    switch (this.sideMenuState) {
-      case SideMenuState.OPENED:
-        this.sideMenuState = SideMenuState.CLOSED;
-
-        break;
-      case SideMenuState.CLOSED:
-        this.sideMenuState = SideMenuState.OPENED;
-
-        break;
-      default:
-        break;
-    }
+    lastValueFrom(
+      this.sideMenuState$.pipe(
+        take(1),
+        tap((res) => {
+          if (res === SideMenuState.OPENED) {
+            this._sideMenuState.next(SideMenuState.CLOSED);
+          }
+          if (res === SideMenuState.CLOSED) {
+            this._sideMenuState.next(SideMenuState.OPENED);
+          }
+        })
+      )
+    );
   }
 
   setOverlay() {
@@ -140,6 +173,12 @@ export class PrimaryLayoutComponent implements OnInit, AfterViewInit {
   }
 
   private setFlexLayoutCongiguration() {
+    if (this.isSideMenu === true) {
+      this.alignItems = AlignItemsTypes.FLEX_START;
+      this.justifyContent = JustifyContentType.CENTER;
+      return;
+    }
+
     if (this.alignItems) {
       this.renderer.setStyle(
         this.contentEl.nativeElement,
@@ -153,6 +192,14 @@ export class PrimaryLayoutComponent implements OnInit, AfterViewInit {
         this.contentEl.nativeElement,
         'justifyContent',
         this.justifyContent
+      );
+    }
+
+    if (this.flexDirection) {
+      this.renderer.setStyle(
+        this.contentEl.nativeElement,
+        'flexDirection',
+        this.flexDirection
       );
     }
   }

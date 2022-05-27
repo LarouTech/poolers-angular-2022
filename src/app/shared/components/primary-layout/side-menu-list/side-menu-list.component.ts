@@ -1,8 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { BehaviorSubject, lastValueFrom } from 'rxjs';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { BehaviorSubject, lastValueFrom, Observable, tap } from 'rxjs';
 import { AuthService } from 'src/app/home/auth-card/auth.service';
 import { SideMenuState } from '../primary-layout.component';
+import { Location } from '@angular/common';
 
 export interface MenuItem {
   name: string;
@@ -11,6 +12,11 @@ export interface MenuItem {
 }
 
 const SIDEDMENU_DATA: MenuItem[] = [
+  {
+    name: 'lobby',
+    icon: 'lobby',
+    selected: false,
+  },
   {
     name: 'stats',
     icon: 'stats',
@@ -39,7 +45,9 @@ const SIDEDMENU_DATA: MenuItem[] = [
   styleUrls: ['./side-menu-list.component.scss'],
 })
 export class SideMenuListComponent implements OnInit {
-  @Input('menuState') menuState!: SideMenuState;
+  @Input('menuState') menuState!: Observable<SideMenuState>;
+  @Output('resetMenu') resetMenuState = new EventEmitter<boolean>();
+
   private data = SIDEDMENU_DATA;
   private _menuItems = new BehaviorSubject<MenuItem[]>(this.data);
 
@@ -47,22 +55,59 @@ export class SideMenuListComponent implements OnInit {
     return this._menuItems.asObservable();
   }
 
-  constructor(private router: Router, private authService: AuthService) {
-    this.menuState = SideMenuState.CLOSED;
+  constructor(
+    private location: Location,
+    private router: Router,
+    private authService: AuthService
+  ) {}
+
+  ngOnInit(): void {
+    this.setInitiaSelectedItem();
   }
 
-  ngOnInit(): void {}
+  private setInitiaSelectedItem() {
+    const currentPath = this.location.path().substring(1);
 
-  logout() {
-    lastValueFrom(this.authService.logout()).then(() =>
-      this.router.navigateByUrl('')
+    this.data.map((item) => {
+      if (currentPath === item.name) {
+        item.selected = true;
+      }
+
+      return item;
+    });
+  }
+
+  private logout() {
+    lastValueFrom(
+      this.authService.logout().pipe(
+        tap(() => {
+          this.data = this.data.map((item) => {
+            item.selected = false;
+            return item;
+          });
+
+          this.resetMenuState.emit(true);
+          this.router.navigate(['home']);
+        })
+      )
     );
   }
 
   onSelectItem(item: MenuItem) {
     if (item.name === 'logout') {
       this.logout();
+      return;
     }
+
+    lastValueFrom(
+      this.menuState.pipe(
+        tap((state) => {
+          this.router.navigate([item.name], {
+            queryParams: { menustate: state },
+          });
+        })
+      )
+    );
 
     const newState = this._menuItems.getValue().map((i) => {
       if (item.name === i.name) {
