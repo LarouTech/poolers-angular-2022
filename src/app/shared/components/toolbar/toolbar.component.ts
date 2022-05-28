@@ -40,12 +40,4 @@ export class ToolbarComponent implements OnInit {
       this.height ? this.height : '6.8rem'
     );
   }
-
-  onLogoutHandler() {
-    this.authService.logout();
-
-    this.router.navigateByUrl('');
-
-    // lastValueFrom(this.authService.logout());
-  }
 }

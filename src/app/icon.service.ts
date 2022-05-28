@@ -40,4 +40,8 @@ export const Icons: string[] = [
   'standing',
   'stats',
   'lobby',
+  'family',
+  'person',
+  'clown',
+  'unknow-user',
 ];

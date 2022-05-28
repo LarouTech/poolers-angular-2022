@@ -1,9 +1,16 @@
 <primary-layout
+  [isFooterHidden]="true"
   [isSideMenu]="false"
   [alignItems]="alignItems"
   [justifyContent]="justifyContent"
 >
-  <div content class="">
+  <div *ngIf="!(authLoading$ | async)" content class="">
     <auth-card></auth-card>
   </div>
+
+  <loading-modal
+    *ngIf="authLoading$ | async"
+    size="2x"
+    class="modal"
+  ></loading-modal>
 </primary-layout>

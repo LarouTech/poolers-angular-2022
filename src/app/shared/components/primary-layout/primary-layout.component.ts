@@ -69,6 +69,7 @@ export class PrimaryLayoutComponent implements OnInit, AfterViewInit {
   @ViewChild('contentEl') contentEl!: ElementRef;
   @ViewChild('sideMenuEl') sideMenuEl!: ElementRef;
   @ViewChild('containerEl') containerEl!: ElementRef;
+  @ViewChild('footerEl') footerEl!: ElementRef;
   @Input('alignItems') alignItems!: AlignItemsTypes;
   @Input('justifyContent') justifyContent!: JustifyContentType;
   @Input('flexDirection') flexDirection?: FlexDirectionType;
@@ -76,6 +77,8 @@ export class PrimaryLayoutComponent implements OnInit, AfterViewInit {
   @Input('isToolbar') isToolbar!: boolean;
   @Input('toolbarHeightRem') toolbarHeight!: number;
   @Input('overlay') overlay!: boolean;
+  @Input('isFooterHidden') isFooterHidden?: boolean;
+  footerHeight: number = 120;
 
   _sideMenuState = new BehaviorSubject<SideMenuState>(SideMenuState.CLOSED);
 
@@ -92,6 +95,7 @@ export class PrimaryLayoutComponent implements OnInit, AfterViewInit {
     this.isToolbar = this.isToolbar ? this.isToolbar : true;
     this.isSideMenu = this.isSideMenu ? this.isSideMenu : false;
     this.toolbarHeight = this.toolbarHeight ? this.toolbarHeight : 68;
+    this.isFooterHidden ? this.isFooterHidden : false;
   }
 
   ngOnInit(): void {
@@ -135,7 +139,9 @@ export class PrimaryLayoutComponent implements OnInit, AfterViewInit {
       this.renderer.setStyle(
         this.sideMenuEl.nativeElement,
         'height',
-        `${this.containerEl.nativeElement.clientHeight - this.toolbarHeight}px`
+        `${
+          this.containerEl.nativeElement.clientHeight - this.toolbarHeight - 120
+        }px`
       );
     }
   }

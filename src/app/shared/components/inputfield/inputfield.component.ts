@@ -17,6 +17,7 @@ export class InputfieldComponent implements OnInit, ControlValueAccessor {
   @Input() form!: FormGroup;
   @Input() message!: string;
   @Input() autocomplete!: InputAutoCompleteTypes;
+
   public errorMessages = new Map();
 
   constructor(@Self() @Optional() public control: NgControl) {

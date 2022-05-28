@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { CognitoIdentityClient } from '@aws-sdk/client-cognito-identity';
 import {
   CognitoIdentityProviderClient,
@@ -20,7 +20,9 @@ import {
 import { fromCognitoIdentityPool } from '@aws-sdk/credential-provider-cognito-identity';
 import jwt_decode, { JwtPayload } from 'jwt-decode';
 import {
+  BehaviorSubject,
   catchError,
+  filter,
   from,
   mergeMap,
   Observable,
@@ -38,11 +40,25 @@ import { environment } from 'src/environments/environment';
 })
 export class AuthService {
   client!: CognitoIdentityProviderClient;
+  _authLoading = new BehaviorSubject<boolean>(false);
+
+  get authLoading$() {
+    return this._authLoading.asObservable();
+  }
 
   constructor(private configService: ConfigurationService) {
     this.client = new CognitoIdentityProviderClient({
       region: environment.region,
     });
+  }
+
+  stopLoadingSpinnerFromRouter(router: Router) {
+    return router.events.pipe(
+      filter((event) => event instanceof NavigationEnd),
+      tap((res) => {
+        this._authLoading.next(false);
+      })
+    );
   }
 
   //GET COGNITO CREDENTIALS
@@ -75,7 +91,7 @@ export class AuthService {
 
     return command$.pipe(
       mergeMap((command) => {
-        return from(this.client.send(command));
+        return from(this.client.send(command)).pipe();
       }),
       catchError((error) => {
         return throwError(() => new Error(error.message).message);
@@ -99,7 +115,7 @@ export class AuthService {
 
     return command$.pipe(
       mergeMap((command) => {
-        return from(this.client.send(command));
+        return from(this.client.send(command)).pipe();
       }),
       catchError((error) => {
         return throwError(() => new Error(error.message).message);
@@ -112,6 +128,7 @@ export class AuthService {
     email: string,
     password: string
   ): Observable<InitiateAuthCommandOutput> {
+    this._authLoading.next(true);
     const command$ = of(
       new InitiateAuthCommand({
         ClientId: this.configService.config.cognito.userPoolClientId,
@@ -141,6 +158,8 @@ export class AuthService {
       credentials: this.getCognitoCredentials(),
     });
 
+    this._authLoading.next(true);
+
     const command$ = of(
       new GlobalSignOutCommand({
         AccessToken: localStorage.getItem('AccessToken')!,
@@ -152,6 +171,7 @@ export class AuthService {
         return from(client.send(command));
       }),
       tap((res) => this.removeTokensFromLocalStorage()),
+      tap(() => this._authLoading.next(false)),
       catchError((error) => {
         console.log(error);
         return throwError(() => new Error(error.message).message);

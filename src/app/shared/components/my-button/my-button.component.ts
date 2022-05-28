@@ -21,12 +21,14 @@ export enum MyButtonType {
 export class MyButtonComponent implements OnInit, AfterViewInit {
   @Input('text') text: string = 'button';
   @Input('icon') icon!: string;
+  @Input('color') color?: string;
   @Input('width') width?: string | number;
   @Input('disabled') disabled?: boolean = false;
   @Input('type') btnType?: MyButtonType | string = this.btnType
     ? this.btnType
     : MyButtonType.BUTTON;
   @ViewChild('btnEl') btnEl?: ElementRef<HTMLButtonElement>;
+  @ViewChild('containerEl') containerEl?: ElementRef<HTMLDivElement>;
 
   constructor(private renderer: Renderer2) {}
 
@@ -36,5 +38,25 @@ export class MyButtonComponent implements OnInit, AfterViewInit {
     this.width
       ? this.renderer.setStyle(this.btnEl?.nativeElement, 'width', this.width)
       : null;
+
+    this.width
+      ? this.renderer.setStyle(
+          this.containerEl?.nativeElement,
+          'width',
+          this.width
+        )
+      : null;
+
+    this.color
+      ? this.renderer.setStyle(
+          this.btnEl?.nativeElement,
+          'backgroundColor',
+          this.color
+        )
+      : this.renderer.setStyle(
+          this.btnEl?.nativeElement,
+          'backgroundColor',
+          'var(--primary500'
+        );
   }
 }

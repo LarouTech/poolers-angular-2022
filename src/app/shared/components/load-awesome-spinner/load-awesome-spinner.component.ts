@@ -39,8 +39,12 @@ export class LoadAwesomeSpinnerComponent implements OnInit, AfterViewInit {
     this.setDivRows();
   }
   ngAfterViewInit(): void {
-    if (this.color != SpinnerColor.dark && this.color != SpinnerColor.normal) {
-      this.renderer.setStyle(this.spinnerEl, 'color', this.color);
+    if (
+      this.color &&
+      this.color != SpinnerColor.dark &&
+      this.color != SpinnerColor.normal
+    ) {
+      this.renderer.setStyle(this.spinnerEl.nativeElement, 'color', this.color);
     }
   }
 

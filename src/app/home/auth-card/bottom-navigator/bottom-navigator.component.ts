@@ -49,18 +49,24 @@ export class BottomNavigatorComponent implements OnInit {
   }
 
   ngAfterViewInit(): void {
-    this._currentTabEl.next(this.loginTabEl.nativeElement);
-    this.renderer.setStyle(
-      this.loginTabEl.nativeElement,
-      'backgroundColor',
-      'var(--grey200)'
-    );
+    if (this._currentTabEl && this.loginTabEl) {
+      this._currentTabEl.next(this.loginTabEl.nativeElement);
+    }
 
-    this.renderer.setStyle(
-      this.signinTabEl.nativeElement,
-      'backgroundColor',
-      'var(--light500)'
-    );
+    if (this.loginTabEl) {
+      this.renderer.setStyle(
+        this.loginTabEl.nativeElement,
+        'backgroundColor',
+        'var(--grey200)'
+      );
+    }
+    if (this.signinTabEl) {
+      this.renderer.setStyle(
+        this.signinTabEl.nativeElement,
+        'backgroundColor',
+        'var(--light500)'
+      );
+    }
 
     this.isValidate$ = this.isValidate$.pipe(
       tap((res) => {

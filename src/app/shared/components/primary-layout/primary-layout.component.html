@@ -23,5 +23,5 @@
     <ng-content class="content__ng" #content></ng-content>
   </div>
 
-  <!-- <footer></footer> -->
+  <footer #footerEl *ngIf="!isFooterHidden"></footer>
 </div>

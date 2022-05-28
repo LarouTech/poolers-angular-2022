@@ -66,7 +66,7 @@ export class SideMenuListComponent implements OnInit {
   }
 
   private setInitiaSelectedItem() {
-    const currentPath = this.location.path().substring(1);
+    const currentPath = this.location.path().substring(1).split('?')[0];
 
     this.data.map((item) => {
       if (currentPath === item.name) {

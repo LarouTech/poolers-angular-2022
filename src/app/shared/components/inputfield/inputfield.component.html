@@ -24,7 +24,7 @@
   />
 
   <div
-    *ngIf="form.get(name)?.invalid && form!.get(name)?.touched"
+    *ngIf="form && form.get(name)?.invalid && form!.get(name)?.touched"
     class="error animate__animated animate__fadeIn"
   >
     <span class="">{{ message }}</span>

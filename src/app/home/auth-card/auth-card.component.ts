@@ -14,17 +14,15 @@ export class AuthCardComponent implements OnInit {
   currentTab: Observable<AuthCardTabType> = of();
   cacheValues: { email: string; password: string } = null!;
 
-  constructor(
-    private tabNavigator: BottomNavigatorService,
-    private router: Router
-  ) {}
+  constructor(private tabNavigator: BottomNavigatorService) {}
 
   ngOnInit(): void {
     this.currentTab = this.tabNavigator.currentTab;
     // this.router.navigate([this.tabNavigator._currentTab.getValue()]);
   }
 
-  getCacheValues(cacheValues: any) {
+  getCacheValues(cacheValues: { email: string; password: string }) {
+    console.log(cacheValues);
     this.cacheValues = cacheValues;
   }
 }

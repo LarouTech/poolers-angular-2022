@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { fromEvent, map, merge, Observable, Observer } from 'rxjs';
 import {
   AlignItemsTypes,
   FlexDirectionType,

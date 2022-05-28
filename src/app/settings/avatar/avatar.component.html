@@ -1,0 +1,16 @@
+<div class="avatar-container">
+  <div #avatarEl class="avatar">
+    <!-- <span class="avatar__initials">YL</span> -->
+
+    <mat-icon
+      #avatarIconEl
+      class="avatar__icon"
+      svgIcon="unknow-user"
+    ></mat-icon>
+  </div>
+
+  <div *ngIf="isLabelVisible" class="avatar__info-box">
+    <span class="avatar__info-box--text">yanicklarouche@hotmail.com</span>
+    <span class="avatar__info-box--subText">your personal account</span>
+  </div>
+</div>

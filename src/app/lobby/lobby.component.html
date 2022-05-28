@@ -1,9 +1,15 @@
 <primary-layout
-  [isSideMenu]="true"
+  [isSideMenu]="(authLoading$ | async)! ? false : true"
   [alignItems]="alignItems"
   [justifyContent]="justifyContent"
 >
   <div class="container">
-    <dashboard></dashboard>
+    <dashboard *ngIf="!(authLoading$ | async)"></dashboard>
   </div>
+
+  <loading-modal
+    *ngIf="authLoading$ | async"
+    size="2x"
+    class="modal"
+  ></loading-modal>
 </primary-layout>

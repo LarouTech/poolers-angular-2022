@@ -5,7 +5,7 @@
       <h1 class="branding__text">poolers</h1>
     </div>
 
-    <div (click)="onLogoutHandler()" *ngIf="isAuth$ | async" class="hamburger">
+    <div *ngIf="isAuth$ | async" class="hamburger">
       <mat-icon svgIcon="hamburger"></mat-icon>
     </div>
   </div>
