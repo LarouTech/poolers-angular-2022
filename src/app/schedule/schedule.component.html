@@ -1,0 +1,13 @@
+<primary-layout
+  [isSideMenu]="(authLoading$ | async)! ? false : true"
+  [alignItems]="alignItems"
+  [justifyContent]="justifyContent"
+>
+  <div class="container">Schedule</div>
+
+  <loading-modal
+    *ngIf="authLoading$ | async"
+    size="2x"
+    class="modal"
+  ></loading-modal>
+</primary-layout>

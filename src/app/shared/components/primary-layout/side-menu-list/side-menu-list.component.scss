@@ -9,11 +9,11 @@
     transition: all 0.4s;
 
     &--hover {
-      background-color: var(--grey400);
+      background-color: var(--grey300);
     }
 
     &--selected {
-      background-color: var(--grey300);
+      background-color: var(--primary100);
     }
 
     display: flex;

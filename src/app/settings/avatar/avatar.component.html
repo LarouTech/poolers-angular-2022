@@ -2,7 +2,18 @@
   <div #avatarEl class="avatar">
     <!-- <span class="avatar__initials">YL</span> -->
 
+    <img
+      *ngIf="imageUri$ | async"
+      class="avatar__pic animate__animated animate__fadeIn"
+      [src]="imageUri$ | async"
+      alt=""
+      (error)="(null)"
+      onerror="this.onerror=null;"
+      loading="lazy"
+    />
+
     <mat-icon
+      *ngIf="!(imageUri$ | async)"
       #avatarIconEl
       class="avatar__icon"
       svgIcon="unknow-user"
@@ -10,7 +21,7 @@
   </div>
 
   <div *ngIf="isLabelVisible" class="avatar__info-box">
-    <span class="avatar__info-box--text">yanicklarouche@hotmail.com</span>
+    <span class="avatar__info-box--text">{{ profile.email }}</span>
     <span class="avatar__info-box--subText">your personal account</span>
   </div>
 </div>

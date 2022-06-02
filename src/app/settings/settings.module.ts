@@ -17,6 +17,8 @@ import { InputfieldModule } from '../shared/components/inputfield/inputfield.mod
 import { SettingsFormComponent } from './settings-form/settings-form.component';
 import { MyButtonModule } from '../shared/components/my-button/my-button.module';
 import { AvatarEditComponent } from './avatar-edit/avatar-edit.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { NotificationModule } from '../shared/components/notification/notification.module';
 
 @NgModule({
   declarations: [
@@ -40,6 +42,8 @@ import { AvatarEditComponent } from './avatar-edit/avatar-edit.component';
     CardModule,
     InputfieldModule,
     MyButtonModule,
+    ReactiveFormsModule,
+    NotificationModule,
   ],
   exports: [SettingsComponent],
 })

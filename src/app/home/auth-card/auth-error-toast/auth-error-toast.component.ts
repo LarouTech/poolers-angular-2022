@@ -21,7 +21,9 @@ export class AuthErrorToastComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.message.subscribe((data) => console.log(data));
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     const message$: Observable<string> = changes['message'].currentValue;

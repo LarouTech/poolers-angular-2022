@@ -30,14 +30,14 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.reloadAfterNetworkFailure();
+    // this.reloadAfterNetworkFailure();
     this.authLoading$ = this.authService.authLoading$.pipe(
       tap((res) => {
         console.log(res);
       })
     );
 
-    lastValueFrom(this.authService.stopLoadingSpinnerFromRouter(this.router));
+    // lastValueFrom(this.authService.stopLoadingSpinnerFromRouter(this.router));
   }
 
   reloadAfterNetworkFailure() {

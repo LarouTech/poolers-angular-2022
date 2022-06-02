@@ -3,41 +3,80 @@
   <div class="form-section__border"></div>
 </div>
 
-<div class="form">
-  <div class="form__left">
-    <div style="margin-bottom: 2.5rem">
-      <inputfield icon="email" name="email" label="email"></inputfield>
+<form [formGroup]="profileForm" (ngSubmit)="onUpdateProfile()">
+  <div class="form">
+    <div class="form__left">
+      <div style="margin-bottom: 2.5rem">
+        <inputfield
+          icon="email"
+          name="email"
+          label="email"
+          [value]="(profile$ | async)?.email"
+          [disabled]="true"
+          [form]="profileForm"
+        ></inputfield>
+      </div>
+
+      <div style="margin-bottom: 2.5rem">
+        <inputfield
+          icon="person"
+          name="firstName"
+          label="first name"
+          formControlName="firstName"
+          [form]="profileForm"
+        ></inputfield>
+      </div>
+
+      <div style="margin-bottom: 2.5rem">
+        <inputfield
+          icon="family"
+          name="lastName"
+          label="family name"
+          formControlName="lastName"
+          [form]="profileForm"
+        ></inputfield>
+      </div>
+
+      <div style="margin-bottom: 2.5rem">
+        <inputfield
+          icon="clown"
+          name="username"
+          label="username"
+          formControlName="username"
+          [form]="profileForm"
+        ></inputfield>
+      </div>
     </div>
 
-    <div style="margin-bottom: 2.5rem">
-      <inputfield
-        icon="person"
-        name="firstName"
-        label="first name"
-      ></inputfield>
-    </div>
-
-    <div style="margin-bottom: 2.5rem">
-      <inputfield
-        icon="family"
-        name="lastName"
-        label="family name"
-      ></inputfield>
-    </div>
-
-    <div style="margin-bottom: 2.5rem">
-      <inputfield icon="clown" name="username" label="username"></inputfield>
+    <div class="form__right">
+      <div class="avatar">
+        <avatar-edit></avatar-edit>
+      </div>
     </div>
   </div>
 
-  <div class="form__right">
-    <div class="avatar">
-      <avatar-edit></avatar-edit>
-    </div>
-  </div>
-</div>
+  <notification
+    *ngIf="notification$ | async"
+    (timerElapsed)="onCloseNotification($event)"
+    [timer]="7000"
+    [width]="60"
+  ></notification>
 
-<div class="form__actions">
-  <my-button text="update" class="form__btn" width="15rem"></my-button>
-  <my-button color="#070505" text="reset" width="15rem"></my-button>
-</div>
+  <div class="form__actions">
+    <my-button
+      type="submit"
+      text="update"
+      class="form__btn"
+      width="15rem"
+      [disabled]="(notification$ | async)!"
+    ></my-button>
+    <my-button
+      (click)="onResetFormValue()"
+      type="button"
+      color="#070505"
+      text="reset"
+      width="15rem"
+      [disabled]="(notification$ | async)!"
+    ></my-button>
+  </div>
+</form>

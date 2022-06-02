@@ -19,6 +19,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { RouterModule } from '@angular/router';
+import { ProfilePictureService } from './profile-picture.service';
 
 export function StartupServiceFactory(configService: ConfigurationService) {
   return () => configService.getConfig().subscribe((data) => console.log(data));
@@ -44,6 +45,7 @@ export function StartupServiceFactory(configService: ConfigurationService) {
     AuthService,
     LayoutService,
     ProfileService,
+    ProfilePictureService,
     ConfigurationService,
     {
       provide: APP_INITIALIZER,

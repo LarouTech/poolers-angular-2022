@@ -4,6 +4,7 @@ import { ConfigResolver } from './config.resolver';
 import { AuthGuard } from './home/auth-card/auth.guard';
 import { IsAuthenticatedGuard } from './home/auth-card/is-authenticated.guard';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { ProfileResolver } from './profile.resolver';
 
 const routes: Routes = [
   {
@@ -24,6 +25,11 @@ const routes: Routes = [
     resolve: { config: ConfigResolver },
   },
   {
+    path: 'schedule',
+    loadChildren: () =>
+      import('./schedule/schedule.module').then((m) => m.ScheduleModule),
+  },
+  {
     path: 'stats',
     loadChildren: () =>
       import('./stats/stats.module').then((m) => m.StatsModule),
@@ -37,6 +43,7 @@ const routes: Routes = [
     path: 'settings',
     loadChildren: () =>
       import('./settings/settings.module').then((m) => m.SettingsModule),
+    resolve: { config: ConfigResolver, profile: ProfileResolver },
   },
   {
     path: '503',

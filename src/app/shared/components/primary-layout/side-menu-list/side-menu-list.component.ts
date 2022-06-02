@@ -18,6 +18,11 @@ const SIDEDMENU_DATA: MenuItem[] = [
     selected: false,
   },
   {
+    name: 'schedule',
+    icon: 'schedule',
+    selected: false,
+  },
+  {
     name: 'stats',
     icon: 'stats',
     selected: false,

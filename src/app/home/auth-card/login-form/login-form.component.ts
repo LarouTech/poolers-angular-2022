@@ -57,6 +57,7 @@ export class LoginFormComponent implements OnInit {
         this.profilePipe.profileRxjsPipe(),
         tap(() => this.router.navigate(['lobby'])),
         catchError((error) => {
+          console.log(error);
           this._error.next(error);
           return of();
         })

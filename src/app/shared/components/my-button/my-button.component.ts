@@ -24,6 +24,7 @@ export class MyButtonComponent implements OnInit, AfterViewInit {
   @Input('color') color?: string;
   @Input('width') width?: string | number;
   @Input('disabled') disabled?: boolean = false;
+  @Input('loadingSpinner') loadingSpinner!: boolean;
   @Input('type') btnType?: MyButtonType | string = this.btnType
     ? this.btnType
     : MyButtonType.BUTTON;
@@ -37,14 +38,6 @@ export class MyButtonComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     this.width
       ? this.renderer.setStyle(this.btnEl?.nativeElement, 'width', this.width)
-      : null;
-
-    this.width
-      ? this.renderer.setStyle(
-          this.containerEl?.nativeElement,
-          'width',
-          this.width
-        )
       : null;
 
     this.color

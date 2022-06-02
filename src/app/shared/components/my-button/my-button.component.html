@@ -1,14 +1,12 @@
-<div #containerEl class="container">
-  <button
-    [disabled]="disabled"
-    [type]="btnType"
-    #btnEl
-    onHoverMyButton
-    class="btn"
-  >
-    <div class="btn__box">
-      <mat-icon *ngIf="icon" class="btn__icon" [svgIcon]="icon"></mat-icon>
-      {{ text }}
-    </div>
-  </button>
-</div>
+<button
+  [disabled]="disabled"
+  [type]="btnType"
+  #btnEl
+  onHoverMyButton
+  class="btn"
+>
+  <div class="btn__box">
+    <mat-icon *ngIf="icon" class="btn__icon" [svgIcon]="icon"></mat-icon>
+    {{ text }}
+  </div>
+</button>
