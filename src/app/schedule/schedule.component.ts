@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { lastValueFrom, Observable } from 'rxjs';
 import { AuthService } from '../home/auth-card/auth.service';
+import { LayoutService } from '../layout.service';
+import { FranchisesService } from '../nhl/franchises.service';
 import { NhlSheduleService } from '../nhl/nhl-shedule.service';
 import { PlayersService } from '../nhl/players.service';
 import { ProfileService } from '../profile.service';
@@ -19,16 +21,20 @@ export class ScheduleComponent implements OnInit {
   alignItems = AlignItemsTypes.FLEX_START;
   justifyContent = JustifyContentType.CENTER;
   authLoading$!: Observable<boolean>;
+  @ViewChild('containerEl') containerEl!: ElementRef;
 
   constructor(
-    private players: PlayersService,
-    private nhlSchedule: NhlSheduleService,
+    private franchise: FranchisesService,
     private authService: AuthService
   ) {}
 
   ngOnInit(): void {
     this.authLoading$ = this.authService.authLoading$;
+    // this.nhlSchedule.getSchedule().subscribe((data) => console.log(data));
+  }
 
-    this.nhlSchedule.getSchedule().subscribe((data) => console.log(data));
+  ngAfterViewInit(): void {
+    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
+    //Add 'implements AfterViewInit' to the class.
   }
 }

@@ -1,0 +1,36 @@
+<!-- <div class="grid-container">
+  <div class="dashboard-card">
+    <div class="header">
+      <div class="title">
+        <mat-icon class="title__icon" svgIcon="game"></mat-icon>
+        <span class="title__text">{{ "test" }}</span>
+      </div>
+    </div>
+
+    <div class="dashboard-card-content">
+      <schedule-games></schedule-games>
+    </div>
+  </div>
+</div> -->
+
+<div class="grid-container">
+  <mat-grid-list cols="2" [rowHeight]="(height$ | async)!">
+    <mat-grid-tile
+      *ngFor="let card of cards | async"
+      [colspan]="card.cols"
+      [rowspan]="card.rows"
+    >
+      <mat-card class="dashboard-card">
+        <mat-card-header>
+          <mat-card-title class="title">
+            <mat-icon class="title__icon" svgIcon="game"></mat-icon>
+            <span class="title__text">{{ card.title }}</span>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="dashboard-card-content">
+          <schedule-games></schedule-games>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>

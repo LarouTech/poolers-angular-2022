@@ -46,4 +46,5 @@ export const Icons: string[] = [
   'unknow-user',
   'schedule',
   'success',
+  'game',
 ];

@@ -79,6 +79,7 @@ export class PrimaryLayoutComponent implements OnInit, AfterViewInit {
   @Input('overlay') overlay!: boolean;
   @Input('isFooterHidden') isFooterHidden?: boolean;
   footerHeight: number = 120;
+  @Input('sideMenuHeight') sideMenuHeight!: number;
 
   _sideMenuState = new BehaviorSubject<SideMenuState>(SideMenuState.CLOSED);
 
@@ -120,6 +121,14 @@ export class PrimaryLayoutComponent implements OnInit, AfterViewInit {
     this.setSideMenuHeight();
     this.setcontentAreaHeight();
     this.overlay ? this.setOverlay() : null;
+
+    this.sideMenuHeight
+      ? this.renderer.setStyle(
+          this.sideMenuEl.nativeElement,
+          'height',
+          this.sideMenuHeight
+        )
+      : null;
   }
 
   onResetMenu() {

@@ -1,0 +1,18 @@
+.container {
+  height: 100%;
+}
+
+.date {
+  background-color: var(--primary500);
+  color: var(--light500);
+  padding: 0.75rem 0.75rem;
+  font-size: 1.6rem;
+  letter-spacing: 0.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  &__icon {
+    margin-right: 0.5rem;
+  }
+}

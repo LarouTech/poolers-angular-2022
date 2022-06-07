@@ -1,14 +1,19 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { BehaviorSubject, fromEvent, Observable, Subscription } from 'rxjs';
+import {
+  BehaviorSubject,
+  fromEvent,
+  lastValueFrom,
+  Observable,
+  Subscription,
+} from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
 })
-export class LayoutService implements OnDestroy {
+export class LayoutService {
   private _innerWidth = new BehaviorSubject<number>(null!);
   private _innerHeight = new BehaviorSubject<number>(null!);
-  private getSizeSub!: Subscription;
 
   get innerWidth$(): Observable<number> {
     return this._innerWidth.asObservable();
@@ -19,7 +24,7 @@ export class LayoutService implements OnDestroy {
   }
 
   constructor() {
-    this.getSizeSub = this.getSizeWidth().subscribe();
+    lastValueFrom(this.getSizeWidth());
     this._innerWidth.next(window.innerWidth);
     this._innerHeight.next(window.innerHeight);
   }
@@ -28,12 +33,9 @@ export class LayoutService implements OnDestroy {
     return fromEvent(window, 'resize').pipe(
       map((event: any) => {
         this._innerWidth.next(event.target!.innerWidth);
+        this._innerHeight.next(event.target!.innerHeight);
         return event.target!.innerWidth;
       })
     );
-  }
-
-  ngOnDestroy() {
-    this.getSizeSub ? this.getSizeSub.unsubscribe() : null;
   }
 }

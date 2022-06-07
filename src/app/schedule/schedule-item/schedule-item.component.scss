@@ -1,0 +1,49 @@
+.container {
+  // height: 15rem;
+  margin-bottom: 2.5rem;
+  border-bottom-left-radius: 0.4rem;
+  border-bottom-right-radius: 0.4rem;
+
+  border: solid 0.2rem rgba(#101359, 0.3);
+  background-color: var(--primary50);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2.8rem;
+}
+
+.team {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  &__record {
+    margin-bottom: 1rem;
+    &--text {
+      font-size: 2rem;
+      font-weight: bold;
+      letter-spacing: 0.2rem;
+      color: var(--primary500);
+    }
+  }
+
+  &__logo {
+    height: 10rem;
+    width: 10rem;
+  }
+
+  &__name {
+    font-size: 1.6rem;
+    letter-spacing: 0.2rem;
+    font-weight: bold;
+    color: var(--dark800);
+  }
+}
+
+.away-box {
+  &__logo {
+    height: 10rem;
+    width: 10rem;
+  }
+}

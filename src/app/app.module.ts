@@ -20,6 +20,11 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { RouterModule } from '@angular/router';
 import { ProfilePictureService } from './profile-picture.service';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatCardModule } from '@angular/material/card';
+import { MatMenuModule } from '@angular/material/menu';
+import { SeasonsService } from './nhl/seasons.service';
+import { FranchisesService } from './nhl/franchises.service';
 
 export function StartupServiceFactory(configService: ConfigurationService) {
   return () => configService.getConfig().subscribe((data) => console.log(data));
@@ -39,14 +44,19 @@ export function StartupServiceFactory(configService: ConfigurationService) {
     MatSidenavModule,
     MatListModule,
     RouterModule,
+    MatGridListModule,
+    MatCardModule,
+    MatMenuModule,
   ],
   providers: [
     IconService,
     AuthService,
     LayoutService,
     ProfileService,
+    SeasonsService,
     ProfilePictureService,
     ConfigurationService,
+    FranchisesService,
     {
       provide: APP_INITIALIZER,
       useFactory: StartupServiceFactory,

@@ -1,3 +1,4 @@
+import { Logo } from './franchiseAllTime.interface';
 import { Broadcasts } from './scheduleBroadcasts.interface';
 import { Linescore } from './scheduleLinescore.interface';
 import { Ticket } from './scheduleTicket.interface';
@@ -109,6 +110,7 @@ export interface Game {
         id: number;
         name: string;
         link: string;
+        logo?: Logo;
       };
     };
     home: {
@@ -122,6 +124,7 @@ export interface Game {
         id: number;
         name: string;
         link: string;
+        logo?: Logo;
       };
     };
     venue: {

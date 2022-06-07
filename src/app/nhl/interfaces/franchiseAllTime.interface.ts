@@ -20,6 +20,7 @@ export interface FranchiseAllTime {
   teams?: {
     id: number;
     active: string;
+    logos: Logo[];
     franchiseTeam: {
       firstSeason: {
         id: number;
@@ -27,5 +28,4 @@ export interface FranchiseAllTime {
       lastSeason: string;
     }[];
   }[];
-  logos: Logo[];
 }

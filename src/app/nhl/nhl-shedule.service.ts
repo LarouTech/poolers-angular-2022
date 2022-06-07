@@ -1,7 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { ScheduleExpands } from './enum/scheduleExpands';
 import { Schedule } from './interfaces/schedule.interface';
 
 @Injectable({
@@ -12,11 +13,28 @@ export class NhlSheduleService {
 
   constructor(private http: HttpClient) {}
 
-  getSchedule(): Observable<Schedule> {
-    return this.http.get<Schedule>(this.url).pipe(
-      tap((res) => {
-        console.log(res.games);
-      })
-    );
+  getSchedule(
+    expand?: ScheduleExpands,
+    startDate?: string,
+    endDate?: string
+  ): Observable<Schedule[]> {
+    const params = new HttpParams()
+      .append('expand', expand!)
+      .append('startDate', startDate!)
+      .append('endDate', endDate!);
+
+    return this.http.get<Schedule[]>(this.url, { params });
+  }
+
+  dateFormatter(date: Date, seperator?: string): string {
+    const month =
+      date.getMonth() + 1 <= 9 ? `0${date.getMonth() + 1}` : date.getMonth();
+    const day = date.getDate() <= 9 ? `0${date.getDate()}` : date.getDate();
+
+    const today = `${date.getFullYear()}${seperator ? seperator : '-'}${month}${
+      seperator ? seperator : '-'
+    }${day}`;
+
+    return today;
   }
 }

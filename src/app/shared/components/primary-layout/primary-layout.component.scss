@@ -7,9 +7,10 @@
 .content {
   display: flex;
   justify-content: space-around;
+
+  min-height: calc(100vh - 6.8rem);
   height: 100%;
   width: 100vw;
-  min-height: calc(100vh - 6.8rem);
 }
 
 .sidemenu {

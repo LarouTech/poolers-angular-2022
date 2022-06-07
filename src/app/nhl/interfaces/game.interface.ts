@@ -1,3 +1,5 @@
+import { StringMap } from '@angular/compiler/src/compiler_facade_interface';
+
 export interface GamePlayPlayer {
   player: {
     id: number;
@@ -69,6 +71,7 @@ export interface Game {
         id: number;
         name: string;
         link: string;
+        logo?: string;
         venue: {
           id: number;
           name: string;

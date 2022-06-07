@@ -3,11 +3,7 @@
   [alignItems]="alignItems"
   [justifyContent]="justifyContent"
 >
-  <div class="container">Schedule</div>
-
-  <loading-modal
-    *ngIf="authLoading$ | async"
-    size="2x"
-    class="modal"
-  ></loading-modal>
+  <div class="container">
+    <schedule-layout #containerEl></schedule-layout>
+  </div>
 </primary-layout>
