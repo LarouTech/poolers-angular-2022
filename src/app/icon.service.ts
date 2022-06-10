@@ -47,4 +47,5 @@ export const Icons: string[] = [
   'schedule',
   'success',
   'game',
+  'back',
 ];

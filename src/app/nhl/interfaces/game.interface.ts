@@ -1,4 +1,5 @@
 import { StringMap } from '@angular/compiler/src/compiler_facade_interface';
+import { Logo } from './franchiseAllTime.interface';
 
 export interface GamePlayPlayer {
   player: {
@@ -71,7 +72,7 @@ export interface Game {
         id: number;
         name: string;
         link: string;
-        logo?: string;
+        logo?: Logo | Logo[];
         venue: {
           id: number;
           name: string;
@@ -114,6 +115,7 @@ export interface Game {
         id: number;
         name: string;
         link: string;
+        logo?: Logo | Logo[];
         venue: {
           id: number;
           name: string;

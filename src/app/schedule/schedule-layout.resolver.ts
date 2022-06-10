@@ -40,7 +40,7 @@ export class ScheduleLayoutResolver implements Resolve<any> {
           )
           .pipe(
             map((games) => {
-              return games.length * 260;
+              return games.length * 315;
             })
           );
       })

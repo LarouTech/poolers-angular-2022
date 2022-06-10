@@ -1,0 +1,33 @@
+<div class="container" #containerEl>
+  <div class="team">
+    <img class="team__logo" [src]="(team$ | async)?.team?.logo?.secureUrl" />
+
+    <div class="team__record">
+      <span class="team__record--text">{{
+        (team$ | async)?.leagueRecord?.wins
+      }}</span
+      ><span class="team__record--text">-</span
+      ><span class="team__record--text">{{
+        (team$ | async)?.leagueRecord?.losses
+      }}</span>
+    </div>
+
+    <span class="team__name">{{ (team$ | async)?.team?.name }}</span>
+  </div>
+
+  <div
+    class="team__score"
+    *ngIf="
+      (game$ | async)?.status?.codedGameState != '1' &&
+      (game$ | async)?.status?.codedGameState != '8' &&
+      (game$ | async)?.status?.codedGameState != '9' &&
+      (game$ | async)?.status?.codedGameState != '2'
+    "
+  >
+    <span class="team__score--text">{{
+      isHome
+        ? (game$ | async)?.linescore?.teams?.home?.goals
+        : (game$ | async)?.linescore?.teams?.away?.goals
+    }}</span>
+  </div>
+</div>

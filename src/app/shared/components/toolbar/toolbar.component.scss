@@ -20,6 +20,20 @@
   align-items: center;
   justify-content: flex-start;
 
+  // &__back {
+  //   margin-right: 1rem;
+  //   cursor: pointer;
+  //   display: flex;
+  //   align-items: center;
+  //   justify-content: center;
+
+  //   &--icon {
+  //     height: 2.5rem;
+  //     width: 2.5rem;
+  //     color: var(--light500);
+  //   }
+  // }
+
   &__icon {
     fill: var(--light500);
     height: 2.5rem;
@@ -34,6 +48,12 @@
     text-transform: capitalize;
     padding-top: 2rem;
   }
+}
+
+.box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .hamburger {

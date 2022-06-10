@@ -1,5 +1,10 @@
 <div #containerEl class="container">
-  <toolbar *ngIf="isToolbar" [height]="toolbarHeight" class="toolbar"></toolbar>
+  <toolbar
+    [backButton]="toolbarBackButton"
+    *ngIf="isToolbar"
+    [height]="toolbarHeight"
+    class="toolbar"
+  ></toolbar>
 
   <div #contentEl class="content">
     <div

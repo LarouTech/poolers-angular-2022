@@ -1,18 +1,9 @@
-import {
-  Component,
-  ElementRef,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  SimpleChanges,
-  ViewChild,
-} from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { map, Observable, pipe, tap } from 'rxjs';
+import { Observable, take, tap } from 'rxjs';
 import { FranchisesService } from 'src/app/nhl/franchises.service';
 import { FranchiseAllTime } from 'src/app/nhl/interfaces/franchiseAllTime.interface';
-import { Game, Schedule } from 'src/app/nhl/interfaces/schedule.interface';
+import { ScheduledGame } from 'src/app/nhl/interfaces/schedule.interface';
 
 @Component({
   selector: 'schedule-item',
@@ -20,10 +11,10 @@ import { Game, Schedule } from 'src/app/nhl/interfaces/schedule.interface';
   styleUrls: ['./schedule-item.component.scss'],
 })
 export class ScheduleItemComponent implements OnInit {
-  @Input('scheduledGame') scheduledGame!: Game;
+  @Input('scheduledGame') scheduledGame!: ScheduledGame;
   @ViewChild('gameContainer') gameContainer!: ElementRef;
   teamsLogos$!: Observable<FranchiseAllTime[]>;
-  game$!: Observable<Game>;
+  game$!: Observable<ScheduledGame>;
 
   constructor(
     private franchises: FranchisesService,
@@ -32,12 +23,12 @@ export class ScheduleItemComponent implements OnInit {
 
   ngOnInit(): void {
     this.teamsLogos$ = this.franchises.getLogosFromRouteResolver(this.route);
-    this.game$ = this.getGameData().pipe(tap((data) => console.log(data)));
+    this.game$ = this.getGameData();
   }
 
-  getGameData(): Observable<Game> {
+  getGameData(): Observable<ScheduledGame> {
     return this.teamsLogos$.pipe(
-      this.franchises.getLatestLogoRxjsPipe(this.scheduledGame)
+      this.franchises.logoFromSchduledGameRxjsPipe(this.scheduledGame)
     );
   }
 }

@@ -78,6 +78,8 @@ export class PrimaryLayoutComponent implements OnInit, AfterViewInit {
   @Input('toolbarHeightRem') toolbarHeight!: number;
   @Input('overlay') overlay!: boolean;
   @Input('isFooterHidden') isFooterHidden?: boolean;
+  @Input('toolbarBackButton') toolbarBackButton: boolean = false;
+
   footerHeight: number = 120;
   @Input('sideMenuHeight') sideMenuHeight!: number;
 

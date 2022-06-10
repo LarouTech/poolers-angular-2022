@@ -13,6 +13,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { LayoutModule } from '@angular/cdk/layout';
 import { ScheduleItemComponent } from './schedule-item/schedule-item.component';
 import { ScheduleGamesComponent } from './schedule-games/schedule-games.component';
+import { ScheduleScoreComponent } from './schedule-item/schedule-score/schedule-score.component';
+import { ScheduleTeamComponent } from './schedule-item/schedule-team/schedule-team.component';
+import { MyButtonModule } from '../shared/components/my-button/my-button.module';
 
 @NgModule({
   declarations: [
@@ -20,6 +23,8 @@ import { ScheduleGamesComponent } from './schedule-games/schedule-games.componen
     ScheduleLayoutComponent,
     ScheduleGamesComponent,
     ScheduleItemComponent,
+    ScheduleScoreComponent,
+    ScheduleTeamComponent,
   ],
   imports: [
     CommonModule,
@@ -32,6 +37,7 @@ import { ScheduleGamesComponent } from './schedule-games/schedule-games.componen
     MatMenuModule,
     MatButtonModule,
     LayoutModule,
+    MyButtonModule,
   ],
   exports: [ScheduleComponent],
 })

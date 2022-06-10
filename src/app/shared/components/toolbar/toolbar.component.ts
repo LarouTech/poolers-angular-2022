@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import {
   Component,
   ElementRef,
@@ -17,13 +18,14 @@ import { AuthService } from 'src/app/home/auth-card/auth.service';
 })
 export class ToolbarComponent implements OnInit {
   @Input('height') height!: number | string;
+  @Input('backButton') backButton: boolean = false;
   @ViewChild('toolbarEl') toolbarEl!: ElementRef;
   accessToken = localStorage.getItem('AccessToken');
   isAuth$!: Observable<boolean>;
 
   constructor(
     private renderer: Renderer2,
-    private router: Router,
+    private location: Location,
     private authService: AuthService
   ) {}
 

@@ -211,7 +211,7 @@ export class AuthService {
       tap((res) => this.removeTokensFromLocalStorage()),
       tap(() => this.router.navigate([''])),
       catchError((error) => {
-        console.log(error);
+        this.router.navigate(['']);
         return throwError(() => new Error(error.message).message);
       })
     );

@@ -1,0 +1,45 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30rem;
+}
+
+.team {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  &__record {
+    margin-bottom: 1rem;
+    &--text {
+      font-size: 1.6rem;
+      font-weight: bold;
+      letter-spacing: 0.2rem;
+      color: var(--primary500);
+    }
+  }
+
+  &__score {
+    margin-left: 2rem;
+    margin-right: 2rem;
+    &--text {
+      font-size: 6rem;
+      font-weight: bold;
+      color: var(--dark800);
+    }
+  }
+
+  &__logo {
+    height: 10rem;
+    width: 10rem;
+  }
+
+  &__name {
+    font-size: 1.6rem;
+    letter-spacing: 0.2rem;
+    font-weight: bold;
+    color: var(--dark800);
+  }
+}

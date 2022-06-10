@@ -7,12 +7,18 @@ import {
   map,
   Observable,
   pipe,
+  switchMap,
   take,
 } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Franchise } from './interfaces/franchise.interface';
-import { FranchiseAllTime } from './interfaces/franchiseAllTime.interface';
-import { Game } from './interfaces/schedule.interface';
+import {
+  FranchiseAllTime,
+  Logo,
+} from './interfaces/franchiseAllTime.interface';
+import { Game } from './interfaces/game.interface';
+import { ScheduledGame } from './interfaces/schedule.interface';
+import { Teams } from './interfaces/teams.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -58,27 +64,71 @@ export class FranchisesService {
   }
 
   getLogosFromRouteResolver(route: ActivatedRoute) {
-    return route.data.pipe(map((res) => res['logos'] as FranchiseAllTime[]));
+    return route.data.pipe(
+      take(1),
+      map((res) => res['logos'] as FranchiseAllTime[])
+    );
   }
 
-  getLatestLogoRxjsPipe = (scheduledGame: Game) =>
+  logoFromTeamIdRxjsPipe = () =>
+    pipe(
+      switchMap((team: Teams) => {
+        return this.franchsiseLogos.pipe(
+          map((logos) => {
+            const logo = logos.find((l) => l.mostRecentTeamId === team.id)
+              ?.teams![0].logos;
+
+            return {
+              logo,
+            };
+          }),
+          map((res) => {
+            let lastesSeason: number = null!;
+
+            res.logo?.map((l) => {
+              if (l.endSeason > lastesSeason) {
+                lastesSeason = l.endSeason;
+              }
+            });
+
+            let lastestLogo: Logo[] = [];
+
+            res.logo?.filter((item) => {
+              if (
+                item.endSeason === lastesSeason &&
+                item.background === 'light'
+              ) {
+                lastestLogo.push(item);
+              }
+            });
+            return { ...team, logo: lastestLogo[0] as Logo };
+          })
+        );
+      })
+    );
+
+  logoFromSchduledGameRxjsPipe = (gameData: ScheduledGame) =>
     pipe(
       map((res: FranchiseAllTime[]) => {
-        const awayLogos = res.find(
-          (r) => r.mostRecentTeamId === scheduledGame.teams.away.team.id
+        const awayTeam = res.find(
+          (r) =>
+            r.mostRecentTeamId ===
+            (gameData as ScheduledGame).teams.away.team.id
         );
 
-        const homeLogos = res.find(
-          (r) => r.mostRecentTeamId === scheduledGame.teams.home.team.id
+        const homeTeam = res.find(
+          (r) =>
+            r.mostRecentTeamId ===
+            (gameData as ScheduledGame).teams.home.team.id
         );
 
         let awayLastestShirt: number = null!;
         let homeLatestShirt: number = null!;
 
-        const lastestAwayLogo = awayLogos?.teams?.find(
+        const lastestAwayLogo = awayTeam?.teams?.find(
           (i) => i.active === 'Y'
         )?.logos;
-        const lastestHomeLogo = homeLogos?.teams?.find(
+        const lastestHomeLogo = homeTeam?.teams?.find(
           (i) => i.active === 'Y'
         )?.logos;
 
@@ -102,10 +152,10 @@ export class FranchisesService {
           (y) => y.endSeason === homeLatestShirt
         );
 
-        scheduledGame.teams.away.team.logo = awayLogo;
-        scheduledGame.teams.home.team.logo = homeLogo;
+        (gameData as ScheduledGame).teams.away.team.logo = awayLogo;
+        (gameData as ScheduledGame).teams.home.team.logo = homeLogo;
 
-        return scheduledGame;
+        return gameData;
       })
     );
 }

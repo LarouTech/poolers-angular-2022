@@ -1,0 +1,36 @@
+<div class="section" *ngIf="(gameContent$ | async)!.editorial.preview.items[0]">
+  <div class="header">
+    <h3 class="header__text">CONFERENCE FINAL</h3>
+  </div>
+
+  <div class="teams">
+    <img class="teams__logo" [src]="(awayTeam$ | async)?.logo?.url" alt="" />
+    <img class="teams__logo" [src]="(homeTeam$ | async)?.logo?.url" alt="" />
+  </div>
+
+  <div class="container">
+    <img
+      class="image"
+      [src]="
+        (gameContent$ | async)!.editorial.preview.items[0].media.image.cuts[
+          '1024x576'
+        ].src
+      "
+    />
+
+    <div class="description">
+      <p class="description__text">
+        {{ (gameContent$ | async)!.editorial.preview.items[0].seoDescription }}
+      </p>
+
+      <p class="description__sub">
+        {{ (gameContent$ | async)!.editorial.preview.items[0].subhead }}
+      </p>
+    </div>
+  </div>
+</div>
+
+<div
+  *ngIf="!(gameContent$ | async)!.editorial.preview.items[0]"
+  class="container"
+></div>

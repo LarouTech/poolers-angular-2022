@@ -1,51 +1,7 @@
 <div class="container">
-  <div class="team">
-    <img
-      class="team__logo"
-      [src]="(game$ | async)?.teams?.home?.team?.logo?.secureUrl"
-    />
+  <schedule-team [isHome]="true" [game]="game$"></schedule-team>
 
-    <div class="team__record">
-      <span class="team__record--text">{{
-        (game$ | async)?.teams?.home?.leagueRecord?.wins
-      }}</span
-      ><span class="team__record--text">-</span
-      ><span class="team__record--text">{{
-        (game$ | async)?.teams?.home?.leagueRecord?.losses
-      }}</span>
-    </div>
+  <schedule-score [game]="game$"></schedule-score>
 
-    <span class="team__name">{{
-      (game$ | async)?.teams?.home?.team?.name
-    }}</span>
-  </div>
-
-  <div class="centerpiece">
-    {{ game$ | async }}
-
-    <span class="centerpiece__date">{{
-      (game$ | async)?.gameDate | date
-    }}</span>
-  </div>
-
-  <div class="team">
-    <img
-      class="team__logo"
-      [src]="(game$ | async)?.teams?.away?.team?.logo?.secureUrl"
-    />
-
-    <div class="team__record">
-      <span class="team__record--text">{{
-        (game$ | async)?.teams?.home?.leagueRecord?.wins
-      }}</span
-      ><span class="team__record--text">-</span
-      ><span class="team__record--text">{{
-        (game$ | async)?.teams?.home?.leagueRecord?.losses
-      }}</span>
-    </div>
-
-    <span class="team__name">{{
-      (game$ | async)?.teams?.away?.team?.name
-    }}</span>
-  </div>
+  <schedule-team [game]="game$"></schedule-team>
 </div>

@@ -85,18 +85,24 @@ export interface MediaEpg {
   items: MediaEpgItem[] | GameItem;
 }
 
-export interface Game {
+export interface ScheduledGame {
   gamePk: number;
   link: string;
   gameType: string;
   season: string;
   gameDate: string;
+  linescore?: Linescore;
   status: {
     abstractGameState: string;
     codedGameState: string;
     detailedState: string;
     statusCode: string;
     startTimeTBD: string;
+  };
+  venue: {
+    id: number;
+    name: string;
+    link: string;
   };
   teams: {
     away: {
@@ -126,11 +132,6 @@ export interface Game {
         link: string;
         logo?: Logo;
       };
-    };
-    venue: {
-      id: number;
-      name: string;
-      link: string;
     };
   };
   content: {
@@ -173,7 +174,7 @@ export interface Schedule {
   totalEvents: number;
   totalGames: number;
   totalMatches: number;
-  games: Game[];
+  games: ScheduledGame[];
   broadcasts?: Broadcasts[];
   linescore?: Linescore;
   tickets: Ticket[];

@@ -1,6 +1,7 @@
 import { Conference } from './conference.interface';
 import { Division } from './division.interface';
 import { Franchise } from './franchise.interface';
+import { Logo } from './franchiseAllTime.interface';
 import { TeamRoster } from './teamsRoster.interface';
 import { TeamStats } from './teamStats.interface';
 
@@ -18,6 +19,7 @@ export interface Teams {
       tz: string;
     };
   };
+  logo: Logo;
   abbreviation: string;
   teamName: string;
   locationName: string;

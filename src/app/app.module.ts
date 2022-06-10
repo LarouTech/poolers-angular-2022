@@ -25,6 +25,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
 import { SeasonsService } from './nhl/seasons.service';
 import { FranchisesService } from './nhl/franchises.service';
+import { GamesService } from './nhl/games.service';
 
 export function StartupServiceFactory(configService: ConfigurationService) {
   return () => configService.getConfig().subscribe((data) => console.log(data));
@@ -55,6 +56,7 @@ export function StartupServiceFactory(configService: ConfigurationService) {
     ProfileService,
     SeasonsService,
     ProfilePictureService,
+    GamesService,
     ConfigurationService,
     FranchisesService,
     {

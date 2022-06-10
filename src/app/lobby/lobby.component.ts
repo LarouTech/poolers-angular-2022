@@ -26,18 +26,6 @@ export class LobbyComponent implements OnInit {
 
   ngOnInit(): void {
     this.authLoading$ = this.authService.authLoading$;
-    this.authService.stopLoadingSpinnerFromRouter(this.router);
-  }
-
-  onTestProfile() {
-    const profile: Profile = {
-      email: 'yanick@weez.com',
-      cognitoSub: '12-2-2-2-2-2-2-2',
-      creationDate: '2022-05-24',
-      id: 'id0008',
-      lastModified: 'hey! Right fucking now',
-    };
-
-    lastValueFrom(this.profile.createProfile(profile));
+    // this.authService.stopLoadingSpinnerFromRouter(this.router);
   }
 }

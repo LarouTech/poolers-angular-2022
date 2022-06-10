@@ -23,10 +23,7 @@ export class ScheduleGamesComponent implements OnInit {
 
   ngOnInit(): void {
     this.today = this.nhlSchedule.dateFormatter(new Date());
-    this.scheduleGames$ = this.getRemainingGames().pipe(
-      take(1),
-      tap((data) => console.log(data))
-    );
+    this.scheduleGames$ = this.getRemainingGames().pipe(take(1));
   }
 
   getRemainingGames(): Observable<Schedule[]> {
