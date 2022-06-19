@@ -1,10 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
-import {
-  AlignItemsTypes,
-  JustifyContentType,
-} from '../shared/components/primary-layout/primary-layout.component';
 
 @Component({
   selector: 'not-found',
@@ -12,8 +8,6 @@ import {
   styleUrls: ['./not-found.component.scss'],
 })
 export class NotFoundComponent implements OnInit {
-  alignItems = AlignItemsTypes.CENTER;
-  justifyContent = JustifyContentType.CENTER;
   private _counter = new BehaviorSubject<number>(5);
 
   get counter$(): Observable<number> {

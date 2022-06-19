@@ -8,18 +8,17 @@
 
 html {
   font-size: 62.5%; //1 rem = 10px ---> 10/16 = 62.5%
-  height: 100% !important;
   max-width: 100vw;
 }
 
 body {
   // font-family: "Fira Sans", sans-serif;
   // font-family: 'Rubik', sans-serif;
-  font-family: "roboto", sans-serif;
+  font-family: "Merriweather Sans", sans-serif;
   font-size: 1.6rem;
   box-sizing: border-box;
   max-width: 100vw;
-  overflow-x: hidden;
+  // overflow-x: hidden;
 
   // background-color: blueviolet;
   // height: 100%;

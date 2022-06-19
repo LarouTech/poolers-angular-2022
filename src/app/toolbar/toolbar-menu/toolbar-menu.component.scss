@@ -1,0 +1,50 @@
+.menu {
+  position: absolute;
+  top: 55px;
+  right: 5%;
+  width: 30rem;
+  background-color: var(--light500);
+  z-index: 200;
+  opacity: 1;
+  border-radius: 1rem;
+  border: 0.1rem solid var(--primary500);
+
+  &__layout {
+    position: absolute;
+    top: -12px;
+    // left: 53%;
+
+    &--arrow-up {
+      height: 5rem;
+      width: 5rem;
+      color: var(--light500);
+      transform: rotate(10deg);
+    }
+  }
+
+  &__fadeIn {
+    animation: fadeInAnimation ease 1s;
+  }
+
+  &__fadeOut {
+    animation: fadeOutAnimation ease 1s;
+  }
+}
+
+@keyframes fadeInAnimation {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOutAnimation {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}

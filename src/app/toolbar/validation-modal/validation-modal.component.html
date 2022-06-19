@@ -1,0 +1,60 @@
+<div *ngIf="state$ | async" class="container">
+  <div class="modal">
+    <div class="modal__header">
+      <div class="modal__header-box">
+        <mat-icon class="modal__header-box--icon" svgIcon="validate"></mat-icon>
+        <span class="modal__header--title">Validate Account</span>
+      </div>
+      <mat-icon class="modal__header--icon" svgIcon="lock"></mat-icon>
+    </div>
+
+    <p class="modal__instructions">
+      In order to validate and confirm your account, Poolers-Hub sent an email
+      to your registered account. Please enter the confirmation code you have
+      received to unlock the power of Poolers-Hub!
+    </p>
+
+    <form [formGroup]="validateForm" (ngSubmit)="onValidate()">
+      <div class="modal__content">
+        <div class="modal__content--box">
+          <inputfield
+            formControlName="email"
+            class="modal__content--input"
+            name="validate-email"
+            type="email"
+            label="email"
+            icon="email"
+            [form]="validateForm"
+            message="Please enter a valid email address"
+          ></inputfield>
+        </div>
+
+        <div class="modal__content--box">
+          <inputfield
+            formControlName="code"
+            class="modal__content--input"
+            name="validate-code"
+            type="code"
+            label="code"
+            icon="code"
+            [form]="validateForm"
+            message="Please enter a valid email address"
+          ></inputfield>
+        </div>
+      </div>
+
+      <div class="modal__controls">
+        <my-button
+          type="submit"
+          class="modal__controls--btn"
+          text="validate"
+        ></my-button>
+        <my-button
+          (click)="onCancelValidation()"
+          color="#B33F40"
+          text="cancel"
+        ></my-button>
+      </div>
+    </form>
+  </div>
+</div>

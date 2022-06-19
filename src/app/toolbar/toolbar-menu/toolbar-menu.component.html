@@ -1,0 +1,20 @@
+<div
+  #menuEl
+  *ngIf="isMenuOpened | async"
+  [ngClass]="{
+    login__fadeIn: (isMenuOpened | async) === true,
+    login__fadeOut: (isMenuOpened | async) === false
+  }"
+  [ngStyle]="{ top: (scrollTopValue$ | async)! + 55 + 'px' }"
+  class="menu"
+>
+  <div
+    [ngStyle]="{ left: arrowXPosition ? arrowXPosition + '%' : '0%' }"
+    #arrowEl
+    class="menu__layout"
+  >
+    <mat-icon svgIcon="triangle" class="menu__layout--arrow-up"></mat-icon>
+  </div>
+
+  <ng-content #content></ng-content>
+</div>

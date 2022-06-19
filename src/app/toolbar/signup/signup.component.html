@@ -1,0 +1,90 @@
+<div class="container">
+  <div class="header">
+    <span class="header__title">signin now</span>
+    <mat-icon class="header__icon" svgIcon="lock"></mat-icon>
+  </div>
+
+  <form [formGroup]="signinForm" (ngSubmit)="onSigninHandler()">
+    <div class="content">
+      <div class="content__box">
+        <inputfield
+          formControlName="email"
+          class="content__input"
+          name="signin-email"
+          type="email"
+          label="email"
+          icon="email"
+          [form]="signinForm"
+          [autocomplete]="emailAutocomplete"
+          message="Please enter a valid email address"
+        ></inputfield>
+      </div>
+
+      <div class="content__box">
+        <inputfield
+          formControlName="username"
+          class="content__input"
+          name="signin-username"
+          type="text"
+          label="username"
+          icon="clown"
+          [form]="signinForm"
+          message="Please enter a username"
+        ></inputfield>
+      </div>
+
+      <div class="content__box">
+        <inputfield
+          formControlName="birthdate"
+          class="content__input"
+          name="signin-birthdate"
+          type="date"
+          label="birthdate"
+          icon="cake"
+          [form]="signinForm"
+          message="Please enter a valid date"
+        ></inputfield>
+      </div>
+
+      <div class="content__box">
+        <inputfield
+          formControlName="password"
+          name="signin-password"
+          type="password"
+          label="password"
+          icon="lock"
+          [form]="signinForm"
+          message="Please enter a valid password"
+          [autocomplete]="passwordAutocomplete"
+        ></inputfield>
+      </div>
+
+      <div class="content__box">
+        <input class="checkbox" type="checkbox" checked="true" /><span
+          class="checkbox__text"
+          >Please accep policies and terms of services to signin to
+          Poolers</span
+        >
+      </div>
+
+      <div class="content__box">
+        <auth-error-toast
+          (clearErrorEmitter)="onClearErrorHandler($event)"
+          [message]="errorMessage$"
+        ></auth-error-toast>
+      </div>
+    </div>
+
+    <div
+      class="controls"
+      [ngClass]="{ controls__onError: (errorMessage$ | async) }"
+    >
+      <my-button
+        [ngClass]="{ disabled: signinForm.invalid }"
+        [disabled]="signinForm.invalid"
+        type="submit"
+        text="signin"
+      ></my-button>
+    </div>
+  </form>
+</div>

@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ConfigResolver } from './config.resolver';
-import { AuthGuard } from './home/auth-card/auth.guard';
-import { IsAuthenticatedGuard } from './home/auth-card/is-authenticated.guard';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { ProfileResolver } from './profile.resolver';
+import { AuthGuard } from './toolbar/auth/auth.guard';
+import { IsAuthenticatedGuard } from './toolbar/auth/is-authenticated.guard';
 
 const routes: Routes = [
   {
@@ -22,29 +22,8 @@ const routes: Routes = [
     loadChildren: () =>
       import('./lobby/lobby.module').then((m) => m.LobbyModule),
     canActivate: [AuthGuard],
-    resolve: { config: ConfigResolver },
   },
-  {
-    path: 'schedule',
-    loadChildren: () =>
-      import('./schedule/schedule.module').then((m) => m.ScheduleModule),
-  },
-  {
-    path: 'stats',
-    loadChildren: () =>
-      import('./stats/stats.module').then((m) => m.StatsModule),
-  },
-  {
-    path: 'standing',
-    loadChildren: () =>
-      import('./standing/standing.module').then((m) => m.StandingModule),
-  },
-  {
-    path: 'settings',
-    loadChildren: () =>
-      import('./settings/settings.module').then((m) => m.SettingsModule),
-    resolve: { config: ConfigResolver, profile: ProfileResolver },
-  },
+
   {
     path: '503',
     loadChildren: () =>
@@ -64,7 +43,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { onSameUrlNavigation: 'reload' })],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

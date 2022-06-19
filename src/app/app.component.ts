@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { Icons, IconService } from './icon.service';
 import { Profile, ProfileService } from './profile.service';
+import { AuthService } from './toolbar/auth/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -9,13 +11,29 @@ import { Profile, ProfileService } from './profile.service';
 })
 export class AppComponent {
   private icons = Icons;
+  isAuth$!: Observable<boolean>;
 
   constructor(
-    private profile: ProfileService,
+    private authService: AuthService,
     private iconService: IconService
   ) {
     this.icons.forEach((icon) => this.iconService.generateSvgMatIcon(icon));
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.detectAuthStateFromToken();
+    this.isAuth$ = this.authService.isAuth$;
+  }
+
+  private detectAuthStateFromToken() {
+    if (localStorage.getItem('AccessToken')) {
+      const authState = this.authService.validateTokenExpiration(
+        localStorage.getItem('AccessToken')!
+      );
+
+      this.authService.setAuthState(authState);
+    } else {
+      this.authService.setAuthState(false);
+    }
+  }
 }

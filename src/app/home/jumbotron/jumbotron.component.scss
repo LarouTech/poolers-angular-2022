@@ -1,0 +1,79 @@
+.jumbotron {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  padding-bottom: 10rem;
+  background-color: rgba(#101359, 0.3);
+
+  &__box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__brand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 20rem;
+
+    &--title {
+      font-size: 10rem;
+      font-weight: bold;
+      letter-spacing: 1rem;
+      color: #fff;
+      text-shadow: 0 0 3rem #000;
+      text-transform: capitalize;
+    }
+
+    &--icon {
+      height: 17rem;
+      width: 8rem;
+      color: var(--light500);
+    }
+
+    &--sub {
+      font-size: 2rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      color: var(--grey500);
+      line-height: 3;
+      letter-spacing: 0.8rem;
+      text-shadow: 0 0 3rem #000;
+      font-family: "Merriweather Sans", sans-serif;
+      text-align: center;
+    }
+  }
+
+  &__scroller {
+    transform: translateY(20rem);
+    height: 5.5rem;
+    width: 5.5rem;
+    border-radius: 10rem;
+    border: solid 0.3rem #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    &--icon {
+      height: 2.6rem;
+      width: 2.6rem;
+      color: var(--light500);
+      transform: rotate(180deg);
+      transition: 0.6s ease;
+    }
+
+    &--hover {
+      transform: rotate(0deg);
+      color: var(--primary200);
+    }
+  }
+}

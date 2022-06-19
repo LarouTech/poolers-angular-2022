@@ -20,6 +20,12 @@ import { Game } from './interfaces/game.interface';
 import { ScheduledGame } from './interfaces/schedule.interface';
 import { Teams } from './interfaces/teams.interface';
 
+export enum LogoType {
+  'DARK' = 'dark',
+  'LIGHT' = 'light',
+  'ALTERNATE' = 'alt',
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -70,7 +76,7 @@ export class FranchisesService {
     );
   }
 
-  logoFromTeamIdRxjsPipe = () =>
+  logoFromTeamIdRxjsPipe = (logoType?: LogoType) =>
     pipe(
       switchMap((team: Teams) => {
         return this.franchsiseLogos.pipe(
@@ -93,14 +99,20 @@ export class FranchisesService {
 
             let lastestLogo: Logo[] = [];
 
+            logoType ? logoType : LogoType.DARK;
+
             res.logo?.filter((item) => {
               if (
                 item.endSeason === lastesSeason &&
-                item.background === 'light'
+                item.background === logoType
               ) {
+                console.log('shit happen');
                 lastestLogo.push(item);
               }
             });
+
+            console.log(LogoType.DARK);
+
             return { ...team, logo: lastestLogo[0] as Logo };
           })
         );

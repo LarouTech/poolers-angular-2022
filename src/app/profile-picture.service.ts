@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { AuthService } from './home/auth-card/auth.service';
 import {
   GetObjectCommand,
   PutObjectCommand,
@@ -24,6 +23,7 @@ import {
   GetIdCommand,
   GetIdCommandOutput,
 } from '@aws-sdk/client-cognito-identity';
+import { AuthService } from './toolbar/auth/auth.service';
 
 @Injectable({
   providedIn: 'root',

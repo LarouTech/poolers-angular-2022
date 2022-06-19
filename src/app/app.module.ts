@@ -6,30 +6,32 @@ import { AppComponent } from './app.component';
 import { IconService } from './icon.service';
 import { MatIconModule } from '@angular/material/icon';
 import { ConfigurationService } from './configuration.service';
-import { AuthService } from './home/auth-card/auth.service';
 import { LayoutService } from './layout.service';
-import { TokenInterceptor } from './home/auth-card/token.interceptor';
 import { NotFoundComponent } from './not-found/not-found.component';
-import { ProfileService } from './profile.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FooterComponent } from './shared/components/footer/footer.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { RouterModule } from '@angular/router';
-import { ProfilePictureService } from './profile-picture.service';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
 import { SeasonsService } from './nhl/seasons.service';
 import { FranchisesService } from './nhl/franchises.service';
 import { GamesService } from './nhl/games.service';
+import { ReactiveFormsModule } from '@angular/forms';
+import { AuthService } from './toolbar/auth/auth.service';
+import { ToolbarModule } from './toolbar/toolbar.module';
+import { TokenInterceptor } from './toolbar/auth/token.interceptor';
+import { ProfileService } from './profile.service';
+import { ProfilePictureService } from './profile-picture.service';
+import { FooterComponent } from './footer/footer.component';
 
-export function StartupServiceFactory(configService: ConfigurationService) {
-  return () => configService.getConfig().subscribe((data) => console.log(data));
-}
+// export function StartupServiceFactory(configService: ConfigurationService) {
+//   return () => configService.getConfig().subscribe((data) => console.log(data));
+// }
 
 @NgModule({
   declarations: [AppComponent],
@@ -40,7 +42,6 @@ export function StartupServiceFactory(configService: ConfigurationService) {
     HttpClientModule,
     MatIconModule,
     LayoutModule,
-    MatToolbarModule,
     MatButtonModule,
     MatSidenavModule,
     MatListModule,
@@ -48,6 +49,8 @@ export function StartupServiceFactory(configService: ConfigurationService) {
     MatGridListModule,
     MatCardModule,
     MatMenuModule,
+    ToolbarModule,
+    ReactiveFormsModule,
   ],
   providers: [
     IconService,
@@ -55,16 +58,16 @@ export function StartupServiceFactory(configService: ConfigurationService) {
     LayoutService,
     ProfileService,
     SeasonsService,
-    ProfilePictureService,
+
     GamesService,
     ConfigurationService,
     FranchisesService,
-    {
-      provide: APP_INITIALIZER,
-      useFactory: StartupServiceFactory,
-      deps: [ConfigurationService],
-      multi: true,
-    },
+    // {
+    //   provide: APP_INITIALIZER,
+    //   useFactory: StartupServiceFactory,
+    //   deps: [ConfigurationService],
+    //   multi: true,
+    // },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,

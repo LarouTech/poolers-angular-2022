@@ -4,15 +4,12 @@
   // padding: 1.5rem;
 }
 
-.box {
-  min-height: calc(100vh - 6.8rem);
+.top {
+  height: 100vh;
+  background-color: var(--light500);
 }
 
-.content {
-  display: flex;
-  // align-items: center;
-  // justify-content: center;
-  // flex-direction: column;
-  // min-height: calc(100vh - 6.8rem);
-  height: 100%;
+.middle {
+  height: 100vh;
+  background-color: red;
 }

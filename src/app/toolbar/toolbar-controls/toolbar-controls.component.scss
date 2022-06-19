@@ -1,0 +1,33 @@
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  list-style: none;
+
+  &__item:not(:last-child) {
+    margin-right: 2rem;
+  }
+
+  &__control {
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.2rem;
+    color: var(--light500);
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: 0.2s ease;
+
+    // &--hamburger {
+    //   margin-right: 0.5rem;
+    // }
+
+    &--hamburger-selected {
+      color: var(--primary200);
+      transform: scaleX(1.2) rotate(180deg);
+    }
+  }
+
+  &__control-hover {
+    color: var(--primary200);
+  }
+}

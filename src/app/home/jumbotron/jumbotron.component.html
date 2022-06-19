@@ -1,0 +1,24 @@
+<div #jumbotronEl class="jumbotron">
+  <div *ngIf="isTitleVisible$ | async" class="jumbotron__brand">
+    <div class="jumbotron__box">
+      <span class="jumbotron__brand--title">po </span>
+      <mat-icon class="jumbotron__brand--icon" svgIcon="poolers"></mat-icon>
+      <span style="text-transform: none" class="jumbotron__brand--title"
+        >lers-Hub</span
+      >
+    </div>
+
+    <p class="jumbotron__brand--sub">the venue for fantasy hockey</p>
+  </div>
+
+  <div
+    class="animate__animated animate__pulse animate__infinite jumbotron__scroller"
+    (click)="scroll(scrollerTarget)"
+  >
+    <mat-icon
+      flipOnHover
+      class="jumbotron__scroller--icon"
+      svgIcon="arrow_up"
+    ></mat-icon>
+  </div>
+</div>

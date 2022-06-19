@@ -42,7 +42,25 @@ export class ConfigurationService {
   private _config = new BehaviorSubject<ConfigResponse>(null!);
 
   get config(): ConfigResponse {
-    return this._config.getValue();
+    //temporay code until lambda is created at later timem in the dev process
+    const config: ConfigResponse = {
+      project: {
+        name: 'poolers-hub',
+        domainName: 'poolershub.com',
+      },
+      cognito: {
+        userPoolClientId: '2umkauhs2t90qpjdq9bftdohot',
+        userPoolId: 'us-east-1_ZBtWiJuCB',
+        identityPoolId: 'us-east-1:667b5f63-bbd0-411c-b38e-1eee3cbd9b7f',
+      },
+      dynamodb: null!,
+      region: 'us-east-1',
+      s3: null!,
+    };
+
+    return config;
+
+    // return this._config.getValue();
   }
 
   constructor(private router: Router, private http: HttpClient) {}

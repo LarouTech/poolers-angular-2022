@@ -13,9 +13,9 @@ import {
   of,
   switchMap,
 } from 'rxjs';
-import { AuthService } from './home/auth-card/auth.service';
 import { ProfilePictureService } from './profile-picture.service';
 import { Profile, ProfileService } from './profile.service';
+import { AuthService } from './toolbar/auth/auth.service';
 
 @Injectable({
   providedIn: 'root',

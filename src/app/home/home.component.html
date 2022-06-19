@@ -1,16 +1,36 @@
-<primary-layout
-  [isFooterHidden]="true"
-  [isSideMenu]="false"
-  [alignItems]="alignItems"
-  [justifyContent]="justifyContent"
->
-  <div *ngIf="!(authLoading$ | async)" content class="">
-    <auth-card></auth-card>
+<div class="container">
+  <img class="background" src="../../assets/images/nhl-generic.jpg" />
+
+  <jumbotron [scrollerTarget]="target"></jumbotron>
+
+  <div #target class="marketing">
+    <h3 class="marketing__header">
+      ...Poolers the world class online hockey fantasy community...
+    </h3>
+
+    <div class="section">
+      <ul class="list">
+        <li *ngFor="let card of cards" class="list__item">
+          <mat-icon class="list__item--icon" [svgIcon]="card.icon"></mat-icon>
+          <div class="list__item-card">
+            <div class="list__card-header">
+              <mat-icon
+                class="list__card-header--icon"
+                svgIcon="star"
+              ></mat-icon>
+              <span class="list__card-header--title">{{ card.title }}</span>
+            </div>
+
+            <div class="list__card-content">
+              <p class="list__card-content--text">{{ card.description }}</p>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
   </div>
 
-  <loading-modal
-    *ngIf="authLoading$ | async"
-    size="2x"
-    class="modal"
-  ></loading-modal>
-</primary-layout>
+  <div class="statistics">STATISTICS</div>
+
+  <app-footer></app-footer>
+</div>

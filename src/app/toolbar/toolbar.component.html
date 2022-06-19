@@ -1,0 +1,38 @@
+<div class="container">
+  <div class="toolbar" #toolbarEl>
+    <div (click)="scrollToTop()" class="toolbar__branding" onHoverItem>
+      <mat-icon class="toolbar__branding--icon" svgIcon="poolers"></mat-icon>
+      <span class="toolbar__branding--title">poolers-Hub</span>
+    </div>
+
+    <tollbar-controls [isAuth]="isAuth$"></tollbar-controls>
+  </div>
+
+  <toolbar-menu
+    *ngIf="!(isAuth$ | async)"
+    [isMenuOpened]="isLoginMenuOpened$"
+    [scrollTopValue]="scrollTopValue$"
+    [arrowXPosition]="55"
+  >
+    <login></login>
+  </toolbar-menu>
+
+  <toolbar-menu
+    *ngIf="!(isAuth$ | async)"
+    [isMenuOpened]="isSignupMenuOpened$"
+    [scrollTopValue]="scrollTopValue$"
+    [arrowXPosition]="80"
+  >
+    <signup (signupDtoEmitter)="getSignupDto($event)"></signup>
+  </toolbar-menu>
+
+  <toolbar-menu
+    [isMenuOpened]="isHamburgerMenuOpened$"
+    [scrollTopValue]="scrollTopValue$"
+    [arrowXPosition]="85"
+  >
+    <hamburger></hamburger>
+  </toolbar-menu>
+</div>
+
+<validation-modal [signupDto]="signupDto$"></validation-modal>

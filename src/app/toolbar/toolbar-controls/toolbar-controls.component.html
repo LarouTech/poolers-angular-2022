@@ -1,0 +1,33 @@
+<ul class="controls">
+  <li
+    *ngIf="!(isAuth$ | async)"
+    (click)="toggleLoginMenu()"
+    class="controls__item"
+  >
+    <span onHoverControl #loginMenuItemEl class="controls__control">login</span>
+  </li>
+  <li
+    *ngIf="!(isAuth$ | async)"
+    class="controls__item"
+    (click)="toggleSignupMenu()"
+  >
+    <span onHoverControl #signupMenuItemEl class="controls__control"
+      >signin</span
+    >
+  </li>
+  <li
+    (click)="toggleHamburger()"
+    *ngIf="isAuth$ | async"
+    class="controls__item"
+  >
+    <mat-icon
+      #hamburgerMenuItemEl
+      [ngClass]="{
+        'controls__control--hamburger-selected':
+          (isHamburgerMenuOpened$ | async)
+      }"
+      class="controls__control controls__control--hamburger"
+      svgIcon="hamburger"
+    ></mat-icon>
+  </li>
+</ul>

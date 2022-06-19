@@ -1,11 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { fromEvent, map, merge, Observable, Observer } from 'rxjs';
-import {
-  AlignItemsTypes,
-  FlexDirectionType,
-  JustifyContentType,
-} from '../shared/components/primary-layout/primary-layout.component';
 
 @Component({
   selector: 'network-error',
@@ -13,10 +7,6 @@ import {
   styleUrls: ['./network-error.component.scss'],
 })
 export class NetworkErrorComponent implements OnInit {
-  alignItems = AlignItemsTypes.CENTER;
-  justifyContent = JustifyContentType.CENTER;
-  flexDirection = FlexDirectionType.COLUMN;
-
   constructor(private router: Router) {}
 
   ngOnInit(): void {}

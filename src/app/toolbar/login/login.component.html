@@ -1,0 +1,55 @@
+<div class="container">
+  <div class="header">
+    <span class="header__title">secure login</span>
+    <mat-icon class="header__icon" svgIcon="lock"></mat-icon>
+  </div>
+
+  <form [formGroup]="loginForm" (ngSubmit)="onLoginHandler()">
+    <div class="content">
+      <div class="content__box">
+        <inputfield
+          formControlName="email"
+          class="content__input"
+          name="login-email"
+          type="email"
+          label="email"
+          icon="email"
+          [form]="loginForm"
+          [autocomplete]="emailAutocomplete"
+          message="Please enter a valid email address"
+        ></inputfield>
+      </div>
+
+      <div class="content__box">
+        <inputfield
+          formControlName="password"
+          name="login-password"
+          type="password"
+          label="password"
+          icon="lock"
+          [form]="loginForm"
+          message="Please enter a valid password"
+          [autocomplete]="passwordAutocomplete"
+        ></inputfield>
+      </div>
+
+      <div class="content__box">
+        <auth-error-toast
+          (clearErrorEmitter)="onClearErrorHandler($event)"
+          [message]="errorMessage$"
+        ></auth-error-toast>
+      </div>
+
+      <p class="content__forget-password">forget password</p>
+    </div>
+
+    <div class="controls">
+      <my-button
+        [ngClass]="{ disabled: loginForm.invalid }"
+        [disabled]="loginForm.invalid"
+        type="submit"
+        text="login"
+      ></my-button>
+    </div>
+  </form>
+</div>
