@@ -1,11 +1,5 @@
-import { Injectable, OnDestroy } from '@angular/core';
-import {
-  BehaviorSubject,
-  fromEvent,
-  lastValueFrom,
-  Observable,
-  Subscription,
-} from 'rxjs';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, fromEvent, lastValueFrom, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Injectable({

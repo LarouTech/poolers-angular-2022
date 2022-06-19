@@ -1,12 +1,4 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  SimpleChange,
-} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { lastValueFrom, Observable, switchMap, tap } from 'rxjs';
@@ -30,7 +22,6 @@ export class ValidationModalComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // this.validateFormConstructor();
     this.state$ = this.toolbarService.validateState$;
   }
 
@@ -46,7 +37,7 @@ export class ValidationModalComponent implements OnInit {
             { value: dto ? dto.email : null, disabled: true },
             [Validators.required, Validators.email]
           ),
-          code: new FormControl(null),
+          code: new FormControl(null, [Validators.required]),
         });
       })
     );

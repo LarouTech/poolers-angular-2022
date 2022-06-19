@@ -4,7 +4,6 @@ import {
   PutItemCommandOutput,
   UpdateItemCommandOutput,
 } from '@aws-sdk/client-dynamodb';
-import { profile } from 'console';
 import { BehaviorSubject, catchError, map, Observable, of, tap } from 'rxjs';
 import { ConfigurationService } from './configuration.service';
 

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { lastValueFrom, tap } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 import { ToolbarService } from '../toolbar.service';
@@ -25,6 +24,5 @@ export class HamburgerComponent implements OnInit {
         })
       )
     );
-    // this.router.navigate(['']);
   }
 }

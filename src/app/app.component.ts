@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Icons, IconService } from './icon.service';
-import { Profile, ProfileService } from './profile.service';
 import { AuthService } from './toolbar/auth/auth.service';
 
 @Component({

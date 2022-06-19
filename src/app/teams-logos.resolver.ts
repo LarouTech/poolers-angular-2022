@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import {
-  Router,
   Resolve,
   RouterStateSnapshot,
   ActivatedRouteSnapshot,
 } from '@angular/router';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { FranchisesService } from './nhl/franchises.service';
 import { FranchiseAllTime } from './nhl/interfaces/franchiseAllTime.interface';
 

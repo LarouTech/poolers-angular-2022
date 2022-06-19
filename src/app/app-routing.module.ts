@@ -1,8 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ConfigResolver } from './config.resolver';
-import { NotFoundComponent } from './not-found/not-found.component';
-import { ProfileResolver } from './profile.resolver';
 import { AuthGuard } from './toolbar/auth/auth.guard';
 import { IsAuthenticatedGuard } from './toolbar/auth/is-authenticated.guard';
 

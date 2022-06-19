@@ -10,7 +10,6 @@ import { LayoutService } from './layout.service';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from '@angular/cdk/layout';
-import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
@@ -26,8 +25,6 @@ import { AuthService } from './toolbar/auth/auth.service';
 import { ToolbarModule } from './toolbar/toolbar.module';
 import { TokenInterceptor } from './toolbar/auth/token.interceptor';
 import { ProfileService } from './profile.service';
-import { ProfilePictureService } from './profile-picture.service';
-import { FooterComponent } from './footer/footer.component';
 
 // export function StartupServiceFactory(configService: ConfigurationService) {
 //   return () => configService.getConfig().subscribe((data) => console.log(data));

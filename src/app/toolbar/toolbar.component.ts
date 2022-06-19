@@ -4,11 +4,9 @@ import {
   Input,
   OnInit,
   Renderer2,
-  SimpleChange,
   ViewChild,
 } from '@angular/core';
-import { Router } from '@angular/router';
-import { BehaviorSubject, lastValueFrom, Observable, of, tap } from 'rxjs';
+import { BehaviorSubject, lastValueFrom, Observable, tap } from 'rxjs';
 import { SignupDto } from './auth/auth.service';
 import { ToolbarService } from './toolbar.service';
 

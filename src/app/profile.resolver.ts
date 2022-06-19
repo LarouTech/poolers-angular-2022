@@ -1,18 +1,10 @@
 import { Injectable } from '@angular/core';
 import {
-  Router,
   Resolve,
   RouterStateSnapshot,
   ActivatedRouteSnapshot,
 } from '@angular/router';
-import {
-  BehaviorSubject,
-  map,
-  mergeMap,
-  Observable,
-  of,
-  switchMap,
-} from 'rxjs';
+import { map, mergeMap, Observable } from 'rxjs';
 import { ProfilePictureService } from './profile-picture.service';
 import { Profile, ProfileService } from './profile.service';
 import { AuthService } from './toolbar/auth/auth.service';

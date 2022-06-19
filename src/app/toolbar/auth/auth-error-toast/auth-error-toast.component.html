@@ -4,11 +4,6 @@
     'errorContainer animate__animated animate__fadeIn': message | async
   }"
 >
-  <!-- <mat-icon
-    *ngIf="message | async"
-    class="errorContainer__icon"
-    svgIcon="exclamation"
-  ></mat-icon> -->
   <p class="errorContainer__text animate__animated animate__fadeIn">
     {{ message | async }}
   </p>

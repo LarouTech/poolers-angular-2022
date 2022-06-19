@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import {
-  Router,
   Resolve,
   RouterStateSnapshot,
   ActivatedRouteSnapshot,
 } from '@angular/router';
-import { map, Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ConfigResponse, ConfigurationService } from './configuration.service';
 
 @Injectable({

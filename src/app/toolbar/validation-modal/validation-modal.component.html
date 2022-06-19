@@ -45,6 +45,8 @@
 
       <div class="modal__controls">
         <my-button
+          [ngClass]="{ disabled: validateForm.invalid }"
+          [disabled]="validateForm.invalid"
           type="submit"
           class="modal__controls--btn"
           text="validate"

@@ -1,18 +1,16 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import {
   BehaviorSubject,
   catchError,
   lastValueFrom,
-  map,
   Observable,
   of,
   tap,
 } from 'rxjs';
 import { InputAutoCompleteTypes } from 'src/app/shared/components/inputfield/input-emun';
 import { AuthService } from '../auth/auth.service';
-import { ToolbarService } from '../toolbar.service';
 
 @Component({
   selector: 'login',

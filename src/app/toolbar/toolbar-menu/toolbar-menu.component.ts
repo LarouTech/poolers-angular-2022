@@ -4,17 +4,9 @@ import {
   Input,
   OnInit,
   Renderer2,
-  SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import {
-  BehaviorSubject,
-  lastValueFrom,
-  Observable,
-  of,
-  take,
-  tap,
-} from 'rxjs';
+import { BehaviorSubject, lastValueFrom, Observable, take, tap } from 'rxjs';
 
 @Component({
   selector: 'toolbar-menu',
