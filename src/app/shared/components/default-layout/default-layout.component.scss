@@ -1,0 +1,13 @@
+@import "../../../../styles.scss";
+
+.container {
+  @include defaultContainer;
+  height: 100%;
+  margin-bottom: 5rem;
+}
+
+.canvas {
+  // margin-left: calc(var(--padding-horizontal) * 2);
+  // margin-right: calc(var(--padding-horizontal) * 2);
+  height: 100%;
+}

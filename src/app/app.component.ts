@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Icons, IconService } from './icon.service';
+import { fadeInAnimation } from './animation';
+import { Icons, IconService } from './services/icon.service';
 import { AuthService } from './toolbar/auth/auth.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
+  animations: [fadeInAnimation],
 })
 export class AppComponent {
   private icons = Icons;

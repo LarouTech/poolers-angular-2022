@@ -1,0 +1,26 @@
+<div class="date-ranges">
+  <div
+    (click)="onChangeScheduleWeekRange(leftSide)"
+    class="date-ranges__side date-ranges__side--left"
+  >
+    <mat-icon class="date-ranges__side--icon" svgIcon="left_arrow"></mat-icon>
+  </div>
+  <div *ngIf="selectedWeekRange$ | async" class="date-ranges__center">
+    <span class="date-ranges__center--text">{{
+      (selectedWeekRange$ | async)!.startDate | date: "fullDate"
+    }}</span>
+    TO
+    <span [style.marginLeft]="'1rem'">{{
+      (selectedWeekRange$ | async)!.endDate | date: "fullDate"
+    }}</span>
+  </div>
+  <div
+    (click)="onChangeScheduleWeekRange(rightSide)"
+    class="date-ranges__side date-ranges__side--right"
+  >
+    <mat-icon
+      class="date-ranges__side--icon rotate"
+      svgIcon="left_arrow"
+    ></mat-icon>
+  </div>
+</div>

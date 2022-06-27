@@ -1,15 +1,12 @@
+@import "../../styles.scss";
+
 .container {
-  width: 100%;
+  @include defaultContainer;
+  height: 100vh;
+}
+
+.canvas {
+  margin-left: calc(var(--padding-horizontal) * 2);
+  margin-right: calc(var(--padding-horizontal) * 2);
   height: 100%;
-  // padding: 1.5rem;
-}
-
-.top {
-  height: 100vh;
-  background-color: var(--light500);
-}
-
-.middle {
-  height: 100vh;
-  background-color: red;
 }

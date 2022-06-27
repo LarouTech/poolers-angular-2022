@@ -5,7 +5,9 @@
       <span class="toolbar__branding--title">poolers-Hub</span>
     </div>
 
-    <tollbar-controls [isAuth]="isAuth$"></tollbar-controls>
+    <toolbar-controls [isAuth]="isAuth$"></toolbar-controls>
+
+    <toolbar-extension [isAuth]="isAuth$"></toolbar-extension>
   </div>
 
   <toolbar-menu
@@ -13,6 +15,7 @@
     [isMenuOpened]="isLoginMenuOpened$"
     [scrollTopValue]="scrollTopValue$"
     [arrowXPosition]="55"
+    [verticalOffset]="65"
   >
     <login></login>
   </toolbar-menu>
@@ -22,6 +25,7 @@
     [isMenuOpened]="isSignupMenuOpened$"
     [scrollTopValue]="scrollTopValue$"
     [arrowXPosition]="80"
+    [verticalOffset]="65"
   >
     <signup (signupDtoEmitter)="getSignupDto($event)"></signup>
   </toolbar-menu>
@@ -29,7 +33,9 @@
   <toolbar-menu
     [isMenuOpened]="isHamburgerMenuOpened$"
     [scrollTopValue]="scrollTopValue$"
-    [arrowXPosition]="85"
+    [arrowXPosition]="90"
+    [verticalOffset]="65"
+    width="27rem"
   >
     <hamburger></hamburger>
   </toolbar-menu>

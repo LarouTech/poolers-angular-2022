@@ -20,7 +20,26 @@ const routes: Routes = [
       import('./lobby/lobby.module').then((m) => m.LobbyModule),
     canActivate: [AuthGuard],
   },
-
+  {
+    path: 'leagues',
+    loadChildren: () =>
+      import('./leagues/leagues.module').then((m) => m.LeaguesModule),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'press-gallery',
+    loadChildren: () =>
+      import('./press-gallery/press-gallery.module').then(
+        (m) => m.PressGalleryModule
+      ),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'schedule',
+    loadChildren: () =>
+      import('./schedule/schedule.module').then((m) => m.ScheduleModule),
+    canActivate: [AuthGuard],
+  },
   {
     path: '503',
     loadChildren: () =>

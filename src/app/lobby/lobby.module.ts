@@ -12,6 +12,7 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { LoadingModalModule } from '../shared/components/loading-modal/loading-modal.module';
 import { FooterComponent } from '../footer/footer.component';
 import { FooterModule } from '../footer/footer.module';
+import { DefaultLayoutModule } from '../shared/components/default-layout/default-layout.module';
 
 @NgModule({
   declarations: [LobbyComponent],
@@ -27,6 +28,7 @@ import { FooterModule } from '../footer/footer.module';
     LayoutModule,
     LoadingModalModule,
     FooterModule,
+    DefaultLayoutModule,
   ],
 })
 export class LobbyModule {}

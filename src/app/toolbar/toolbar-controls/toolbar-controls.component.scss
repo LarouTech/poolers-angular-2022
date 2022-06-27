@@ -17,9 +17,9 @@
     cursor: pointer;
     transition: 0.2s ease;
 
-    // &--hamburger {
-    //   margin-right: 0.5rem;
-    // }
+    &--hamburger {
+      margin-right: 0.5rem;
+    }
 
     &--hamburger-selected {
       color: var(--primary200);

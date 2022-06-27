@@ -1,0 +1,15 @@
+<div *ngIf="isAuth$ | async" class="extensionContainer">
+  <ul class="list">
+    <div class="list__box animate__animated animate__slideInRight">
+      <li
+        *ngFor="let data of menuData"
+        [routerLink]="[data.route]"
+        routerLinkActive="list__item--active"
+        class="list__item"
+      >
+        <span class="list__item--text">{{ data.name }}</span>
+        <mat-icon class="list__item--icon" svgIcon="arrow_down"></mat-icon>
+      </li>
+    </div>
+  </ul>
+</div>

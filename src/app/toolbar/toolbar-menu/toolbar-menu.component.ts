@@ -19,6 +19,8 @@ export class ToolbarMenuComponent implements OnInit {
   @Input('scrollTopValue') scrollTopValue!: Observable<number>;
   @Input('isMenuOpened') isMenuOpened!: Observable<boolean>;
   @Input('arrowXPosition') arrowXPosition!: number;
+  @Input('verticalOffset') verticalOffset!: number;
+  @Input('width') width!: string;
 
   _scrollTopValue = new BehaviorSubject<number>(0);
 
@@ -63,4 +65,17 @@ export class ToolbarMenuComponent implements OnInit {
 
     lastValueFrom(menuArrowPosition$);
   }
+
+  // ngAfterContentChecked(): void {
+  //   //Called after every check of the component's or directive's content.
+  //   //Add 'implements AfterContentChecked' to the class.
+  //   if (this.width && this.menuEl) {
+  //     console.log('coco');
+  //     this.renderer.setStyle(
+  //       this.menuEl.nativeElement,
+  //       'width',
+  //       `${this.width}`
+  //     );
+  //   }
+  // }
 }

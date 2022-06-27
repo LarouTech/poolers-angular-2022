@@ -1,0 +1,40 @@
+<div class="games">
+  <ul class="games__list">
+    <li *ngFor="let gamePerDate of scheduledGames$ | async" class="games__item">
+      <div class="games__header">
+        <mat-icon class="games__header--icon" svgIcon="matchup"></mat-icon>
+        <span class="games__header--text">{{
+          gamePerDate.date | date: "fullDate"
+        }}</span>
+      </div>
+
+      <div *ngFor="let game of gamePerDate.games" class="games__content">
+        <div class="away">
+          <img
+            class="away__logo"
+            [src]="
+              game.teams.away.team.logo
+                ? game.teams.away.team.logo?.secureUrl
+                : 'https://www-league.nhlstatic.com/images/logos/league-dark/133-flat.svg'
+            "
+          />
+          <span>{{ game.teams.away.team.name }}</span>
+        </div>
+
+        <span class="center">@</span>
+
+        <div class="home">
+          <img
+            class="home__logo"
+            [src]="
+              game.teams.home.team.logo
+                ? game.teams.home.team.logo?.secureUrl
+                : 'https://www-league.nhlstatic.com/images/logos/league-dark/133-flat.svg'
+            "
+          />
+          <span>{{ game.teams.home.team.name }}</span>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>

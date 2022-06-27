@@ -1,6 +1,6 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { BehaviorSubject, lastValueFrom, map, Observable } from 'rxjs';
-import { LayoutService } from 'src/app/layout.service';
+import { LayoutService } from 'src/app/services/layout.service';
 
 @Component({
   selector: 'jumbotron',

@@ -1,0 +1,10 @@
+<div class="months">
+  <ul class="months__list">
+    <li
+      *ngFor="let month of seasonMonths$ | async"
+      class="months__item animate__animated animate__fadeIn"
+    >
+      {{ month }}
+    </li>
+  </ul>
+</div>

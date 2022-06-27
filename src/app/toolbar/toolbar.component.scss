@@ -7,12 +7,13 @@
   top: 0;
   left: 0;
   z-index: 100;
-  padding: 1rem 5%;
+  padding: 1.5rem var(--padding-horizontal);
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  background: "linear-gradient(90deg, #101359, #1c1f78)";
+  background: linear-gradient(90deg, #101359, #1c1f78);
+  height: var(--toolbarHeight);
 
   &__branding {
     color: var(--light500);
@@ -24,6 +25,7 @@
     justify-content: flex-start;
     cursor: pointer;
     transition: 0.4s ease;
+    width: 100%;
 
     &--hover {
       color: var(--primary200);

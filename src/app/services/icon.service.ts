@@ -38,6 +38,10 @@ export const Icons: string[] = [
   'milestone',
   'faq',
   'code',
+  'news',
+  'arrow_down',
+  'left_arrow',
+  'matchup',
 ];
 
 @Injectable({

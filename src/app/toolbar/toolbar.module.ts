@@ -17,6 +17,8 @@ import { MyButtonModule } from '../shared/components/my-button/my-button.module'
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { HamburgerComponent } from './hamburger/hamburger.component';
+import { ToolbarExtensionComponent } from './toolbar-extension/toolbar-extension.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -31,6 +33,7 @@ import { HamburgerComponent } from './hamburger/hamburger.component';
     HamburgerMouseDirective,
     ValidationModalComponent,
     AuthErrorToastComponent,
+    ToolbarExtensionComponent,
   ],
   imports: [
     CommonModule,
@@ -38,6 +41,7 @@ import { HamburgerComponent } from './hamburger/hamburger.component';
     InputfieldModule,
     MyButtonModule,
     ReactiveFormsModule,
+    RouterModule,
   ],
   providers: [ToolbarService],
   exports: [ToolbarComponent],

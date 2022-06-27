@@ -10,7 +10,7 @@ import { BehaviorSubject, lastValueFrom, Observable, tap } from 'rxjs';
 import { ToolbarService } from '../toolbar.service';
 
 @Component({
-  selector: 'tollbar-controls',
+  selector: 'toolbar-controls',
   templateUrl: './toolbar-controls.component.html',
   styleUrls: ['./toolbar-controls.component.scss'],
 })
@@ -33,7 +33,7 @@ export class TollbarControlsComponent implements OnInit {
   ngOnInit(): void {
     this.isLoginMenuOpened$ = this.toolbarService.loginMenuState$;
     this.isSignupMenuOpened$ = this.toolbarService.signinMenuState$;
-    this.isHamburgerMenuOpened$ = this.toolbarService.loginMenuState$;
+    this.isHamburgerMenuOpened$ = this.toolbarService.hamburgerMenuState$;
   }
 
   ngAfterViewInit(): void {

@@ -31,10 +31,10 @@ export enum LogoType {
 })
 export class FranchisesService {
   private url = `${environment.nhlApi}/franchises/all-time`;
-  private _franchsiseLogos = new BehaviorSubject<FranchiseAllTime[]>(null!);
+  private _franchiseLogos = new BehaviorSubject<FranchiseAllTime[]>(null!);
 
-  get franchsiseLogos(): Observable<FranchiseAllTime[]> {
-    return this._franchsiseLogos.asObservable();
+  get franchiseLogos$(): Observable<FranchiseAllTime[]> {
+    return this._franchiseLogos.asObservable();
   }
 
   constructor(private http: HttpClient) {
@@ -63,7 +63,7 @@ export class FranchisesService {
             });
           });
 
-          this._franchsiseLogos.next(activeTeams);
+          this._franchiseLogos.next(activeTeams);
           return activeTeams;
         })
       );
@@ -76,98 +76,98 @@ export class FranchisesService {
     );
   }
 
-  logoFromTeamIdRxjsPipe = (logoType?: LogoType) =>
-    pipe(
-      switchMap((team: Teams) => {
-        return this.franchsiseLogos.pipe(
-          map((logos) => {
-            const logo = logos.find((l) => l.mostRecentTeamId === team.id)
-              ?.teams![0].logos;
+  // logoFromTeamIdRxjsPipe = (logoType?: LogoType) =>
+  //   pipe(
+  //     switchMap((team: Teams) => {
+  //       return this.franchiseLogos$.pipe(
+  //         map((logos) => {
+  //           const logo = logos.find((l) => l.mostRecentTeamId === team.id)
+  //             ?.teams![0].logos;
 
-            return {
-              logo,
-            };
-          }),
-          map((res) => {
-            let lastesSeason: number = null!;
+  //           return {
+  //             logo,
+  //           };
+  //         }),
+  //         map((res) => {
+  //           let lastesSeason: number = null!;
 
-            res.logo?.map((l) => {
-              if (l.endSeason > lastesSeason) {
-                lastesSeason = l.endSeason;
-              }
-            });
+  //           res.logo?.map((l) => {
+  //             if (l.endSeason > lastesSeason) {
+  //               lastesSeason = l.endSeason;
+  //             }
+  //           });
 
-            let lastestLogo: Logo[] = [];
+  //           let lastestLogo: Logo[] = [];
 
-            logoType ? logoType : LogoType.DARK;
+  //           logoType ? logoType : LogoType.DARK;
 
-            res.logo?.filter((item) => {
-              if (
-                item.endSeason === lastesSeason &&
-                item.background === logoType
-              ) {
-                console.log('shit happen');
-                lastestLogo.push(item);
-              }
-            });
+  //           res.logo?.filter((item) => {
+  //             if (
+  //               item.endSeason === lastesSeason &&
+  //               item.background === logoType
+  //             ) {
+  //               console.log('shit happen');
+  //               lastestLogo.push(item);
+  //             }
+  //           });
 
-            console.log(LogoType.DARK);
+  //           console.log(LogoType.DARK);
 
-            return { ...team, logo: lastestLogo[0] as Logo };
-          })
-        );
-      })
-    );
+  //           return { ...team, logo: lastestLogo[0] as Logo };
+  //         })
+  //       );
+  //     })
+  //   );
 
-  logoFromSchduledGameRxjsPipe = (gameData: ScheduledGame) =>
-    pipe(
-      map((res: FranchiseAllTime[]) => {
-        const awayTeam = res.find(
-          (r) =>
-            r.mostRecentTeamId ===
-            (gameData as ScheduledGame).teams.away.team.id
-        );
+  // logoFromSchduledGameRxjsPipe = (gameData: ScheduledGame) =>
+  //   pipe(
+  //     map((res: FranchiseAllTime[]) => {
+  //       const awayTeam = res.find(
+  //         (r) =>
+  //           r.mostRecentTeamId ===
+  //           (gameData as ScheduledGame).teams.away.team.id
+  //       );
 
-        const homeTeam = res.find(
-          (r) =>
-            r.mostRecentTeamId ===
-            (gameData as ScheduledGame).teams.home.team.id
-        );
+  //       const homeTeam = res.find(
+  //         (r) =>
+  //           r.mostRecentTeamId ===
+  //           (gameData as ScheduledGame).teams.home.team.id
+  //       );
 
-        let awayLastestShirt: number = null!;
-        let homeLatestShirt: number = null!;
+  //       let awayLastestShirt: number = null!;
+  //       let homeLatestShirt: number = null!;
 
-        const lastestAwayLogo = awayTeam?.teams?.find(
-          (i) => i.active === 'Y'
-        )?.logos;
-        const lastestHomeLogo = homeTeam?.teams?.find(
-          (i) => i.active === 'Y'
-        )?.logos;
+  //       const lastestAwayLogo = awayTeam?.teams?.find(
+  //         (i) => i.active === 'Y'
+  //       )?.logos;
+  //       const lastestHomeLogo = homeTeam?.teams?.find(
+  //         (i) => i.active === 'Y'
+  //       )?.logos;
 
-        lastestAwayLogo?.forEach((el) => {
-          if (el.endSeason > awayLastestShirt && el.background === 'dark') {
-            awayLastestShirt = el.endSeason;
-          }
-        });
+  //       lastestAwayLogo?.forEach((el) => {
+  //         if (el.endSeason > awayLastestShirt && el.background === 'dark') {
+  //           awayLastestShirt = el.endSeason;
+  //         }
+  //       });
 
-        lastestHomeLogo?.forEach((el) => {
-          if (el.endSeason > homeLatestShirt) {
-            homeLatestShirt = el.endSeason;
-          }
-        });
+  //       lastestHomeLogo?.forEach((el) => {
+  //         if (el.endSeason > homeLatestShirt) {
+  //           homeLatestShirt = el.endSeason;
+  //         }
+  //       });
 
-        const awayLogo = lastestAwayLogo?.find(
-          (y) => y.endSeason === awayLastestShirt
-        );
+  //       const awayLogo = lastestAwayLogo?.find(
+  //         (y) => y.endSeason === awayLastestShirt
+  //       );
 
-        const homeLogo = lastestHomeLogo?.find(
-          (y) => y.endSeason === homeLatestShirt
-        );
+  //       const homeLogo = lastestHomeLogo?.find(
+  //         (y) => y.endSeason === homeLatestShirt
+  //       );
 
-        (gameData as ScheduledGame).teams.away.team.logo = awayLogo;
-        (gameData as ScheduledGame).teams.home.team.logo = homeLogo;
+  //       (gameData as ScheduledGame).teams.away.team.logo = awayLogo;
+  //       (gameData as ScheduledGame).teams.home.team.logo = homeLogo;
 
-        return gameData;
-      })
-    );
+  //       return gameData;
+  //     })
+  //   );
 }

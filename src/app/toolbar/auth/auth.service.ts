@@ -37,7 +37,7 @@ import {
   tap,
   throwError,
 } from 'rxjs';
-import { ConfigurationService } from 'src/app/configuration.service';
+import { ConfigurationService } from 'src/app/services/configuration.service';
 import { environment } from 'src/environments/environment';
 
 export interface SignupDto {

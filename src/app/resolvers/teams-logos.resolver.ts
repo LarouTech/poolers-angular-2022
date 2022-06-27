@@ -5,8 +5,8 @@ import {
   ActivatedRouteSnapshot,
 } from '@angular/router';
 import { Observable } from 'rxjs';
-import { FranchisesService } from './nhl/franchises.service';
-import { FranchiseAllTime } from './nhl/interfaces/franchiseAllTime.interface';
+import { FranchisesService } from '../nhl/franchises.service';
+import { FranchiseAllTime } from '../nhl/interfaces/franchiseAllTime.interface';
 
 @Injectable({
   providedIn: 'root',

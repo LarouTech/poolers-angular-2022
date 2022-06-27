@@ -3,10 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { IconService } from './icon.service';
+import { IconService } from './services/icon.service';
 import { MatIconModule } from '@angular/material/icon';
-import { ConfigurationService } from './configuration.service';
-import { LayoutService } from './layout.service';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from '@angular/cdk/layout';
@@ -24,7 +22,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from './toolbar/auth/auth.service';
 import { ToolbarModule } from './toolbar/toolbar.module';
 import { TokenInterceptor } from './toolbar/auth/token.interceptor';
-import { ProfileService } from './profile.service';
+import { LayoutService } from './services/layout.service';
+import { ProfileService } from './services/profile.service';
+import { ConfigurationService } from './services/configuration.service';
+import { FooterModule } from './footer/footer.module';
 
 // export function StartupServiceFactory(configService: ConfigurationService) {
 //   return () => configService.getConfig().subscribe((data) => console.log(data));
@@ -48,6 +49,7 @@ import { ProfileService } from './profile.service';
     MatMenuModule,
     ToolbarModule,
     ReactiveFormsModule,
+    FooterModule,
   ],
   providers: [
     IconService,

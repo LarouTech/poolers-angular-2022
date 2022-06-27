@@ -5,7 +5,7 @@
     login__fadeIn: (isMenuOpened | async) === true,
     login__fadeOut: (isMenuOpened | async) === false
   }"
-  [ngStyle]="{ top: (scrollTopValue$ | async)! + 55 + 'px' }"
+  [ngStyle]="{ top: (scrollTopValue$ | async)! + verticalOffset + 'px' }"
   class="menu"
 >
   <div

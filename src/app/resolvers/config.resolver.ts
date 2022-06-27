@@ -5,7 +5,10 @@ import {
   ActivatedRouteSnapshot,
 } from '@angular/router';
 import { Observable } from 'rxjs';
-import { ConfigResponse, ConfigurationService } from './configuration.service';
+import {
+  ConfigResponse,
+  ConfigurationService,
+} from '../services/configuration.service';
 
 @Injectable({
   providedIn: 'root',

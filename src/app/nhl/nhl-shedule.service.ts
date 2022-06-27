@@ -13,19 +13,35 @@ export class NhlSheduleService {
 
   constructor(private http: HttpClient) {}
 
+  //GET SCHEDULE FROM NHL API
   getSchedule(
     expand?: ScheduleExpands,
+    season?: number,
     startDate?: string,
     endDate?: string
   ): Observable<Schedule[]> {
-    const params = new HttpParams()
-      .append('expand', expand!)
-      .append('startDate', startDate!)
-      .append('endDate', endDate!);
+    let params = new HttpParams();
+
+    if (season) {
+      params = params.append('season', season!);
+    }
+
+    if (expand) {
+      params = params.append('expand', expand!);
+    }
+
+    if (startDate) {
+      params = params.append('startDate', startDate!);
+    }
+
+    if (endDate) {
+      params = params.append('endDate', endDate!);
+    }
 
     return this.http.get<Schedule[]>(this.url, { params });
   }
 
+  //FORMAT DATE STRING AS PER NHL API FORMAT
   dateFormatter(date: Date, seperator?: string): string {
     const month =
       date.getMonth() + 1 <= 9 ? `0${date.getMonth() + 1}` : date.getMonth();
@@ -36,5 +52,15 @@ export class NhlSheduleService {
     }${day}`;
 
     return today;
+  }
+
+  //ADD DAYS TO A DATE OBJECTY
+  addDays(date: Date, days: number) {
+    return new Date(date.setDate(date.getDate() + days));
+  }
+
+  //REMOVE DAYS TO A DATE OBJECT
+  removeDays(date: Date, days: number) {
+    return new Date(date.setDate(date.getDate() - days));
   }
 }

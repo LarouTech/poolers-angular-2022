@@ -1,0 +1,30 @@
+.seasons {
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  &__label {
+    margin-right: 0.8rem;
+    text-transform: capitalize;
+    font-size: 2rem;
+    font-weight: 500;
+    color: var(--dark600);
+  }
+
+  &__select {
+    border: none;
+    padding: none;
+    margin: none;
+    background-color: none;
+    outline: none;
+    width: 20rem;
+    padding: 0.5rem 0.75rem;
+    cursor: pointer;
+    color: var(--primary500);
+    font-size: 1.4rem;
+  }
+
+  &__option {
+  }
+}
