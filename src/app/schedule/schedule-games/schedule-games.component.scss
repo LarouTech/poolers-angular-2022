@@ -39,6 +39,7 @@
     background-color: var(--grey50);
     transition: 0.3s ease;
     cursor: pointer;
+    flex-wrap: wrap;
   }
 
   &__content:hover {
@@ -50,29 +51,72 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  width: 19rem;
+  width: 21rem;
 
   &__logo {
     height: 3rem;
     width: 3rem;
-    margin-right: 0.8rem;
+    margin-right: 1rem;
   }
 }
 
 .center {
-  width: 5rem;
   text-align: center;
-  padding-right: 3rem;
+  padding-right: 5rem;
+
+  &__and {
+    padding-left: 2.2rem;
+    padding-right: 2.2rem;
+  }
+
+  &__score {
+    font-weight: 500;
+    font-size: 1.8rem;
+    color: var(--primary500);
+  }
 }
 
 .home {
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  width: 19rem;
+  margin-right: 3rem;
 
   &__logo {
     height: 3rem;
     width: 3rem;
-    margin-right: 0.8rem;
+    margin-right: 1rem;
+  }
+}
+
+.venue {
+  width: 15rem;
+}
+
+.stars {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 16rem;
+
+  &__box {
+    position: relative;
+
+    &--icon {
+      color: var(--yellow500);
+      height: 3rem;
+      width: 3rem;
+      margin-right: 1rem;
+    }
+
+    &--num {
+      position: absolute;
+      font-size: 1.1rem;
+      font-weight: 500;
+      top: 0.6rem;
+      left: 1.2rem;
+      color: var(--dark800);
+    }
   }
 }

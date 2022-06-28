@@ -1,10 +1,17 @@
 <div class="months">
   <ul class="months__list">
     <li
-      *ngFor="let month of seasonMonths$ | async"
+      (click)="onFilterByMonth(month, i)"
+      *ngFor="let month of seasonMonths$ | async; index as i"
       class="months__item animate__animated animate__fadeIn"
     >
-      {{ month }}
+      <div
+        *ngIf="(monthFilterState$ | async)![i]"
+        [ngClass]="{ months__active: (monthFilterState$ | async)![i].state }"
+        class="months__btn"
+      >
+        {{ month }}
+      </div>
     </li>
   </ul>
 </div>

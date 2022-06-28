@@ -85,6 +85,34 @@ export interface MediaEpg {
   items: MediaEpgItem[] | GameItem;
 }
 
+export interface Decisions {
+  firstStar: {
+    id: string;
+    fullName: string;
+    link: string;
+  };
+  secondStar: {
+    id: string;
+    fullName: string;
+    link: string;
+  };
+  thirdStar: {
+    id: string;
+    fullName: string;
+    link: string;
+  };
+  winner: {
+    id: string;
+    fullName: string;
+    link: string;
+  };
+  looser: {
+    id: string;
+    fullName: string;
+    link: string;
+  };
+}
+
 export interface ScheduledGame {
   gamePk: number;
   link: string;
@@ -92,6 +120,7 @@ export interface ScheduledGame {
   season: string;
   gameDate: string;
   linescore?: Linescore;
+  decisions: Decisions;
   status: {
     abstractGameState: string;
     codedGameState: string;

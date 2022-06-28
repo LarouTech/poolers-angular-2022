@@ -18,10 +18,16 @@
                 : 'https://www-league.nhlstatic.com/images/logos/league-dark/133-flat.svg'
             "
           />
-          <span>{{ game.teams.away.team.name }}</span>
+          <span>{{ game.teams.away.team.name }} </span>
         </div>
 
-        <span class="center">@</span>
+        <span class="center">
+          <span class="center__score">{{ game.teams.away.score }}</span>
+
+          <span class="center__and">@</span>
+
+          <span class="center__score">{{ game.teams.home.score }}</span>
+        </span>
 
         <div class="home">
           <img
@@ -32,7 +38,58 @@
                 : 'https://www-league.nhlstatic.com/images/logos/league-dark/133-flat.svg'
             "
           />
-          <span>{{ game.teams.home.team.name }}</span>
+          <span>{{ game.teams.home.team.name }} </span>
+        </div>
+
+        <div class="venue">
+          <span>{{ game.venue.name }}</span>
+        </div>
+
+        <div *ngIf="game.decisions">
+          <div
+            *ngIf="(innerWidth$ | async)! > 1100 && game.decisions.firstStar"
+            class="stars"
+          >
+            <div class="stars__box">
+              <mat-icon class="stars__box--icon" svgIcon="star"></mat-icon>
+              <span class="stars__box--num">1</span>
+            </div>
+            <span>{{
+              +game.season > 20102011
+                ? game.decisions.firstStar.fullName.split(" ")[1]
+                : "n/a"
+            }}</span>
+          </div>
+
+          <div
+            *ngIf="(innerWidth$ | async)! > 1300 && game.decisions.secondStar"
+            class="stars"
+          >
+            <div class="stars__box">
+              <mat-icon class="stars__box--icon" svgIcon="star"></mat-icon>
+              <span class="stars__box--num">2</span>
+            </div>
+            <span>{{
+              +game.season > 20102011
+                ? game.decisions.secondStar.fullName.split(" ")[1]
+                : "n/a"
+            }}</span>
+          </div>
+
+          <div
+            *ngIf="(innerWidth$ | async)! > 1500 && game.decisions.thirdStar"
+            class="stars"
+          >
+            <div class="stars__box">
+              <mat-icon class="stars__box--icon" svgIcon="star"></mat-icon>
+              <span class="stars__box--num">3</span>
+            </div>
+            <span>{{
+              +game.season > 20102011
+                ? game.decisions.thirdStar.fullName.split(" ")[1]
+                : "n/a"
+            }}</span>
+          </div>
         </div>
       </div>
     </li>

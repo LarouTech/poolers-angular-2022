@@ -32,6 +32,11 @@
       height: 2rem;
       width: 2rem;
     }
+
+    &--text {
+      text-transform: capitalize;
+      font-size: 1.3rem;
+    }
   }
 
   &__side:hover {
@@ -54,7 +59,10 @@
     font-size: 1.4rem;
 
     &--text {
-      margin-right: 1rem;
+      color: var(--dark500);
+      margin-left: 0.5rem;
+      margin-right: 0.5rem;
+      font-weight: 500;
     }
   }
 }

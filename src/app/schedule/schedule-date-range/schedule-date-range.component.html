@@ -4,13 +4,16 @@
     class="date-ranges__side date-ranges__side--left"
   >
     <mat-icon class="date-ranges__side--icon" svgIcon="left_arrow"></mat-icon>
+    <span style="margin-left: 0.8rem" class="date-ranges__side--text"
+      >previous week</span
+    >
   </div>
   <div *ngIf="selectedWeekRange$ | async" class="date-ranges__center">
     <span class="date-ranges__center--text">{{
       (selectedWeekRange$ | async)!.startDate | date: "fullDate"
     }}</span>
-    TO
-    <span [style.marginLeft]="'1rem'">{{
+    <span class="date-ranges__center--text">TO</span>
+    <span class="date-ranges__center--text">{{
       (selectedWeekRange$ | async)!.endDate | date: "fullDate"
     }}</span>
   </div>
@@ -18,6 +21,9 @@
     (click)="onChangeScheduleWeekRange(rightSide)"
     class="date-ranges__side date-ranges__side--right"
   >
+    <span style="margin-right: 0.8rem" class="date-ranges__side--text"
+      >next week</span
+    >
     <mat-icon
       class="date-ranges__side--icon rotate"
       svgIcon="left_arrow"

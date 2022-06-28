@@ -1,7 +1,24 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import {
+  BehaviorSubject,
+  Observable,
+  switchMap,
+  tap,
+  of,
+  lastValueFrom,
+} from 'rxjs';
 import { Schedule } from '../nhl/interfaces/schedule.interface';
-import { SeasonLov, SeasonWeekRange } from '../nhl/seasons.service';
+import {
+  SeasonLov,
+  SeasonsService,
+  SeasonWeekRange,
+} from '../nhl/seasons.service';
+
+export interface MonthFilterState {
+  index: number;
+  state: boolean;
+  name: string;
+}
 
 @Injectable({
   providedIn: 'root',
@@ -11,6 +28,16 @@ export class ScheduleService {
   private _selectedWeekRange = new BehaviorSubject<SeasonWeekRange>(null!);
   private _selectedSeason = new BehaviorSubject<SeasonLov>(null!);
   private _scheduledGames = new BehaviorSubject<Schedule[]>(null!);
+  private _seasonWeekRanges = new BehaviorSubject<SeasonWeekRange[]>(null!);
+  private _monthFiltersState = new BehaviorSubject<MonthFilterState[]>(null!);
+
+  get monthFilterilterState$(): Observable<MonthFilterState[]> {
+    return this._monthFiltersState.asObservable();
+  }
+
+  get seasonWeekRanges$(): Observable<SeasonWeekRange[]> {
+    return this._seasonWeekRanges.asObservable();
+  }
 
   get scheduledGames$(): Observable<Schedule[]> {
     return this._scheduledGames.asObservable();
@@ -28,7 +55,13 @@ export class ScheduleService {
     return this._selectedSeason.asObservable();
   }
 
-  constructor() {}
+  constructor(private seasons: SeasonsService) {
+    lastValueFrom(this.setWeekRanges());
+  }
+
+  setMonFilterilterState(state: MonthFilterState[]) {
+    this._monthFiltersState.next(state);
+  }
 
   setScheduledGames(schedules: Schedule[]) {
     this._scheduledGames.next(schedules);
@@ -44,6 +77,28 @@ export class ScheduleService {
 
   setSelectedSeason(lov: SeasonLov) {
     this._selectedSeason.next(lov);
+  }
+
+  setWeekRanges() {
+    return this.selectedSeason$.pipe(
+      switchMap((selectedSeason) => {
+        if (selectedSeason) {
+          return this.getWeekRanges(selectedSeason.value).pipe(
+            tap((ranges) => {
+              this._seasonWeekRanges.next(ranges);
+              this.setSelectedWeekRanges(ranges[0]);
+            })
+          );
+        }
+        return of([{ startDate: new Date(), endDate: new Date() }]);
+      })
+    );
+  }
+
+  getWeekRanges(seasonId: number): Observable<SeasonWeekRange[]> {
+    return this.seasons
+      .getSeasonById(seasonId)
+      .pipe(this.seasons.seasonRangePipe());
   }
 
   dateSanitizer(date: Date) {

@@ -12,6 +12,7 @@ import {
   ScheduledGame,
 } from 'src/app/nhl/interfaces/schedule.interface';
 import { NhlSheduleService } from 'src/app/nhl/nhl-shedule.service';
+import { LayoutService } from 'src/app/services/layout.service';
 import { ScheduleService } from '../schedule.service';
 
 @Component({
@@ -22,18 +23,20 @@ import { ScheduleService } from '../schedule.service';
 export class ScheduleGamesComponent implements OnInit {
   scheduledGames$!: Observable<Schedule[]>;
   teamsLogos$!: Observable<FranchiseAllTime[]>;
+  innerWidth$!: Observable<number>;
 
   constructor(
     private nhlSchedule: NhlSheduleService,
     private scheduleService: ScheduleService,
     private franchises: FranchisesService,
-    private route: ActivatedRoute
+    private layoutService: LayoutService
   ) {}
 
   ngOnInit(): void {
     this.teamsLogos$ = this.franchises.getFranchisesLogos();
     lastValueFrom(this.fetchScheduledGameByRange());
     this.scheduledGames$ = this.getScheduledGame();
+    this.innerWidth$ = this.layoutService.innerWidth$;
   }
 
   getScheduledGame(): Observable<Schedule[]> {
@@ -43,7 +46,7 @@ export class ScheduleGamesComponent implements OnInit {
           map((dates) => {
             if (dates) {
               dates.map((date) => {
-                const dateGames = date.games.map((game) => {
+                date.games.map((game) => {
                   let awayLogos: Logo[] = franchises.find(
                     (f) => f.mostRecentTeamId === game.teams.away.team.id
                   )?.teams![0].logos!;
@@ -99,12 +102,6 @@ export class ScheduleGamesComponent implements OnInit {
     );
   }
 
-  // getGameData(): Observable<ScheduledGame> {
-  //   return this.teamsLogos$.pipe(
-  //     this.franchises.logoFromSchduledGameRxjsPipe(this.scheduledGame)
-  //   );
-  // }
-
   private fetchScheduledGameByRange() {
     return this.scheduleService.selectedWeekRange$.pipe(
       switchMap((range) => {
@@ -124,7 +121,7 @@ export class ScheduleGamesComponent implements OnInit {
             if (season) {
               return this.nhlSchedule
                 .getSchedule(
-                  ScheduleExpands.LINESCORE,
+                  ScheduleExpands.DECISIONS,
                   season.value,
                   startDateStringnify,
                   endDateStringnify
