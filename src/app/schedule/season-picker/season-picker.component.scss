@@ -3,13 +3,25 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  padding-left: 0.5rem;
 
   &__label {
     margin-right: 0.8rem;
     text-transform: capitalize;
     font-size: 2rem;
     font-weight: 500;
-    color: var(--dark600);
+    color: var(--primary500);
+  }
+
+  &__icon {
+    margin-right: 0.8rem;
+    color: var(--primary500);
+  }
+
+  &__box {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
   }
 
   &__select {

@@ -1,5 +1,8 @@
 <div class="seasons">
-  <label class="seasons__label">seasons</label>
+  <div class="seasons__box">
+    <mat-icon class="seasons__icon" svgIcon="arrow-right-square"></mat-icon>
+    <label class="seasons__label">seasons</label>
+  </div>
   <select (change)="onSelect($event)" #selectEl class="seasons__select">
     <option class="seasons__option" *ngFor="let season of seasonsLov$ | async">
       {{ season.name }}

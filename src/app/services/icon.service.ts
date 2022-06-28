@@ -42,6 +42,7 @@ export const Icons: string[] = [
   'arrow_down',
   'left_arrow',
   'matchup',
+  'arrow-right-square',
 ];
 
 @Injectable({

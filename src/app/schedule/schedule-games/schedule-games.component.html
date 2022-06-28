@@ -45,7 +45,7 @@
           <span>{{ game.venue.name }}</span>
         </div>
 
-        <div *ngIf="game.decisions">
+        <div class="stars-box" *ngIf="game.decisions">
           <div
             *ngIf="(innerWidth$ | async)! > 1100 && game.decisions.firstStar"
             class="stars"

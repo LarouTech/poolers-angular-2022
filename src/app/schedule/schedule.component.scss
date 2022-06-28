@@ -1,8 +1,8 @@
 .controlPanel {
-  background-color: var(--grey100);
+  background-color: var(--primary50);
   // box-shadow: 0.1rem 0.2rem 0.3rem rgba(#000, 0.3);
   border-radius: 0.4rem;
-  border: solid 0.1rem rgba(#000, 0.2);
+  border: solid 0.1rem rgba(#1c1f78, 0.3);
   padding: 1.5rem;
 }
 
@@ -10,7 +10,7 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  padding: 0.8rem 0;
+  padding: 1rem 0;
 
   &__icon {
     height: 3rem;
@@ -26,25 +26,7 @@
   }
 }
 
-// .games {
-//   margin-top: 3rem;
-//   padding-bottom: 5rem;
-
-//   &__list {
-//     list-style: none;
-//   }
-
-//   &__item {
-//     margin-bottom: 2rem;
-//   }
-
-//   &__header {
-//     padding: 0.75rem 1rem;
-//     background-color: var(--dark800);
-//     border-radius: 0.4rem;
-
-//     &--text {
-//       color: var(--light500);
-//     }
-//   }
-// }
+.controls {
+  padding-bottom: 4rem;
+  width: 100%;
+}

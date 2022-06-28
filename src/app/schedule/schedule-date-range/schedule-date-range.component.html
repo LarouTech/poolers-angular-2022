@@ -12,7 +12,9 @@
     <span class="date-ranges__center--text">{{
       (selectedWeekRange$ | async)!.startDate | date: "fullDate"
     }}</span>
-    <span class="date-ranges__center--text">TO</span>
+    <span class="date-ranges__center--text date-ranges__center--seperator"
+      >TO</span
+    >
     <span class="date-ranges__center--text">{{
       (selectedWeekRange$ | async)!.endDate | date: "fullDate"
     }}</span>

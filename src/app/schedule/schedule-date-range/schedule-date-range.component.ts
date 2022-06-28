@@ -161,6 +161,11 @@ export class ScheduleDateRangeComponent implements OnInit {
       })
     );
 
+    this.scrollToTop();
     lastValueFrom(changeRange$);
+  }
+
+  scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 }

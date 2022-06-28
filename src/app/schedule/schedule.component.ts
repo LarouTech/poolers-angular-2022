@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Schedule } from '../nhl/interfaces/schedule.interface';
+import { ScheduleService } from './schedule.service';
 
 @Component({
   selector: 'schedule',
@@ -6,7 +9,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./schedule.component.scss'],
 })
 export class ScheduleComponent implements OnInit {
-  constructor() {}
+  scheduledGames$!: Observable<Schedule[]>;
 
-  ngOnInit(): void {}
+  constructor(private scheduleService: ScheduleService) {}
+
+  ngOnInit(): void {
+    this.scheduledGames$ = this.scheduleService.scheduledGames$;
+  }
 }

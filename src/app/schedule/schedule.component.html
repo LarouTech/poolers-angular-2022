@@ -13,4 +13,8 @@
   </div>
 
   <schedule-games></schedule-games>
+
+  <div *ngIf="scheduledGames$ | async" class="controls">
+    <schedule-date-range></schedule-date-range>
+  </div>
 </default-layout>
