@@ -80,7 +80,7 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  width: 19rem;
+  width: 21rem;
   margin-right: 3rem;
 
   &__logo {
@@ -125,4 +125,16 @@
       color: var(--dark800);
     }
   }
+}
+
+.win {
+  color: var(--green500);
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.lost {
+  color: var(--red500);
+  font-size: 1.2rem;
+  font-weight: 500;
 }

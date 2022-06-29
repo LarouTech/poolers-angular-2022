@@ -1,6 +1,7 @@
 export interface MenuData {
   name: string;
   route: string;
+  icon?: string;
 }
 
 export const MENU_DATA: MenuData[] = [

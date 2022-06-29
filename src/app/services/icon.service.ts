@@ -43,6 +43,9 @@ export const Icons: string[] = [
   'left_arrow',
   'matchup',
   'arrow-right-square',
+  'team',
+  'player',
+  'press',
 ];
 
 @Injectable({

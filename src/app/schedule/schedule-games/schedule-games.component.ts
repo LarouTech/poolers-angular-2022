@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { lastValueFrom, Observable, switchMap, tap, of, map } from 'rxjs';
 import { ScheduleExpands } from 'src/app/nhl/enum/scheduleExpands';
 import { FranchisesService, LogoType } from 'src/app/nhl/franchises.service';
@@ -29,7 +29,8 @@ export class ScheduleGamesComponent implements OnInit {
     private nhlSchedule: NhlSheduleService,
     private scheduleService: ScheduleService,
     private franchises: FranchisesService,
-    private layoutService: LayoutService
+    private layoutService: LayoutService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -37,6 +38,10 @@ export class ScheduleGamesComponent implements OnInit {
     lastValueFrom(this.fetchScheduledGameByRange());
     this.scheduledGames$ = this.getScheduledGame();
     this.innerWidth$ = this.layoutService.innerWidth$;
+  }
+
+  onGameHandler(game: ScheduledGame) {
+    this.router.navigate(['schedule', 'game-details', game.gamePk]);
   }
 
   getScheduledGame(): Observable<Schedule[]> {

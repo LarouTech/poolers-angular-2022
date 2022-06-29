@@ -5,6 +5,7 @@ import { LeaguesRoutingModule } from './leagues-routing.module';
 import { FooterModule } from '../footer/footer.module';
 import { DefaultLayoutModule } from '../shared/components/default-layout/default-layout.module';
 import { MatIconModule } from '@angular/material/icon';
+import { ScreenTitlePanelModule } from '../shared/components/screen-title-panel/screen-title-panel.module';
 
 @NgModule({
   declarations: [LeaguesComponent],
@@ -14,6 +15,7 @@ import { MatIconModule } from '@angular/material/icon';
     FooterModule,
     DefaultLayoutModule,
     MatIconModule,
+    ScreenTitlePanelModule,
   ],
   exports: [LeaguesComponent],
 })

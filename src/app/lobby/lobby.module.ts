@@ -13,6 +13,7 @@ import { LoadingModalModule } from '../shared/components/loading-modal/loading-m
 import { FooterComponent } from '../footer/footer.component';
 import { FooterModule } from '../footer/footer.module';
 import { DefaultLayoutModule } from '../shared/components/default-layout/default-layout.module';
+import { ScreenTitlePanelModule } from '../shared/components/screen-title-panel/screen-title-panel.module';
 
 @NgModule({
   declarations: [LobbyComponent],
@@ -29,6 +30,7 @@ import { DefaultLayoutModule } from '../shared/components/default-layout/default
     LoadingModalModule,
     FooterModule,
     DefaultLayoutModule,
+    ScreenTitlePanelModule,
   ],
 })
 export class LobbyModule {}

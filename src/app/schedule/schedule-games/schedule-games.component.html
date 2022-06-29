@@ -8,7 +8,11 @@
         }}</span>
       </div>
 
-      <div *ngFor="let game of gamePerDate.games" class="games__content">
+      <div
+        (click)="onGameHandler(game)"
+        *ngFor="let game of gamePerDate.games"
+        class="games__content"
+      >
         <div class="away">
           <img
             class="away__logo"
@@ -18,7 +22,17 @@
                 : 'https://www-league.nhlstatic.com/images/logos/league-dark/133-flat.svg'
             "
           />
-          <span>{{ game.teams.away.team.name }} </span>
+          <span
+            >{{ game.teams.away.team.name }} (<span
+              [ngClass]="{
+                win: game.teams.away.score > game.teams.home.score,
+                lost: game.teams.away.score < game.teams.home.score
+              }"
+              >{{
+                game.teams.away.score > game.teams.home.score ? "W" : "L"
+              }}</span
+            >)
+          </span>
         </div>
 
         <span class="center">
@@ -38,7 +52,17 @@
                 : 'https://www-league.nhlstatic.com/images/logos/league-dark/133-flat.svg'
             "
           />
-          <span>{{ game.teams.home.team.name }} </span>
+          <span
+            >{{ game.teams.home.team.name }} (<span
+              [ngClass]="{
+                win: game.teams.home.score > game.teams.away.score,
+                lost: game.teams.home.score < game.teams.away.score
+              }"
+              >{{
+                game.teams.home.score > game.teams.away.score ? "W" : "L"
+              }}</span
+            >)
+          </span>
         </div>
 
         <div class="venue">

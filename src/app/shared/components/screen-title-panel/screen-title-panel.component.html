@@ -1,0 +1,12 @@
+<div class="title">
+  <mat-icon class="title__icon" [svgIcon]="icon"></mat-icon>
+  <span class="title__text">{{ name }}</span>
+</div>
+
+<div
+  #controlPanelEl
+  [ngStyle]="{ 'background-color': this.backgroundColor }"
+  class="controlPanel"
+>
+  <ng-content></ng-content>
+</div>

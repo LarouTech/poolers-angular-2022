@@ -1,16 +1,15 @@
 <default-layout>
-  <div class="title">
-    <mat-icon class="title__icon" svgIcon="schedule"></mat-icon>
-    <span class="title__text">nhl schedule</span>
-  </div>
-
-  <div class="controlPanel">
+  <screen-title-panel
+    name="nhl schedule"
+    icon="schedule"
+    backgroundColor="#e6e6f5"
+  >
     <season-picker></season-picker>
 
     <schedule-month-filter></schedule-month-filter>
 
     <schedule-date-range></schedule-date-range>
-  </div>
+  </screen-title-panel>
 
   <schedule-games></schedule-games>
 

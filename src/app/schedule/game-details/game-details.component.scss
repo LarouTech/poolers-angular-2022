@@ -1,0 +1,35 @@
+@import "../../../styles.scss";
+
+.container {
+  @include defaultContainer;
+  padding-left: calc(var(--padding-horizontal) * 2);
+  padding-right: calc(var(--padding-horizontal) * 2);
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 1rem 0;
+
+  &__icon {
+    height: 3rem;
+    width: 3rem;
+    margin-right: 0.8rem;
+  }
+
+  &__text {
+    font-size: 2.6rem;
+    font-weight: 500;
+    text-transform: capitalize;
+    letter-spacing: 0.1rem;
+  }
+}
+
+.control-panel {
+  background-color: var(--primary50);
+  // box-shadow: 0.1rem 0.2rem 0.3rem rgba(#000, 0.3);
+  border-radius: 0.4rem;
+  border: solid 0.1rem rgba(#1c1f78, 0.3);
+  padding: 1.5rem;
+}

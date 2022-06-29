@@ -14,7 +14,9 @@ import {
 })
 export class DefaultLayoutComponent implements OnInit {
   @ViewChild('canvasEl') canvasEl!: ElementRef;
+  @ViewChild('containerEl') containerEl!: ElementRef;
   @Input('padding-horizontal') paddinHorizontal!: string;
+  @Input('top') top!: number;
 
   constructor(private renderer: Renderer2) {}
 
@@ -24,6 +26,15 @@ export class DefaultLayoutComponent implements OnInit {
 
   ngAfterViewInit(): void {
     this.setHorizontalPadding();
+
+    if (this.top) {
+      console.log('top top');
+      this.renderer.setStyle(
+        this.containerEl.nativeElement,
+        'top',
+        `calc(var(--top-std-position) + ${this.top}rem)`
+      );
+    }
   }
 
   private setHorizontalPadding(): void {
