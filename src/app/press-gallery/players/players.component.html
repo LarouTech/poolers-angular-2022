@@ -1,7 +1,9 @@
 <default-layout [top]="4.5">
-  <screen-title-panel name="players" icon="player"
-    >CONTROL PANEL</screen-title-panel
-  >
+  <div class="control-panel">
+    <screen-title-panel name="players" icon="player"
+      >CONTROL PANEL</screen-title-panel
+    >
+  </div>
 
   <div class="players">
     <ul>
@@ -12,6 +14,10 @@
   </div>
 
   <div class="paginator">
-    <paginator [players]="players$"></paginator>
+    <paginator
+      [scrollOnSelectFilter]="true"
+      [paginatorFilter]="paginatorFilter"
+      [data]="players$"
+    ></paginator>
   </div>
 </default-layout>

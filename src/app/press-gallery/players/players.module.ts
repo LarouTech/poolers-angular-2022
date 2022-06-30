@@ -5,16 +5,18 @@ import { PlayersRoutingModule } from './players-routing.module';
 import { ScreenTitlePanelModule } from 'src/app/shared/components/screen-title-panel/screen-title-panel.module';
 import { DefaultLayoutModule } from 'src/app/shared/components/default-layout/default-layout.module';
 import { MatIconModule } from '@angular/material/icon';
-import { PaginatorComponent } from './paginator/paginator.component';
+import { PaginatorComponent } from '../../shared/components/paginator/paginator.component';
+import { PaginatorModule } from '../../shared/components/paginator/paginator.module';
 
 @NgModule({
-  declarations: [PlayersComponent, PaginatorComponent],
+  declarations: [PlayersComponent],
   imports: [
     CommonModule,
     PlayersRoutingModule,
     ScreenTitlePanelModule,
     DefaultLayoutModule,
     MatIconModule,
+    PaginatorModule,
   ],
   exports: [PlayersComponent],
 })

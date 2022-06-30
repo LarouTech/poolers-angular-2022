@@ -14,7 +14,7 @@ export class PaginatorService {
     return this._paginator.asObservable();
   }
 
-  constructor(private players: PlayersService) {}
+  constructor() {}
 
   setPaginator(paginator: Paginator) {
     this._paginator.next(paginator);

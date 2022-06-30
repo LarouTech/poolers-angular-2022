@@ -1,0 +1,92 @@
+.paginator {
+  width: 100%;
+  margin-top: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  height: 4rem;
+  padding: 0 0.5rem;
+
+  &__box {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  &__controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &--control {
+      height: 3.5rem;
+      width: 3.5rem;
+      text-align: center;
+      border-radius: 10rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    &--left {
+      height: 2rem;
+      width: 2rem;
+      cursor: pointer;
+      color: var(--primary500);
+    }
+
+    &--inactive {
+      opacity: 0.5;
+    }
+
+    &--right {
+      transform: rotate(180deg);
+      height: 2rem;
+      width: 2rem;
+      cursor: pointer;
+      color: var(--primary500);
+    }
+  }
+}
+
+.total {
+  &__text {
+    font-size: 1.2rem;
+    color: var(--dark800);
+    opacity: 0.9;
+  }
+}
+
+.pages-value {
+  margin-right: 1.6rem;
+
+  &__text {
+    color: var(--dark800);
+    font-size: 1.2rem;
+    opacity: 0.9;
+  }
+}
+
+.select-value {
+  margin-right: 1.6rem;
+
+  &__select {
+    border: none;
+    background-color: none;
+    outline: none;
+    width: 7rem;
+    border: 0.1rem solid var(--grey500);
+    border-radius: 0.4rem;
+    padding: 0.5rem 0.75rem;
+    cursor: pointer;
+    font-weight: 500;
+    color: var(--primary500);
+  }
+
+  &__option {
+    padding: 0.5rem 0.75rem;
+    margin-bottom: 0.2rem;
+    color: var(--primary500);
+  }
+}

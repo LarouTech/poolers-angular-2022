@@ -32,4 +32,8 @@ export class LayoutService {
       })
     );
   }
+
+  scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 }

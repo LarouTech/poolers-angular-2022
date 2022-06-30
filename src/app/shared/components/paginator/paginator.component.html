@@ -1,0 +1,61 @@
+<div class="paginator">
+  <div class="paginator__box">
+    <div class="select-value">
+      <select
+        class="select-value__select"
+        (change)="onSelectPaginatorValue($event)"
+      >
+        <option
+          class="select-value__option"
+          [selected]="filter.selected"
+          *ngFor="let filter of paginatorFilter"
+          [value]="filter.value"
+        >
+          {{ filter.value }}
+        </option>
+      </select>
+    </div>
+
+    <div *ngIf="paginator$ | async" class="pages-value">
+      <span class="pages-value__text">Page </span>
+      <span class="pages-value__text"
+        >{{ (paginator$ | async)!.paginatorIndex + 1 }} of </span
+      ><span class="pages-value__text">{{ (paginator$ | async)!.pages }}</span>
+    </div>
+
+    <div class="paginator__controls">
+      <div matRipple class="paginator__controls--control">
+        <mat-icon
+          [ngClass]="{
+            'paginator__controls--inactive':
+              (paginator$ | async)!.paginatorIndex === 0
+          }"
+          (click)="onPaginateHandler(paginateBackward)"
+          class="paginator__controls--left"
+          svgIcon="left_arrow"
+        ></mat-icon>
+      </div>
+
+      <div class="total">
+        <span class="total__text">{{ itemValue$ | async }}</span>
+        <span class="total__text"> of </span>
+        <span class="total__text">{{
+          (paginator$ | async)!.numberOfItems
+        }}</span>
+      </div>
+
+      <div matRipple class="paginator__controls--control">
+        <mat-icon
+          [ngClass]="{
+            'paginator__controls--inactive':
+              (paginator$ | async)!.paginatorIndex ===
+              (paginator$ | async)!.pages - 1
+          }"
+          (click)="onPaginateHandler(paginateForward)"
+          class="paginator__controls--right"
+          svgIcon="left_arrow"
+        ></mat-icon>
+      </div>
+    </div>
+  </div>
+</div>

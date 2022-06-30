@@ -2,8 +2,8 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { PlayersService } from 'src/app/nhl/players.service';
 import { BehaviorSubject, map, Observable, of } from 'rxjs';
 import { Player } from 'src/app/nhl/interfaces/player.interface';
-import { Paginator } from './paginator/paginator.component';
-import { PaginatorService } from './paginator/paginator.service';
+import { Paginator } from '../../shared/components/paginator/paginator.component';
+import { PaginatorService } from '../../shared/components/paginator/paginator.service';
 
 @Component({
   selector: 'players',
@@ -13,7 +13,13 @@ import { PaginatorService } from './paginator/paginator.service';
 export class PlayersComponent implements OnInit {
   players$!: Observable<Player[]>;
   paginatedPlayers$!: Observable<Player[]>;
-
+  paginatorFilter = [
+    { value: 10, selected: true },
+    { value: 25, selected: false },
+    { value: 50, selected: false },
+    { value: 100, selected: false },
+    { value: 250, selected: false },
+  ];
   constructor(
     private cdRef: ChangeDetectorRef,
     private paginatorService: PaginatorService,
