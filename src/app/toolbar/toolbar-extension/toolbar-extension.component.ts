@@ -62,8 +62,13 @@ export class ToolbarExtensionComponent implements OnInit {
       map((res) => {
         const validator = (res as NavigationEnd).url.split('/');
 
-        if ((res as NavigationEnd).url === '/press-gallery') {
-          console.log('wtf');
+        if (
+          (res as NavigationEnd).url === '/press-gallery' ||
+          (res as NavigationEnd).url === '/press-gallery/players' ||
+          (res as NavigationEnd).url === '/press-gallery/stats' ||
+          (res as NavigationEnd).url === '/press-gallery/teams' ||
+          (res as NavigationEnd).url === '/press-gallery/standing'
+        ) {
           this._isPressGallery.next(true);
           return res;
         }

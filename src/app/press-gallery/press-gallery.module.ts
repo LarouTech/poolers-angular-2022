@@ -12,6 +12,7 @@ import { ScreenTitlePanelModule } from '../shared/components/screen-title-panel/
     PressGalleryRoutingModule,
     DefaultLayoutModule,
     ScreenTitlePanelModule,
+    PressGalleryRoutingModule,
   ],
   exports: [PressGalleryComponent],
 })

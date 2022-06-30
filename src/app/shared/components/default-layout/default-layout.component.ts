@@ -28,7 +28,6 @@ export class DefaultLayoutComponent implements OnInit {
     this.setHorizontalPadding();
 
     if (this.top) {
-      console.log('top top');
       this.renderer.setStyle(
         this.containerEl.nativeElement,
         'top',

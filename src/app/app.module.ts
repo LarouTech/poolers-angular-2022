@@ -26,10 +26,19 @@ import { LayoutService } from './services/layout.service';
 import { ProfileService } from './services/profile.service';
 import { ConfigurationService } from './services/configuration.service';
 import { FooterModule } from './footer/footer.module';
+import { PlayersService } from './nhl/players.service';
+import { lastValueFrom, tap } from 'rxjs';
 
 // export function StartupServiceFactory(configService: ConfigurationService) {
 //   return () => configService.getConfig().subscribe((data) => console.log(data));
 // }
+
+export function StartupServiceFactory(playersService: PlayersService) {
+  return () =>
+    lastValueFrom(
+      playersService.getPlayers().pipe(tap((res) => console.log(res)))
+    );
+}
 
 @NgModule({
   declarations: [AppComponent],
@@ -61,6 +70,12 @@ import { FooterModule } from './footer/footer.module';
     GamesService,
     ConfigurationService,
     FranchisesService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: StartupServiceFactory,
+      deps: [PlayersService],
+      multi: true,
+    },
     // {
     //   provide: APP_INITIALIZER,
     //   useFactory: StartupServiceFactory,

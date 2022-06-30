@@ -3,6 +3,7 @@ import { Teams } from './teams.interface';
 
 export interface Player {
   id: number;
+  dataIndex?: number;
   fullName: string;
   link: string;
   firstName: string;

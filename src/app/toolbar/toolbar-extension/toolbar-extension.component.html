@@ -35,6 +35,8 @@
       <li
         *ngFor="let menuData of pressGalleryMenuData"
         class="gallery-list__item"
+        [routerLink]="menuData.route"
+        routerLinkActive="active"
       >
         <mat-icon
           class="gallery-list__item--icon"

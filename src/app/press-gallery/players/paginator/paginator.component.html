@@ -1,0 +1,35 @@
+<div class="paginator">
+  <div class="paginator__box">
+    <div class="select-value">
+      <select
+        [selectedIndex]="2"
+        class="select-value__select"
+        (change)="onSelectPaginatorValue($event)"
+      >
+        <option value="25">25</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+        <option value="250">250</option>
+      </select>
+    </div>
+
+    <div *ngIf="paginator$ | async" class="pages-value">
+      <span>Page </span>
+      <span>{{ (paginator$ | async)!.paginatorIndex + 1 }} of </span
+      ><span>{{ (paginator$ | async)!.pages }}</span>
+    </div>
+
+    <div class="paginator__controls">
+      <mat-icon
+        (click)="onPaginateHandler(paginateBackward)"
+        class="paginator__controls--left"
+        svgIcon="left_arrow"
+      ></mat-icon>
+      <mat-icon
+        (click)="onPaginateHandler(paginateForward)"
+        class="paginator__controls--right"
+        svgIcon="left_arrow"
+      ></mat-icon>
+    </div>
+  </div>
+</div>

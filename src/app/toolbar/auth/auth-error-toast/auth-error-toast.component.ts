@@ -21,9 +21,7 @@ export class AuthErrorToastComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit(): void {
-    this.message.subscribe((data) => console.log(data));
-  }
+  ngOnInit(): void {}
 
   ngOnChanges(changes: SimpleChanges): void {
     const message$: Observable<string> = changes['message'].currentValue;
@@ -43,7 +41,6 @@ export class AuthErrorToastComponent implements OnInit {
   }
 
   onClose() {
-    console.log('test close');
     this.clearErrorEmitter.emit(true);
   }
 }
