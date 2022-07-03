@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
+import { lastValueFrom, Observable } from 'rxjs';
 import { fadeInAnimation } from './animation';
+import { PlayersService } from './nhl/players.service';
 import { Icons, IconService } from './services/icon.service';
 import { AuthService } from './toolbar/auth/auth.service';
 
@@ -16,7 +17,8 @@ export class AppComponent {
 
   constructor(
     private authService: AuthService,
-    private iconService: IconService
+    private iconService: IconService,
+    private playerService: PlayersService
   ) {
     this.icons.forEach((icon) => this.iconService.generateSvgMatIcon(icon));
   }
@@ -24,6 +26,22 @@ export class AppComponent {
   ngOnInit(): void {
     this.detectAuthStateFromToken();
     this.isAuth$ = this.authService.isAuth$;
+    this.playerWebWorkerInit();
+
+    this.playerService.players$.subscribe((data) => console.log(data));
+  }
+
+  playerWebWorkerInit() {
+    if (typeof Worker !== 'undefined') {
+      const worker = new Worker(new URL('./players.worker', import.meta.url));
+      worker.onmessage = ({ data }) => {
+        this.playerService.setPlayers(data);
+        localStorage.setItem('players', JSON.stringify(data));
+      };
+      worker.postMessage('players uploaded');
+    } else {
+      lastValueFrom(this.playerService.getPlayers());
+    }
   }
 
   private detectAuthStateFromToken() {

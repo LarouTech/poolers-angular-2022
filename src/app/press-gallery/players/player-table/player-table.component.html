@@ -1,0 +1,31 @@
+<table class="table">
+  <tr class="table__row--header">
+    <th class="table__header">rank</th>
+    <th class="table__header">headshot</th>
+    <th class="table__header">name</th>
+    <th class="table__header">nationality</th>
+    <th class="table__header">position</th>
+    <th class="table__header">hand</th>
+    <th class="table__header">age</th>
+    <th class="table__header">height</th>
+    <th (click)="onSort($event)" class="table__header">team</th>
+  </tr>
+
+  <tr class="table__row" *ngFor="let player of paginatedPlayers$ | async">
+    <td class="table__col">{{ player.dataIndex! + 1 }}</td>
+    <td class="table__col">
+      <img
+        class="table__col--img"
+        [src]="player.image!.headshot"
+        onerror="this.src='../../../../assets/images/hockey_player.png';this.onerror='';"
+      />
+    </td>
+    <td class="table__col">{{ player.fullName }}</td>
+    <td class="table__col">{{ player.nationality }}</td>
+    <td class="table__col">{{ player.primaryPosition.code }}</td>
+    <td class="table__col">{{ player.shootsCatches }}</td>
+    <td class="table__col">{{ player.currentAge }}</td>
+    <td class="table__col">{{ player.height }}</td>
+    <td class="table__col">{{ player.currentTeam.name }}</td>
+  </tr>
+</table>

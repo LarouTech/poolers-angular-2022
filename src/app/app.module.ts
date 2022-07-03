@@ -33,12 +33,12 @@ import { lastValueFrom, tap } from 'rxjs';
 //   return () => configService.getConfig().subscribe((data) => console.log(data));
 // }
 
-export function StartupServiceFactory(playersService: PlayersService) {
-  return () =>
-    lastValueFrom(
-      playersService.getPlayers().pipe(tap((res) => console.log(res)))
-    );
-}
+// export function StartupServiceFactory(playersService: PlayersService) {
+//   return () =>
+//     lastValueFrom(
+//       playersService.getPlayers().pipe(tap((res) => console.log(res)))
+//     );
+// }
 
 @NgModule({
   declarations: [AppComponent],
@@ -66,16 +66,16 @@ export function StartupServiceFactory(playersService: PlayersService) {
     LayoutService,
     ProfileService,
     SeasonsService,
-
+    PlayersService,
     GamesService,
     ConfigurationService,
     FranchisesService,
-    {
-      provide: APP_INITIALIZER,
-      useFactory: StartupServiceFactory,
-      deps: [PlayersService],
-      multi: true,
-    },
+    // {
+    //   provide: APP_INITIALIZER,
+    //   useFactory: StartupServiceFactory,
+    //   deps: [PlayersService],
+    //   multi: true,
+    // },
     // {
     //   provide: APP_INITIALIZER,
     //   useFactory: StartupServiceFactory,

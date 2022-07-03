@@ -14,12 +14,13 @@ export class PlayersComponent implements OnInit {
   players$!: Observable<Player[]>;
   paginatedPlayers$!: Observable<Player[]>;
   paginatorFilter = [
-    { value: 10, selected: true },
-    { value: 25, selected: false },
+    { value: 10, selected: false },
+    { value: 25, selected: true },
     { value: 50, selected: false },
     { value: 100, selected: false },
     { value: 250, selected: false },
   ];
+
   constructor(
     private cdRef: ChangeDetectorRef,
     private paginatorService: PaginatorService,
@@ -27,7 +28,14 @@ export class PlayersComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.players$ = this.playerServivce.players$;
+    this.players$ = this.playerServivce.players$.pipe(
+      map((players) => {
+        if (!players) {
+          return JSON.parse(localStorage.getItem('players')!);
+        }
+        return players;
+      })
+    );
   }
 
   ngAfterContentChecked(): void {

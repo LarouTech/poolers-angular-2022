@@ -1,17 +1,11 @@
 <default-layout [top]="4.5">
   <div class="control-panel">
-    <screen-title-panel name="players" icon="player"
-      >CONTROL PANEL</screen-title-panel
-    >
+    <screen-title-panel name="players" icon="player">
+      <!-- <season-picker></season-picker> -->
+    </screen-title-panel>
   </div>
 
-  <div class="players">
-    <ul>
-      <li *ngFor="let player of paginatedPlayers$ | async">
-        {{ player.dataIndex! + 1 + " " + player.fullName }}
-      </li>
-    </ul>
-  </div>
+  <player-table [paginatedPlayers]="paginatedPlayers$"></player-table>
 
   <div class="paginator">
     <paginator

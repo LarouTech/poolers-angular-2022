@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Player } from './interfaces/player.interface';
-import { tap } from 'rxjs';
+import { tap, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -19,8 +19,24 @@ export class PlayersService {
   constructor(private http: HttpClient) {}
 
   getPlayers(): Observable<Player[]> {
-    return this.http
-      .get<Player[]>(`${this.url}/all`)
-      .pipe(tap((res) => this._players.next(res)));
+    return this.http.get<Player[]>(`${this.url}/all`).pipe(
+      map((players) => {
+        return this.shuffleFisherYates(players);
+      }),
+      tap((res) => this._players.next(res))
+    );
+  }
+
+  shuffleFisherYates(array: Player[]) {
+    let i = array.length;
+    while (i--) {
+      const ri = Math.floor(Math.random() * i);
+      [array[i], array[ri]] = [array[ri], array[i]];
+    }
+    return array;
+  }
+
+  setPlayers(players: Player[]) {
+    this._players.next(players);
   }
 }

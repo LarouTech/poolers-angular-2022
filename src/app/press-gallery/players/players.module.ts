@@ -7,9 +7,12 @@ import { DefaultLayoutModule } from 'src/app/shared/components/default-layout/de
 import { MatIconModule } from '@angular/material/icon';
 import { PaginatorComponent } from '../../shared/components/paginator/paginator.component';
 import { PaginatorModule } from '../../shared/components/paginator/paginator.module';
+import { PlayerTableComponent } from './player-table/player-table.component';
+import { SeasonPickerComponent } from 'src/app/shared/components/season-picker/season-picker.component';
+import { SeasonPickerModule } from 'src/app/shared/components/season-picker/season-picker.module';
 
 @NgModule({
-  declarations: [PlayersComponent],
+  declarations: [PlayersComponent, PlayerTableComponent],
   imports: [
     CommonModule,
     PlayersRoutingModule,
@@ -17,6 +20,7 @@ import { PaginatorModule } from '../../shared/components/paginator/paginator.mod
     DefaultLayoutModule,
     MatIconModule,
     PaginatorModule,
+    SeasonPickerModule,
   ],
   exports: [PlayersComponent],
 })

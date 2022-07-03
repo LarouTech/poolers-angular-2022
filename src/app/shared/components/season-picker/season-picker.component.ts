@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, map, lastValueFrom, tap } from 'rxjs';
 import { SeasonLov, SeasonsService } from 'src/app/nhl/seasons.service';
-import { ScheduleService } from '../schedule.service';
+import { ScheduleService } from '../../../schedule/schedule.service';
 
 @Component({
   selector: 'season-picker',
