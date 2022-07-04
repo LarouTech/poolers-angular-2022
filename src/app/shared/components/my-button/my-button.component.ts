@@ -25,6 +25,7 @@ export class MyButtonComponent implements OnInit, AfterViewInit {
   @Input('width') width?: string | number;
   @Input('disabled') disabled?: boolean = false;
   @Input('loadingSpinner') loadingSpinner!: boolean;
+  @Input('fontSize') fontSize!: string;
   @Input('type') btnType?: MyButtonType | string = this.btnType
     ? this.btnType
     : MyButtonType.BUTTON;

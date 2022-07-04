@@ -1,11 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Observable, map, take, lastValueFrom, pipe } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Player } from 'src/app/nhl/interfaces/player.interface';
 import { PlayersService } from 'src/app/nhl/players.service';
+import { SortType } from '../player-sorter/player-sorter.component';
+import { Router } from '@angular/router';
 
-enum SortType {
-  'TEAM' = 'team',
-  'AGE' = 'age',
+interface TableHeader {
+  name: string;
+  sorter?: SortType;
 }
 
 @Component({
@@ -16,64 +18,30 @@ enum SortType {
 export class PlayerTableComponent implements OnInit {
   @Input('paginatedPlayers') paginatedPlayers$!: Observable<Player[]>;
 
-  constructor(private players: PlayersService) {}
+  headerData: TableHeader[] = [
+    { name: 'rank' },
+    { name: 'headshot' },
+    { name: 'name', sorter: SortType.NAME },
+    { name: 'nationality', sorter: SortType.NATIONALITY },
+    { name: 'position', sorter: SortType.POSITION },
+    { name: 'hand', sorter: SortType.HAND },
+    { name: 'age', sorter: SortType.AGE },
+    { name: 'height', sorter: SortType.HEIGHT },
+    { name: 'weight', sorter: SortType.WEIGHT },
+    { name: 'team', sorter: SortType.TEAM },
+  ];
+
+  constructor(private router: Router, private players: PlayersService) {}
 
   ngOnInit(): void {}
 
-  onSort(ev: MouseEvent) {
-    const event = ev as any;
-
-    switch (event.target.innerHTML) {
-      case SortType.AGE:
-        const sortbyAge$ = this.players.players$.pipe(
-          take(1),
-          map((players) => {
-            const sorted = players.sort((a: Player, b: Player) => {
-              return a.currentTeam.name.localeCompare(
-                b.currentTeam.name,
-                undefined,
-                {
-                  numeric: true,
-                  sensitivity: 'base',
-                }
-              );
-            });
-
-            this.players.setPlayers(sorted);
-
-            return players;
-          })
-        );
-
-        break;
-
-      case SortType.TEAM:
-        const sortByTeam$ = this.players.players$.pipe(
-          take(1),
-          map((players) => {
-            const sorted = players.sort((a: Player, b: Player) => {
-              return a.currentTeam.name.localeCompare(
-                b.currentTeam.name,
-                undefined,
-                {
-                  numeric: true,
-                  sensitivity: 'base',
-                }
-              );
-            });
-
-            this.players.setPlayers(sorted);
-
-            return players;
-          })
-        );
-
-        lastValueFrom(sortByTeam$);
-
-        break;
-
-      default:
-        break;
-    }
+  onPlayerDetailsHandler(player: Player) {
+    this.router.navigate([
+      '/',
+      'press-gallery',
+      'players',
+      'player-details',
+      player.id,
+    ]);
   }
 }

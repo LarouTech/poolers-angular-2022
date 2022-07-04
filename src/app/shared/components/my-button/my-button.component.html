@@ -6,7 +6,12 @@
   class="btn"
 >
   <div class="btn__box">
-    <mat-icon *ngIf="icon" class="btn__icon" [svgIcon]="icon"></mat-icon>
-    {{ text }}
+    <mat-icon
+      [ngStyle]="{ height: fontSize, width: fontSize }"
+      *ngIf="icon"
+      class="btn__icon"
+      [svgIcon]="icon"
+    ></mat-icon>
+    <span [ngStyle]="{ 'font-size': fontSize }" #textEl>{{ text }}</span>
   </div>
 </button>

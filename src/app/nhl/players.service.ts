@@ -21,7 +21,8 @@ export class PlayersService {
   getPlayers(): Observable<Player[]> {
     return this.http.get<Player[]>(`${this.url}/all`).pipe(
       map((players) => {
-        return this.shuffleFisherYates(players);
+        // return this.shuffleFisherYates(players);
+        return players;
       }),
       tap((res) => this._players.next(res))
     );

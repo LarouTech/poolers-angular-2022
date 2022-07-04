@@ -31,7 +31,9 @@ export class PlayersComponent implements OnInit {
     this.players$ = this.playerServivce.players$.pipe(
       map((players) => {
         if (!players) {
-          return JSON.parse(localStorage.getItem('players')!);
+          const staticPlayers = JSON.parse(localStorage.getItem('players')!);
+          this.playerServivce.setPlayers(staticPlayers);
+          return staticPlayers;
         }
         return players;
       })

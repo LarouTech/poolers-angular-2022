@@ -1,0 +1,23 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  cursor: pointer;
+
+  &__ascending {
+    // justify-content: flex-start;
+  }
+}
+
+.sorter {
+  height: 1rem;
+  width: 1rem;
+  margin-left: 0.3rem;
+
+  &__ascending {
+    transform: rotate(180deg);
+  }
+}

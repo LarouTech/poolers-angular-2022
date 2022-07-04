@@ -1,4 +1,12 @@
-import { Component, Input, OnInit, Optional, Self } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Optional,
+  Output,
+  Self,
+} from '@angular/core';
 import { ControlValueAccessor, FormGroup, NgControl } from '@angular/forms';
 import { InputAutoCompleteTypes, InputTypes } from './input-emun';
 
@@ -17,6 +25,7 @@ export class InputfieldComponent implements OnInit, ControlValueAccessor {
   @Input() form!: FormGroup;
   @Input() message!: string;
   @Input() autocomplete!: InputAutoCompleteTypes;
+  @Output('valueChange') valueChage = new EventEmitter<string | number>();
 
   public errorMessages = new Map();
 
@@ -64,6 +73,7 @@ export class InputfieldComponent implements OnInit, ControlValueAccessor {
 
   public onChange() {
     this.onChangeFn(this.value);
+    this.valueChage.emit(this.value);
   }
 
   //VALIDATION

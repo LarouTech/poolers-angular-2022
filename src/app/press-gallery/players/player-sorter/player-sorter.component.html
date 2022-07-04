@@ -1,0 +1,11 @@
+<div
+  [ngClass]="{ container__ascending: isAscending$ | async }"
+  class="container"
+  (click)="onSort()"
+>
+  <mat-icon
+    [ngClass]="{ sorter__ascending: isAscending$ | async }"
+    class="sorter"
+    svgIcon="sorter_down"
+  ></mat-icon>
+</div>

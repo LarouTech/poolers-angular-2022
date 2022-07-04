@@ -1,0 +1,40 @@
+<div class="filter">
+  <div class="filter__header">
+    <mat-icon class="filter__header--icon" svgIcon="filter"></mat-icon>
+    <label class="filter__header--label">filters</label>
+  </div>
+
+  <div class="filter__content">
+    <div class="select-box">
+      <div *ngFor="let filter of filters" class="select">
+        <div class="select__label">
+          <mat-icon
+            [svgIcon]="filter.icon"
+            class="select__label--icon"
+          ></mat-icon>
+          <label class="select__label--text">{{ filter.name }}</label>
+        </div>
+
+        <select (change)="onSelect($event)" #selectEl class="select__selector">
+          <option class="select__selector--option">OPTION</option>
+        </select>
+      </div>
+    </div>
+
+    <my-button
+      fontSize="1rem"
+      icon="filter"
+      width="fit-content"
+      text="apply filter"
+    ></my-button>
+
+    <div class="filter__search">
+      <inputfield
+        (valueChange)="onSearchPlayer($event)"
+        name="search"
+        icon="search"
+        label="search player"
+      ></inputfield>
+    </div>
+  </div>
+</div>
