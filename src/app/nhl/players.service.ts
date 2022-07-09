@@ -12,7 +12,7 @@ export class PlayersService {
   private url = `${environment.nhlApi}/players`;
   private _players = new BehaviorSubject<Player[]>(null!);
 
-  get players$() {
+  get players$(): Observable<Player[]> {
     return this._players.asObservable();
   }
 
@@ -21,10 +21,11 @@ export class PlayersService {
   getPlayers(): Observable<Player[]> {
     return this.http.get<Player[]>(`${this.url}/all`).pipe(
       map((players) => {
-        // return this.shuffleFisherYates(players);
         return players;
       }),
-      tap((res) => this._players.next(res))
+      tap((res) => {
+        this._players.next(res);
+      })
     );
   }
 

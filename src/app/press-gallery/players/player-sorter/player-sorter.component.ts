@@ -66,6 +66,9 @@ export class PlayerSorterComponent implements OnInit {
     return this.playerService.players$.pipe(
       take(1),
       map((players) => {
+        const test = array.find((player) => player.id === 8478400);
+        console.log(test);
+
         const sorted = array.sort((a: any, b: any) => {
           const attrTransformer = attr.split('.');
 
@@ -73,8 +76,12 @@ export class PlayerSorterComponent implements OnInit {
           let sorterB = ascending ? b : a;
 
           for (let i = 0; i < attrTransformer.length; i++) {
-            sorterA = sorterA[attrTransformer[i]];
-            sorterB = sorterB[attrTransformer[i]];
+            sorterA = sorterA[attrTransformer[i]]
+              ? sorterA[attrTransformer[i]]
+              : 'UNKNOW';
+            sorterB = sorterB[attrTransformer[i]]
+              ? sorterB[attrTransformer[i]]
+              : 'UNKNOW';
           }
 
           return sorterA.localeCompare(sorterB, undefined, {

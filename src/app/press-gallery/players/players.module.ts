@@ -13,6 +13,7 @@ import { InputfieldModule } from 'src/app/shared/components/inputfield/inputfiel
 import { PlayerFiltersComponent } from './player-filters/player-filters.component';
 import { MyButtonModule } from 'src/app/shared/components/my-button/my-button.module';
 import { PlayerDetailsComponent } from './player-details/player-details.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,8 @@ import { PlayerDetailsComponent } from './player-details/player-details.componen
     SeasonPickerModule,
     InputfieldModule,
     MyButtonModule,
+    ReactiveFormsModule,
+    FormsModule,
   ],
   exports: [PlayersComponent],
 })

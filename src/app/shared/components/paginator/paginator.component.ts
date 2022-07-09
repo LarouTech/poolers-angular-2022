@@ -190,7 +190,10 @@ export class PaginatorComponent implements OnInit {
               numberOfItems: numberOfItems,
               pages: pages,
               paginatorIndex: paginator ? paginator.paginatorIndex : 0,
-              lastChunkIndexes: paginatorData[paginatorData.length - 1].length,
+              lastChunkIndexes:
+                paginatorData.length <= 0
+                  ? 0
+                  : paginatorData[paginatorData.length - 1].length,
             };
 
             this.paginatorService.setPaginator(paginatorObj);

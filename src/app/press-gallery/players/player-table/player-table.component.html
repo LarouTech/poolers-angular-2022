@@ -31,6 +31,8 @@
     <td class="table__col">{{ player.currentAge }}</td>
     <td class="table__col">{{ player.height }}</td>
     <td class="table__col">{{ player.weight }}</td>
-    <td class="table__col">{{ player.currentTeam.name }}</td>
+    <td class="table__col">
+      {{ player.currentTeam ? player.currentTeam.name : "UNKNOWN" }}
+    </td>
   </tr>
 </table>

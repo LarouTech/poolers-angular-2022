@@ -5,28 +5,54 @@
   </div>
 
   <div class="filter__content">
-    <div class="select-box">
-      <div *ngFor="let filter of filters" class="select">
-        <div class="select__label">
-          <mat-icon
-            [svgIcon]="filter.icon"
-            class="select__label--icon"
-          ></mat-icon>
-          <label class="select__label--text">{{ filter.name }}</label>
+    <form [formGroup]="filterForm" (ngSubmit)="onApplyFilters()">
+      <div class="select-box">
+        <div *ngFor="let filter of filters" class="select">
+          <div class="select__label">
+            <mat-icon
+              [svgIcon]="filter.icon"
+              class="select__label--icon"
+            ></mat-icon>
+            <label class="select__label--text">{{ filter.name }}</label>
+          </div>
+
+          <select
+            [formControlName]="filter.name"
+            #selectEl
+            class="select__selector"
+          >
+            <option>Please Choose...</option>
+            <option *ngFor="let option of filter.options">
+              <span>{{ option }}</span>
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="buttons">
+        <div class="buttons__btn">
+          <my-button
+            fontSize="1rem"
+            icon="filter"
+            width="fit-content"
+            text="apply filter"
+            type="submit"
+          ></my-button>
         </div>
 
-        <select (change)="onSelect($event)" #selectEl class="select__selector">
-          <option class="select__selector--option">OPTION</option>
-        </select>
+        <div class="buttons__btn">
+          <my-button
+            (click)="onResetFilters()"
+            fontSize="1rem"
+            icon="reset"
+            width="fit-content"
+            text="reset filter"
+            type="button"
+            color="#b33f40"
+          ></my-button>
+        </div>
       </div>
-    </div>
-
-    <my-button
-      fontSize="1rem"
-      icon="filter"
-      width="fit-content"
-      text="apply filter"
-    ></my-button>
+    </form>
 
     <div class="filter__search">
       <inputfield
