@@ -9,6 +9,7 @@ import {
   forkJoin,
   Observable,
   BehaviorSubject,
+  timestamp,
 } from 'rxjs';
 import { Player } from 'src/app/nhl/interfaces/player.interface';
 import { NhlConfigurationsService } from 'src/app/nhl/nhl-configurations.service';
@@ -36,6 +37,10 @@ export class PlayerFiltersComponent implements OnInit {
   filters: SelectFilter[] = PlayerFilterData;
   filterForm!: FormGroup;
   unfilteredPlayers!: Observable<Player[]>;
+  private resetPlayers = JSON.parse(
+    localStorage.getItem('players')!
+  ) as Player[];
+  private _filtersPlayers = new BehaviorSubject<Player[]>(this.resetPlayers);
 
   constructor(
     private countriesService: CountriesService,
@@ -49,6 +54,34 @@ export class PlayerFiltersComponent implements OnInit {
     this.unfilteredPlayers = this.playerService.players$;
     this.initFiltersLovs();
     this.filterFormConstructor();
+
+    this.playerService.players$
+      .pipe(timestamp())
+      .subscribe((data) => console.log(data));
+  }
+
+  onResetIndividualFilter(filterName: string) {
+    this.filterForm.get(filterName)?.setValue('Please Choose...');
+
+    const formControls = Object.keys(this.filterForm.controls).filter(
+      (control) => control
+    ) as string[];
+
+    const filterGroup: any = {};
+
+    formControls.forEach((control) => {
+      filterGroup[control] = this.filterForm.get(control)?.value;
+    });
+
+    if (filterName === 'position') this.filterByPosition(filterGroup);
+    if (filterName === 'nationality') this.filterByPosition(filterGroup);
+
+    filterName != 'position' ? this.filterByPosition(filterGroup) : null;
+    filterName != 'nationality' ? this.filterByCountry(filterGroup) : null;
+    this.filterByTeam(filterGroup);
+
+    this.filterByRookieStatus(filterGroup);
+    this.filterByHandSide(filterGroup);
   }
 
   //RESET FILTERS
@@ -56,6 +89,7 @@ export class PlayerFiltersComponent implements OnInit {
     this.playerService.setPlayers(
       JSON.parse(localStorage.getItem('players')!) as Player[]
     );
+    this.filterForm.reset();
     this.filterForm.get('nationality')?.setValue('Please Choose...');
     this.filterForm.get('hand')?.setValue('Please Choose...');
     this.filterForm.get('team')?.setValue('Please Choose...');
@@ -63,25 +97,9 @@ export class PlayerFiltersComponent implements OnInit {
     this.filterForm.get('rookie')?.setValue('Please Choose...');
   }
 
-  //CREATE FILTER FORM
-  private filterFormConstructor(): void {
-    let formControls: any = {};
-
-    this.filters.map((filter) => {
-      formControls[filter.name] = new FormControl();
-    });
-
-    this.filterForm = new FormGroup(formControls);
-  }
-
   //ON APPLY FILTER
   onApplyFilters() {
-    const resetPlayers = JSON.parse(
-      localStorage.getItem('players')!
-    ) as Player[];
-
-    const _filtersPlayers = new BehaviorSubject<Player[]>(resetPlayers);
-
+    this._filtersPlayers.next(this.resetPlayers);
     const filterGroup: PlayerFilterGroup = {
       nationality: this.filterForm.get('nationality')?.value,
       hand: this.filterForm.get('hand')?.value,
@@ -90,81 +108,13 @@ export class PlayerFiltersComponent implements OnInit {
       position: this.filterForm.get('position')?.value,
     };
 
-    //FILTER BY ROOKIE STATUS
-    if (filterGroup.rookie) {
-      let players = _filtersPlayers.getValue();
+    this.filterByRookieStatus(filterGroup);
+    this.filterByHandSide(filterGroup);
+    this.filterByPosition(filterGroup);
+    this.filterByTeam(filterGroup);
+    this.filterByCountry(filterGroup);
 
-      const value = filterGroup.rookie === 'Yes' ? true : false;
-
-      players = players.filter((player) => player.rookie === value);
-
-      _filtersPlayers.next(players);
-      this.playerService.setPlayers(players);
-    }
-
-    //FILTER BY SHOOTING OR CATCHING HAND
-    if (filterGroup.hand) {
-      let players = _filtersPlayers.getValue();
-      filterGroup.hand = filterGroup.hand === 'Left' ? 'L' : 'R';
-
-      players = players.filter(
-        (player) => player.shootsCatches === filterGroup.hand
-      );
-
-      _filtersPlayers.next(players);
-      this.playerService.setPlayers(players);
-    }
-
-    //FILTER BY POSITION
-    if (filterGroup.position) {
-      let players = _filtersPlayers.getValue();
-
-      players = players.filter(
-        (player) => player.primaryPosition.name === filterGroup.position
-      );
-
-      _filtersPlayers.next(players);
-      this.playerService.setPlayers(players);
-    }
-
-    //FILTER BY TEAM
-    if (filterGroup.team) {
-      let players = _filtersPlayers.getValue();
-
-      players = players.filter((player) => {
-        if (player.currentTeam) {
-          return player.currentTeam.name === filterGroup.team;
-        }
-
-        return;
-      });
-
-      _filtersPlayers.next(players);
-      this.playerService.setPlayers(players);
-    }
-
-    //FILTER BY COUNTRY CODE
-    if (filterGroup.nationality) {
-      const nationality$ = this.countriesService.getCountries().pipe(
-        map((countries) => {
-          const countryCode = countries.find(
-            (c) => c.name.common === filterGroup.nationality
-          )?.cca3;
-
-          let players = _filtersPlayers.getValue();
-          players = players.filter(
-            (player) => player.nationality === countryCode
-          );
-
-          _filtersPlayers.next(players);
-          this.playerService.setPlayers(players);
-        })
-      );
-
-      lastValueFrom(nationality$);
-    }
-
-    lastValueFrom(_filtersPlayers.asObservable());
+    // lastValueFrom(this._filtersPlayers.asObservable());
   }
 
   //ON SERACH PLAYER (STILL HAVE BUGS WITH PAGINATOR)
@@ -206,35 +156,113 @@ export class PlayerFiltersComponent implements OnInit {
     lastValueFrom(filteredPlayers$);
   }
 
-  //STRING SORTER
-  private stringSorter(array: any[], sorter?: string) {
-    if (sorter) {
-      array.sort((a: any, b: any) => {
-        const attrTransformer = sorter.split('.');
+  //CREATE FILTER FORM
+  private filterFormConstructor(): void {
+    let formControls: any = {};
 
-        let sorterA = a;
-        let sorterB = b;
+    this.filters.map((filter) => {
+      formControls[filter.name] = new FormControl();
+    });
 
-        for (let i = 0; i < attrTransformer.length; i++) {
-          sorterA = sorterA[attrTransformer[i]];
+    this.filterForm = new FormGroup(formControls);
+  }
 
-          sorterB = sorterB[attrTransformer[i]];
-        }
+  //FILTER BY ROOKIE STATUS
+  private filterByRookieStatus(filterGroup: PlayerFilterGroup) {
+    if (filterGroup.rookie) {
+      let players = this._filtersPlayers.getValue();
 
-        return sorterA.localeCompare(sorterB, undefined, {
-          numeric: true,
-          sensitivity: 'base',
-        });
-      });
+      const value = filterGroup.rookie === 'Yes' ? true : false;
+
+      players = players.filter((player) => player.rookie === value);
+
+      this._filtersPlayers.next(players);
+      this.playerService.setPlayers(players);
+    }
+  }
+
+  //FILTER BY SHOOTING OR CATCHING HAND
+  private filterByHandSide(filterGroup: PlayerFilterGroup) {
+    if (filterGroup.hand) {
+      let players = this._filtersPlayers.getValue();
+      filterGroup.hand = filterGroup.hand === 'Left' ? 'L' : 'R';
+
+      players = players.filter(
+        (player) => player.shootsCatches === filterGroup.hand
+      );
+
+      this._filtersPlayers.next(players);
+      this.playerService.setPlayers(players);
+    }
+  }
+
+  //FILTER BY POSITION
+  private filterByPosition(filterGroup: PlayerFilterGroup) {
+    if (filterGroup.position === 'Please Choose...') {
+      this._filtersPlayers.next(this.resetPlayers);
+      this.playerService.setPlayers(this.resetPlayers);
       return;
     }
 
-    array.sort((a: string, b: string) => {
-      return a.localeCompare(b, undefined, {
-        numeric: true,
-        sensitivity: 'base',
+    if (filterGroup.position) {
+      let players = this._filtersPlayers.getValue();
+
+      players = players.filter(
+        (player) => player.primaryPosition.name === filterGroup.position
+      );
+
+      this._filtersPlayers.next(players);
+      this.playerService.setPlayers(players);
+    }
+  }
+
+  //FILTER BY TEAM
+  private filterByTeam(filterGroup: PlayerFilterGroup) {
+    if (filterGroup.team) {
+      let players = this._filtersPlayers.getValue();
+
+      players = players.filter((player) => {
+        if (player.currentTeam) {
+          return player.currentTeam.name === filterGroup.team;
+        }
+
+        return;
       });
-    });
+
+      this._filtersPlayers.next(players);
+      this.playerService.setPlayers(players);
+    }
+  }
+
+  //FILTER BY COUNTRY CODE
+  private filterByCountry(filterGroup: PlayerFilterGroup) {
+    console.log(this.filterForm);
+
+    if (filterGroup.nationality === 'Please Choose...') {
+      this._filtersPlayers.next(this.resetPlayers);
+      this.playerService.setPlayers(this.resetPlayers);
+      return;
+    }
+
+    if (filterGroup.nationality) {
+      const nationality$ = this.countriesService.getCountries().pipe(
+        map((countries) => {
+          const countryCode = countries.find(
+            (c) => c.name.common === filterGroup.nationality
+          )?.cca3;
+
+          let players = this._filtersPlayers.getValue();
+          players = players.filter(
+            (player) => player.nationality === countryCode
+          );
+
+          this._filtersPlayers.next(players);
+          this.playerService.setPlayers(players);
+        })
+      );
+
+      lastValueFrom(nationality$);
+    }
   }
 
   //LOAD SELECT INPUT OPTIONS FOR AVAILBALE FILTERS
@@ -272,5 +300,36 @@ export class PlayerFiltersComponent implements OnInit {
     lastValueFrom(
       forkJoin([initCountriesLov$, initTeamsLov$, initPositionsLov$])
     );
+  }
+
+  //STRING SORTER
+  private stringSorter(array: any[], sorter?: string) {
+    if (sorter) {
+      array.sort((a: any, b: any) => {
+        const attrTransformer = sorter.split('.');
+
+        let sorterA = a;
+        let sorterB = b;
+
+        for (let i = 0; i < attrTransformer.length; i++) {
+          sorterA = sorterA[attrTransformer[i]];
+
+          sorterB = sorterB[attrTransformer[i]];
+        }
+
+        return sorterA.localeCompare(sorterB, undefined, {
+          numeric: true,
+          sensitivity: 'base',
+        });
+      });
+      return;
+    }
+
+    array.sort((a: string, b: string) => {
+      return a.localeCompare(b, undefined, {
+        numeric: true,
+        sensitivity: 'base',
+      });
+    });
   }
 }

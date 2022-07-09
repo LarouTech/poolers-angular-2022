@@ -52,6 +52,7 @@ export const Icons: string[] = [
   'flag',
   'side',
   'baby',
+  'reset',
 ];
 
 @Injectable({

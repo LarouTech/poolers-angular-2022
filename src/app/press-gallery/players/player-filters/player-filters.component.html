@@ -9,11 +9,18 @@
       <div class="select-box">
         <div *ngFor="let filter of filters" class="select">
           <div class="select__label">
+            <div class="select__label-box">
+              <mat-icon
+                [svgIcon]="filter.icon"
+                class="select__label--icon"
+              ></mat-icon>
+              <label class="select__label--text">{{ filter.name }}</label>
+            </div>
             <mat-icon
-              [svgIcon]="filter.icon"
-              class="select__label--icon"
+              (click)="onResetIndividualFilter(filter.name)"
+              svgIcon="close"
+              class="select__label--close"
             ></mat-icon>
-            <label class="select__label--text">{{ filter.name }}</label>
           </div>
 
           <select

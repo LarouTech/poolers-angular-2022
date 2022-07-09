@@ -55,7 +55,7 @@
   &__label {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: space-between;
     margin-bottom: 0.5rem;
 
     &--text {
@@ -70,6 +70,13 @@
       color: var(--primary500);
       height: 1.6rem;
       width: 1.6rem;
+    }
+
+    &--close {
+      color: var(--red500);
+      height: 1.2em;
+      width: 1.2rem;
+      cursor: pointer;
     }
   }
 
