@@ -54,10 +54,6 @@ export class PlayerFiltersComponent implements OnInit {
     this.unfilteredPlayers = this.playerService.players$;
     this.initFiltersLovs();
     this.filterFormConstructor();
-
-    this.playerService.players$
-      .pipe(timestamp())
-      .subscribe((data) => console.log(data));
   }
 
   onResetIndividualFilter(filterName: string) {
@@ -236,13 +232,13 @@ export class PlayerFiltersComponent implements OnInit {
 
   //FILTER BY COUNTRY CODE
   private filterByCountry(filterGroup: PlayerFilterGroup) {
-    console.log(this.filterForm);
+    // console.log(this.filterForm);
 
-    if (filterGroup.nationality === 'Please Choose...') {
-      this._filtersPlayers.next(this.resetPlayers);
-      this.playerService.setPlayers(this.resetPlayers);
-      return;
-    }
+    // if (filterGroup.nationality === 'Please Choose...') {
+    //   this._filtersPlayers.next(this.resetPlayers);
+    //   this.playerService.setPlayers(this.resetPlayers);
+    //   return;
+    // }
 
     if (filterGroup.nationality) {
       const nationality$ = this.countriesService.getCountries().pipe(
@@ -288,7 +284,6 @@ export class PlayerFiltersComponent implements OnInit {
       .getCountries(['name', 'flags'])
       .pipe(
         tap((c) => {
-          console.log(c);
           const array = (this.filters.find(
             (f) => f.name === 'nationality'
           )!.options = c.map((country) => country.name.common));

@@ -14,6 +14,7 @@ import { AuthService } from './toolbar/auth/auth.service';
 export class AppComponent {
   private icons = Icons;
   isAuth$!: Observable<boolean>;
+  uploadInterval = 24 * 60 * 60 * 1000;
 
   constructor(
     private authService: AuthService,
@@ -27,16 +28,22 @@ export class AppComponent {
     this.detectAuthStateFromToken();
     this.isAuth$ = this.authService.isAuth$;
     this.playerWebWorkerInit();
-
-    this.playerService.players$.subscribe((data) => console.log(data));
   }
 
   playerWebWorkerInit() {
+    const lastUpload = localStorage.getItem('lastPlayerUpload');
+    const elapseTimeSinceUpload = Number(new Date()) - +lastUpload!;
+
+    if (lastUpload && elapseTimeSinceUpload < this.uploadInterval) {
+      return;
+    }
+
     if (typeof Worker !== 'undefined') {
       const worker = new Worker(new URL('./players.worker', import.meta.url));
       worker.onmessage = ({ data }) => {
         this.playerService.setPlayers(data);
         localStorage.setItem('players', JSON.stringify(data));
+        localStorage.setItem('lastPlayerUpload', Number(new Date()).toString());
       };
       worker.postMessage('players uploaded');
     } else {
