@@ -1,30 +1,41 @@
 export interface SelectFilter {
-  name: string;
+  name: PlayerFilterType;
   icon: string;
   options?: any[];
 }
 
+export enum PlayerFilterType {
+  'POSITION' = 'position',
+  'NATIONALITY' = 'nationality',
+  'TEAM' = 'team',
+  'HAND' = 'hand',
+  'ROOKIE_STATUS' = 'rookie',
+}
+
 export const PlayerFilterData: SelectFilter[] = [
   {
-    name: 'position',
+    name: PlayerFilterType.POSITION,
     icon: 'matchup',
+    options: ['Please Choose...'],
   },
   {
-    name: 'nationality',
+    name: PlayerFilterType.NATIONALITY,
     icon: 'flag',
+    options: ['Please Choose...'],
   },
   {
-    name: 'team',
+    name: PlayerFilterType.TEAM,
     icon: 'team',
+    options: ['Please Choose...'],
   },
   {
-    name: 'hand',
+    name: PlayerFilterType.HAND,
     icon: 'side',
-    options: ['Left', 'Right'],
+    options: ['Please Choose...', 'Left', 'Right'],
   },
   {
-    name: 'rookie',
+    name: PlayerFilterType.ROOKIE_STATUS,
     icon: 'baby',
-    options: ['No', 'Yes'],
+    options: ['Please Choose...', 'No', 'Yes'],
   },
 ];

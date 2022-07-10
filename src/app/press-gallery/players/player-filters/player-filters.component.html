@@ -17,9 +17,10 @@
               <label class="select__label--text">{{ filter.name }}</label>
             </div>
             <mat-icon
+              *ngIf="(filterStatus$ | async)![filter.name]"
               (click)="onResetIndividualFilter(filter.name)"
               svgIcon="close"
-              class="select__label--close"
+              class="select__label--close animate__animated__fadeIn"
             ></mat-icon>
           </div>
 
@@ -28,7 +29,6 @@
             #selectEl
             class="select__selector"
           >
-            <option>Please Choose...</option>
             <option *ngFor="let option of filter.options">
               <span>{{ option }}</span>
             </option>

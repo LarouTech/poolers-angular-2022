@@ -7,9 +7,9 @@ import {
   take,
   tap,
   forkJoin,
-  Observable,
   BehaviorSubject,
-  timestamp,
+  Observable,
+  switchMap,
 } from 'rxjs';
 import { Player } from 'src/app/nhl/interfaces/player.interface';
 import { NhlConfigurationsService } from 'src/app/nhl/nhl-configurations.service';
@@ -18,9 +18,9 @@ import { TeamsService } from 'src/app/nhl/teams.service';
 import { CountriesService } from 'src/app/services/countries.service';
 import { Paginator } from 'src/app/shared/components/paginator/paginator.component';
 import { PaginatorService } from 'src/app/shared/components/paginator/paginator.service';
-import { PlayerFilterData, SelectFilter } from './player-filter.metadata';
+import { PlayerFilterData, PlayerFilterType } from './player-filter.metadata';
 
-export interface PlayerFilterGroup {
+export interface PlayerFiltersSelection {
   hand: string;
   nationality: string;
   position: string;
@@ -34,13 +34,30 @@ export interface PlayerFilterGroup {
   styleUrls: ['./player-filters.component.scss'],
 })
 export class PlayerFiltersComponent implements OnInit {
-  filters: SelectFilter[] = PlayerFilterData;
+  filters = PlayerFilterData;
   filterForm!: FormGroup;
-  unfilteredPlayers!: Observable<Player[]>;
-  private resetPlayers = JSON.parse(
+  private _initialPlayerSet = new BehaviorSubject<Player[]>(null!);
+
+  private defaultSelectValue = 'Please Choose...';
+  private staticPlayersSet = JSON.parse(
     localStorage.getItem('players')!
   ) as Player[];
-  private _filtersPlayers = new BehaviorSubject<Player[]>(this.resetPlayers);
+
+  initFilterStatus: PlayerFiltersSelection = {
+    position: null!,
+    nationality: null!,
+    hand: null!,
+    rookie: null!,
+    team: null!,
+  };
+
+  private _filterStatus = new BehaviorSubject<PlayerFiltersSelection>(
+    this.initFilterStatus
+  );
+
+  get filterStatus$(): Observable<PlayerFiltersSelection> {
+    return this._filterStatus.asObservable();
+  }
 
   constructor(
     private countriesService: CountriesService,
@@ -51,101 +68,121 @@ export class PlayerFiltersComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.unfilteredPlayers = this.playerService.players$;
     this.initFiltersLovs();
     this.filterFormConstructor();
   }
 
   onResetIndividualFilter(filterName: string) {
-    this.filterForm.get(filterName)?.setValue('Please Choose...');
+    this.playerService.setPlayers(this.staticPlayersSet);
+    const resetFilter$ = this.filterStatus$.pipe(
+      take(1),
+      map((filters) => {
+        if (filterName === PlayerFilterType.POSITION) filters.position = null!;
+        if (filterName === PlayerFilterType.NATIONALITY)
+          filters.nationality = null!;
+        if (filterName === PlayerFilterType.TEAM) filters.team = null!;
+        if (filterName === PlayerFilterType.HAND) filters.hand = null!;
+        if (filterName === PlayerFilterType.ROOKIE_STATUS)
+          filters.rookie = null!;
 
-    const formControls = Object.keys(this.filterForm.controls).filter(
-      (control) => control
-    ) as string[];
+        this.filterForm.get(filterName)?.setValue(this.defaultSelectValue);
+        this._filterStatus.next(filters);
+        this.filterHandler();
+      })
+    );
 
-    const filterGroup: any = {};
-
-    formControls.forEach((control) => {
-      filterGroup[control] = this.filterForm.get(control)?.value;
-    });
-
-    if (filterName === 'position') this.filterByPosition(filterGroup);
-    if (filterName === 'nationality') this.filterByPosition(filterGroup);
-
-    filterName != 'position' ? this.filterByPosition(filterGroup) : null;
-    filterName != 'nationality' ? this.filterByCountry(filterGroup) : null;
-    this.filterByTeam(filterGroup);
-
-    this.filterByRookieStatus(filterGroup);
-    this.filterByHandSide(filterGroup);
+    lastValueFrom(resetFilter$);
   }
 
   //RESET FILTERS
   onResetFilters() {
-    this.playerService.setPlayers(
-      JSON.parse(localStorage.getItem('players')!) as Player[]
-    );
-    this.filterForm.reset();
-    this.filterForm.get('nationality')?.setValue('Please Choose...');
-    this.filterForm.get('hand')?.setValue('Please Choose...');
-    this.filterForm.get('team')?.setValue('Please Choose...');
-    this.filterForm.get('position')?.setValue('Please Choose...');
-    this.filterForm.get('rookie')?.setValue('Please Choose...');
+    this._filterStatus.next(this.initFilterStatus);
+
+    Object.values(this.filters).forEach((item) => {
+      this.filterForm.get(item.name)?.setValue(this.defaultSelectValue);
+    });
+
+    this._initialPlayerSet.next(null!);
+    this.playerService.setPlayers(this.staticPlayersSet);
+  }
+
+  //SET FORM CONTROL
+  private setFilterControl(filterType: PlayerFilterType) {
+    return this.filterForm.get(filterType)?.value === this.defaultSelectValue
+      ? null
+      : this.filterForm.get(filterType)?.value;
   }
 
   //ON APPLY FILTER
   onApplyFilters() {
-    this._filtersPlayers.next(this.resetPlayers);
-    const filterGroup: PlayerFilterGroup = {
-      nationality: this.filterForm.get('nationality')?.value,
-      hand: this.filterForm.get('hand')?.value,
-      team: this.filterForm.get('team')?.value,
-      rookie: this.filterForm.get('rookie')?.value,
-      position: this.filterForm.get('position')?.value,
+    const filterStatus: PlayerFiltersSelection = {
+      position: this.setFilterControl(PlayerFilterType.POSITION),
+      nationality: this.setFilterControl(PlayerFilterType.NATIONALITY),
+      team: this.setFilterControl(PlayerFilterType.TEAM),
+      rookie: this.setFilterControl(PlayerFilterType.ROOKIE_STATUS),
+      hand: this.setFilterControl(PlayerFilterType.HAND),
     };
 
-    this.filterByRookieStatus(filterGroup);
-    this.filterByHandSide(filterGroup);
-    this.filterByPosition(filterGroup);
-    this.filterByTeam(filterGroup);
-    this.filterByCountry(filterGroup);
-
-    // lastValueFrom(this._filtersPlayers.asObservable());
+    this.playerService.setPlayers(this.staticPlayersSet);
+    this._filterStatus.next(filterStatus);
+    this.filterHandler();
   }
 
-  //ON SERACH PLAYER (STILL HAVE BUGS WITH PAGINATOR)
-  onSearchPlayer(event: any) {
-    const playersCopy = JSON.parse(
-      localStorage.getItem('players')!
-    ) as Player[];
-
-    const filteredPlayers$ = this.playerService.players$.pipe(
+  //FILTER HANDLER
+  private filterHandler() {
+    const filteredPlayers$ = this.filterStatus$.pipe(
       take(1),
-      debounceTime(300),
-      map((players) => {
-        if (event.length <= 0) {
-          this.playerService.setPlayers(playersCopy);
-          return players;
-        }
+      switchMap((filter) => {
+        return this.playerService.players$.pipe(
+          take(1),
+          switchMap((players) => {
+            return this.countriesService.getCountries().pipe(
+              map((countries) => {
+                console.log(filter);
 
-        const searchPlayers = playersCopy.filter((s) => {
-          if (s.fullName.toLowerCase().includes(event)) {
-            return s;
-          }
-          return;
-        });
+                if (filter.position) {
+                  players = players.filter(
+                    (player) => player.primaryPosition.name === filter.position
+                  );
+                }
 
-        const pagination: Paginator = {
-          data: [searchPlayers],
-          numberOfItems: searchPlayers.length,
-          pages: 1,
-          paginatorIndex: 0,
-          lastChunkIndexes: 0,
-        };
+                if (filter.nationality) {
+                  const countryAbrev = countries.find(
+                    (country) => country.name.common === filter.nationality
+                  )?.cca3;
 
-        this.paginatorService.setPaginator(pagination);
-        this.playerService.setPlayers(searchPlayers);
-        return searchPlayers;
+                  players = players.filter(
+                    (player) => player.nationality === countryAbrev
+                  );
+                }
+
+                if (filter.team) {
+                  players = players.filter(
+                    (player) => player.currentTeam.name === filter.team
+                  );
+                }
+
+                if (filter.hand) {
+                  const filterConverter = filter.hand === 'Left' ? 'L' : 'R';
+
+                  players = players.filter(
+                    (player) => player.shootsCatches === filterConverter
+                  );
+                }
+
+                if (filter.rookie) {
+                  const filterConverter =
+                    filter.rookie === 'Yes' ? true : false;
+                  players = players.filter(
+                    (player) => player.rookie === filterConverter
+                  );
+                }
+
+                this.playerService.setPlayers(players);
+              })
+            );
+          })
+        );
       })
     );
 
@@ -163,132 +200,43 @@ export class PlayerFiltersComponent implements OnInit {
     this.filterForm = new FormGroup(formControls);
   }
 
-  //FILTER BY ROOKIE STATUS
-  private filterByRookieStatus(filterGroup: PlayerFilterGroup) {
-    if (filterGroup.rookie) {
-      let players = this._filtersPlayers.getValue();
-
-      const value = filterGroup.rookie === 'Yes' ? true : false;
-
-      players = players.filter((player) => player.rookie === value);
-
-      this._filtersPlayers.next(players);
-      this.playerService.setPlayers(players);
-    }
-  }
-
-  //FILTER BY SHOOTING OR CATCHING HAND
-  private filterByHandSide(filterGroup: PlayerFilterGroup) {
-    if (filterGroup.hand) {
-      let players = this._filtersPlayers.getValue();
-      filterGroup.hand = filterGroup.hand === 'Left' ? 'L' : 'R';
-
-      players = players.filter(
-        (player) => player.shootsCatches === filterGroup.hand
-      );
-
-      this._filtersPlayers.next(players);
-      this.playerService.setPlayers(players);
-    }
-  }
-
-  //FILTER BY POSITION
-  private filterByPosition(filterGroup: PlayerFilterGroup) {
-    if (filterGroup.position === 'Please Choose...') {
-      this._filtersPlayers.next(this.resetPlayers);
-      this.playerService.setPlayers(this.resetPlayers);
-      return;
-    }
-
-    if (filterGroup.position) {
-      let players = this._filtersPlayers.getValue();
-
-      players = players.filter(
-        (player) => player.primaryPosition.name === filterGroup.position
-      );
-
-      this._filtersPlayers.next(players);
-      this.playerService.setPlayers(players);
-    }
-  }
-
-  //FILTER BY TEAM
-  private filterByTeam(filterGroup: PlayerFilterGroup) {
-    if (filterGroup.team) {
-      let players = this._filtersPlayers.getValue();
-
-      players = players.filter((player) => {
-        if (player.currentTeam) {
-          return player.currentTeam.name === filterGroup.team;
-        }
-
-        return;
-      });
-
-      this._filtersPlayers.next(players);
-      this.playerService.setPlayers(players);
-    }
-  }
-
-  //FILTER BY COUNTRY CODE
-  private filterByCountry(filterGroup: PlayerFilterGroup) {
-    // console.log(this.filterForm);
-
-    // if (filterGroup.nationality === 'Please Choose...') {
-    //   this._filtersPlayers.next(this.resetPlayers);
-    //   this.playerService.setPlayers(this.resetPlayers);
-    //   return;
-    // }
-
-    if (filterGroup.nationality) {
-      const nationality$ = this.countriesService.getCountries().pipe(
-        map((countries) => {
-          const countryCode = countries.find(
-            (c) => c.name.common === filterGroup.nationality
-          )?.cca3;
-
-          let players = this._filtersPlayers.getValue();
-          players = players.filter(
-            (player) => player.nationality === countryCode
-          );
-
-          this._filtersPlayers.next(players);
-          this.playerService.setPlayers(players);
-        })
-      );
-
-      lastValueFrom(nationality$);
-    }
-  }
-
   //LOAD SELECT INPUT OPTIONS FOR AVAILBALE FILTERS
   private initFiltersLovs() {
     const initPositionsLov$ = this.nhlConfig.getPositions().pipe(
-      tap((p) => {
-        let array = (this.filters.find((f) => f.name === 'position')!.options =
-          p.map((p) => p.fullName));
-        this.stringSorter(array);
+      tap((positions) => {
+        let array = this.filters.find(
+          (filter) => filter.name === PlayerFilterType.POSITION
+        )?.options;
+
+        const positionsName = positions.map((position) => position.fullName);
+        this.stringSorter(positionsName!);
+        array!.push(...positionsName);
       })
     );
 
     const initTeamsLov$ = this.teamService.getTeams().pipe(
-      tap((t) => {
-        const array = (this.filters.find((f) => f.name === 'team')!.options =
-          t.map((t) => t.name));
+      tap((teams) => {
+        let array = this.filters.find(
+          (filter) => filter.name === PlayerFilterType.TEAM
+        )?.options;
 
-        this.stringSorter(array);
+        const teamName = teams.map((team) => team.name);
+        this.stringSorter(teamName!);
+        array!.push(...teamName);
       })
     );
 
     const initCountriesLov$ = this.countriesService
       .getCountries(['name', 'flags'])
       .pipe(
-        tap((c) => {
-          const array = (this.filters.find(
-            (f) => f.name === 'nationality'
-          )!.options = c.map((country) => country.name.common));
+        tap((countries) => {
+          let array = this.filters.find(
+            (filter) => filter.name === PlayerFilterType.NATIONALITY
+          )?.options;
 
-          this.stringSorter(array);
+          const countryName = countries.map((country) => country.name.common);
+          this.stringSorter(countryName!);
+          array!.push(...countryName);
         })
       );
 
@@ -326,5 +274,50 @@ export class PlayerFiltersComponent implements OnInit {
         sensitivity: 'base',
       });
     });
+  }
+
+  //ON SERACH PLAYER (STILL HAVE BUGS WITH PAGINATOR)
+  onSearchPlayer(event: any) {
+    const playersCopy = JSON.parse(
+      localStorage.getItem('players')!
+    ) as Player[];
+
+    const filteredPlayers$ = this.playerService.players$.pipe(
+      take(1),
+      debounceTime(300),
+      map((players) => {
+        if (this._initialPlayerSet.getValue() === null) {
+          this._initialPlayerSet.next(players);
+        }
+
+        console.log(this._initialPlayerSet.getValue());
+
+        if (event.length <= 0) {
+          this.playerService.setPlayers(this._initialPlayerSet.getValue());
+          return players;
+        }
+
+        const searchPlayers = players.filter((s) => {
+          if (s.fullName.toLowerCase().includes(event)) {
+            return s;
+          }
+          return;
+        });
+
+        const pagination: Paginator = {
+          data: [searchPlayers],
+          numberOfItems: searchPlayers.length,
+          pages: 1,
+          paginatorIndex: 0,
+          lastChunkIndexes: 0,
+        };
+
+        this.paginatorService.setPaginator(pagination);
+        this.playerService.setPlayers(searchPlayers);
+        return searchPlayers;
+      })
+    );
+
+    lastValueFrom(filteredPlayers$);
   }
 }

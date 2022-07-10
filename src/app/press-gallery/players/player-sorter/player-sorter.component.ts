@@ -66,9 +66,6 @@ export class PlayerSorterComponent implements OnInit {
     return this.playerService.players$.pipe(
       take(1),
       map((players) => {
-        const test = array.find((player) => player.id === 8478400);
-        console.log(test);
-
         const sorted = array.sort((a: any, b: any) => {
           const attrTransformer = attr.split('.');
 

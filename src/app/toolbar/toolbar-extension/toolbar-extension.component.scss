@@ -10,6 +10,7 @@
   background-image: url(../../../assets/images/colorado_bench.jpg);
   box-shadow: 0 0.4rem 0.3rem rgba(#000, 0.2);
   filter: grayscale(60%);
+  transition: 0.1s ease-in-out;
 }
 
 .list {

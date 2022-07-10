@@ -1,4 +1,4 @@
-<div *ngIf="isAuth$ | async" class="extensionContainer">
+<div *ngIf="isAuth$ | async" #containerEl class="extensionContainer">
   <ul class="list">
     <div class="list__box animate__animated animate__slideInRight">
       <ng-container *ngIf="isMenuShow$ | async">
@@ -20,7 +20,7 @@
           <span class="list__item--text">back</span>
         </li>
         <li class="list__item">
-          <span class="list__item--text">game details</span>
+          <span class="list__item--text">{{ pageTitle$ | async }}</span>
           <mat-icon class="list__item--icon" svgIcon="arrow_down"></mat-icon>
         </li>
       </div>
