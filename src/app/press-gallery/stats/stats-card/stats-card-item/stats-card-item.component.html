@@ -1,5 +1,8 @@
 <div class="container">
   <div class="container__left">
+    <span class="container__left--rank">{{
+      "# " + ((hoverIndex$ | async)! + 1 | number: "1.0-0")
+    }}</span>
     <div class="leader">
       <div class="avatar">
         <img

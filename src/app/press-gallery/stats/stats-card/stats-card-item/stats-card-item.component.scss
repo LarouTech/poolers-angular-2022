@@ -12,6 +12,16 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    position: relative;
+
+    &--rank {
+      position: absolute;
+      top: 2rem;
+      left: 2rem;
+      font-size: 3.5rem;
+      font-weight: 500;
+      color: var(--dark600);
+    }
   }
 
   &__right {

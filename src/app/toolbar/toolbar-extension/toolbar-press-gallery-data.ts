@@ -7,7 +7,7 @@ export const PRESS_GALLERY_DATA: MenuData[] = [
     icon: 'player',
   },
   {
-    name: 'stats',
+    name: 'league leaders',
     route: '/press-gallery/stats',
     icon: 'stats',
   },
