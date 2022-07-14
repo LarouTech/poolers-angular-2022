@@ -1,5 +1,36 @@
-<default-layout [top]="4.5">
-  <screen-title-panel name="stats" icon="stats"
-    >CONTROL PANEL</screen-title-panel
+<default-layout [top]="6.5">
+  <screen-title-panel
+    name="players stats"
+    icon="stats"
+    backgroundColor="#e6e6f5"
   >
+    <season-picker></season-picker>
+
+    <ul class="menu">
+      <li
+        routerLinkActive="menu__item--active"
+        [routerLink]="['', 'press-gallery', 'stats', 'home']"
+        class="menu__item"
+      >
+        home
+      </li>
+      <li
+        routerLinkActive="menu__item--active"
+        [routerLink]="['', 'press-gallery', 'stats', 'skaters']"
+        class="menu__item"
+      >
+        skaters
+      </li>
+      <li
+        routerLinkActive="menu__item--active"
+        [routerLink]="['', 'press-gallery', 'stats', 'teams']"
+        class="menu__item"
+      >
+        teams
+      </li>
+      <li class="menu__item">glossary</li>
+    </ul>
+  </screen-title-panel>
+
+  <router-outlet></router-outlet>
 </default-layout>

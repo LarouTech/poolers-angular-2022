@@ -1,0 +1,36 @@
+.container {
+  padding-top: 3.5rem;
+  width: 100%;
+}
+
+.row {
+  width: 100%;
+  display: flex;
+
+  &__col {
+    width: 50%;
+    height: 45rem;
+    border-radius: 0.4rem;
+    padding: 2rem;
+    background-color: var(--grey50);
+    border: solid 0.1rem var(--grey300);
+
+    &--1 {
+      margin-right: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    &--2 {
+      margin-bottom: 2rem;
+    }
+
+    &--3 {
+      margin-right: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    &--4 {
+      margin-bottom: 2rem;
+    }
+  }
+}

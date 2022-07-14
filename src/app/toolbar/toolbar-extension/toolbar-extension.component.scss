@@ -99,9 +99,10 @@
 
 .press {
   // height: 4rem;
-  background-color: var(--primary200);
+  background-color: var(--primary50);
   padding: 0rem calc(var(--padding-horizontal) * 2);
-  border-bottom: 0.1rem solid rgba(#000, 0.2);
+  border-bottom: 0.1rem solid rgba(#000, 0.4);
+
 }
 
 .gallery-list {
@@ -126,7 +127,7 @@
     border-top-right-radius: 1rem;
     border: 0.1rem solid rgba(#101359, 0.2);
     border-bottom: none;
-    background-color: var(--primary50);
+    background-color: var(--primary200);
 
     &--text {
       text-transform: capitalize;
@@ -152,5 +153,5 @@
   background-color: #fff;
   border: 0.1rem solid rgba(#101359, 0.4);
   border-bottom: none;
-  transform: scale(1.05);
+  // transform: scale(1.05);
 }

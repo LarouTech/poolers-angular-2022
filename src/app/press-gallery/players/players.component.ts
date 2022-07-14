@@ -28,16 +28,7 @@ export class PlayersComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.players$ = this.playerServivce.players$.pipe(
-      map((players) => {
-        if (!players) {
-          const staticPlayers = JSON.parse(localStorage.getItem('players')!);
-          this.playerServivce.setPlayers(staticPlayers);
-          return staticPlayers;
-        }
-        return players;
-      })
-    );
+    this.players$ = this.playerServivce.players$;
   }
 
   ngAfterContentChecked(): void {

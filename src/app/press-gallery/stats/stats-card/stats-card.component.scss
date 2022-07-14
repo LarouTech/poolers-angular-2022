@@ -1,0 +1,46 @@
+.card {
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    &--icon {
+      margin-right: 0.5rem;
+      height: 2.5rem;
+      width: 2.5rem;
+    }
+
+    &--text {
+      text-transform: capitalize;
+      font-size: 2.5rem;
+      font-weight: 500;
+      letter-spacing: 0.1rem;
+    }
+  }
+}
+
+.navigator {
+  padding: 2rem 0rem;
+
+  &__list {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    list-style: none;
+  }
+
+  &__item:not(:last-child) {
+    margin-right: 1.8rem;
+  }
+
+  &__item {
+    &--text {
+      font-size: 1.6rem;
+      text-transform: uppercase;
+      color: var(--dark500);
+      letter-spacing: 0.1rem;
+      font-weight: 500;
+    }
+  }
+}

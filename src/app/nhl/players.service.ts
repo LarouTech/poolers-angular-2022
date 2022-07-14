@@ -9,8 +9,9 @@ import { tap, map } from 'rxjs';
   providedIn: 'root',
 })
 export class PlayersService {
+  cachePlayers = JSON.parse(localStorage.getItem('players')!) as Player[];
   private url = `${environment.nhlApi}/players`;
-  private _players = new BehaviorSubject<Player[]>(null!);
+  private _players = new BehaviorSubject<Player[]>(this.cachePlayers);
 
   get players$(): Observable<Player[]> {
     return this._players.asObservable();
@@ -29,16 +30,43 @@ export class PlayersService {
     );
   }
 
-  shuffleFisherYates(array: Player[]) {
-    let i = array.length;
-    while (i--) {
-      const ri = Math.floor(Math.random() * i);
-      [array[i], array[ri]] = [array[ri], array[i]];
-    }
-    return array;
-  }
-
   setPlayers(players: Player[]) {
     this._players.next(players);
+  }
+
+  getSkaters() {
+    return this.players$.pipe(
+      map((players) => {
+        players = players.filter(
+          (player) =>
+            player.primaryPosition.code === 'L' ||
+            player.primaryPosition.code === 'R' ||
+            player.primaryPosition.code === 'C'
+        );
+        return players;
+      })
+    );
+  }
+
+  getDefensemen() {
+    return this.players$.pipe(
+      map((players) => {
+        players = players.filter(
+          (player) => player.primaryPosition.code === 'D'
+        );
+        return players;
+      })
+    );
+  }
+
+  getGoalies() {
+    return this.players$.pipe(
+      map((players) => {
+        players = players.filter(
+          (player) => player.primaryPosition.code === 'G'
+        );
+        return players;
+      })
+    );
   }
 }

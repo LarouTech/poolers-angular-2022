@@ -6,7 +6,6 @@ import {
   trigger,
 } from '@angular/animations';
 import { Location } from '@angular/common';
-import { StringMapWithRename } from '@angular/compiler/src/compiler_facade_interface';
 import {
   Component,
   ElementRef,
@@ -15,19 +14,11 @@ import {
   Renderer2,
   ViewChild,
 } from '@angular/core';
-import {
-  ActivatedRoute,
-  NavigationEnd,
-  Router,
-  RouterEvent,
-} from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import {
   BehaviorSubject,
   lastValueFrom,
   Observable,
-  of,
-  take,
-  tap,
   map,
   filter,
   fromEvent,
@@ -103,20 +94,22 @@ export class ToolbarExtensionComponent implements OnInit {
   ajustExtensionOnScroll() {
     const eventController$ = fromEvent(window, 'scroll').pipe(
       map((event) => {
-        if (window.pageYOffset >= 0 && window.pageXOffset <= 10) {
-          this.renderer.setStyle(
-            this.containerEl.nativeElement,
-            'height',
-            '15rem'
-          );
-        }
+        if (this.containerEl) {
+          if (window.pageYOffset >= 0 && window.pageXOffset <= 10) {
+            this.renderer.setStyle(
+              this.containerEl.nativeElement,
+              'height',
+              '15rem'
+            );
+          }
 
-        if (window.pageYOffset > 150) {
-          this.renderer.setStyle(
-            this.containerEl.nativeElement,
-            'height',
-            '3.5rem'
-          );
+          if (window.pageYOffset > 150) {
+            this.renderer.setStyle(
+              this.containerEl.nativeElement,
+              'height',
+              '3.5rem'
+            );
+          }
         }
       })
     );
@@ -134,6 +127,9 @@ export class ToolbarExtensionComponent implements OnInit {
           (res as NavigationEnd).url === '/press-gallery' ||
           (res as NavigationEnd).url === '/press-gallery/players' ||
           (res as NavigationEnd).url === '/press-gallery/stats' ||
+          (res as NavigationEnd).url === '/press-gallery/stats/home' ||
+          (res as NavigationEnd).url === '/press-gallery/stats/skaters' ||
+          (res as NavigationEnd).url === '/press-gallery/stats/teams' ||
           (res as NavigationEnd).url === '/press-gallery/teams' ||
           (res as NavigationEnd).url === '/press-gallery/standing'
         ) {

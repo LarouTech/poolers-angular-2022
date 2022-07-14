@@ -1,0 +1,31 @@
+.menu {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  list-style: none;
+  margin-top: 2rem;
+
+  &__item:not(:last-child) {
+    margin-right: 1.2rem;
+  }
+
+  &__item {
+    text-transform: uppercase;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.2s ease-in;
+    padding: 0.5rem 1rem;
+    border-radius: 0.4rem;
+    color: var(--dark500);
+
+    &--active {
+      background-color: var(--primary500);
+      color: var(--grey50);
+    }
+  }
+
+  // &__item:hover {
+  //   background-color: var(--grey200);
+  //   color: var(--primary500);
+  // }
+}

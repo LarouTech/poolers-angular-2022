@@ -39,9 +39,6 @@ export class PlayerFiltersComponent implements OnInit {
   private _initialPlayerSet = new BehaviorSubject<Player[]>(null!);
 
   private defaultSelectValue = 'Please Choose...';
-  private staticPlayersSet = JSON.parse(
-    localStorage.getItem('players')!
-  ) as Player[];
 
   initFilterStatus: PlayerFiltersSelection = {
     position: null!,
@@ -73,7 +70,7 @@ export class PlayerFiltersComponent implements OnInit {
   }
 
   onResetIndividualFilter(filterName: string) {
-    this.playerService.setPlayers(this.staticPlayersSet);
+    this.playerService.setPlayers(this.playerService.cachePlayers);
     const resetFilter$ = this.filterStatus$.pipe(
       take(1),
       map((filters) => {
@@ -103,7 +100,7 @@ export class PlayerFiltersComponent implements OnInit {
     });
 
     this._initialPlayerSet.next(null!);
-    this.playerService.setPlayers(this.staticPlayersSet);
+    this.playerService.setPlayers(this.playerService.cachePlayers);
   }
 
   //SET FORM CONTROL
@@ -123,7 +120,7 @@ export class PlayerFiltersComponent implements OnInit {
       hand: this.setFilterControl(PlayerFilterType.HAND),
     };
 
-    this.playerService.setPlayers(this.staticPlayersSet);
+    this.playerService.setPlayers(this.playerService.cachePlayers);
     this._filterStatus.next(filterStatus);
     this.filterHandler();
   }
@@ -278,10 +275,6 @@ export class PlayerFiltersComponent implements OnInit {
 
   //ON SERACH PLAYER (STILL HAVE BUGS WITH PAGINATOR)
   onSearchPlayer(event: any) {
-    const playersCopy = JSON.parse(
-      localStorage.getItem('players')!
-    ) as Player[];
-
     const filteredPlayers$ = this.playerService.players$.pipe(
       take(1),
       debounceTime(300),

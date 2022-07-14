@@ -1,0 +1,14 @@
+<div class="card">
+  <div class="card__header">
+    <mat-icon class="card__header--icon" [svgIcon]="icon"></mat-icon>
+    <span class="card__header--text">{{ title }}</span>
+  </div>
+
+  <div class="navigator">
+    <ul class="navigator__list">
+      <li *ngFor="let item of navigatorMenuItems" class="navigator__item">
+        <span class="navigator__item--text">{{ item }}</span>
+      </li>
+    </ul>
+  </div>
+</div>
