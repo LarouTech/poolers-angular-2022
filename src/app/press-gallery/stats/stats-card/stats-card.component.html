@@ -6,9 +6,30 @@
 
   <div class="navigator">
     <ul class="navigator__list">
-      <li *ngFor="let item of navigatorMenuItems" class="navigator__item">
-        <span class="navigator__item--text">{{ item }}</span>
+      <li
+        (click)="onChangeTab(item.name)"
+        *ngFor="let item of navigationState$ | async"
+        class="navigator__item"
+        [ngClass]="{ 'navigator__item--selected': item.state }"
+      >
+        <span
+          [ngClass]="{ 'navigator__item--text-selected': item.state }"
+          class="navigator__item--text"
+          >{{ item.name }}</span
+        >
       </li>
     </ul>
+  </div>
+
+  <div class="card__content">
+    <div *ngFor="let item of navigationState$ | async" class="card__tab">
+      <stats-card-item
+        [players]="players$"
+        *ngIf="item.state"
+        [sortBy]="item.sorter!"
+        [descending]="item.descending"
+        [filterName]="item.name"
+      ></stats-card-item>
+    </div>
   </div>
 </div>

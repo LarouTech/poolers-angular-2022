@@ -7,7 +7,7 @@ export interface PlayerStats {
       postseason: string | boolean;
     };
   };
-  splits: PlayerStatsProperties;
+  splits: PlayerStatsProperties[];
 }
 
 export interface PlayerStatsProperties {

@@ -41,9 +41,21 @@ export class PlayersService {
           (player) =>
             player.primaryPosition.code === 'L' ||
             player.primaryPosition.code === 'R' ||
-            player.primaryPosition.code === 'C'
+            player.primaryPosition.code === 'C' ||
+            player.primaryPosition.code === 'D'
         );
         return players;
+      })
+    );
+  }
+
+  getRookieSkaters() {
+    return this.players$.pipe(
+      map((players) => {
+        return players.filter(
+          (player) =>
+            player.rookie === true && player.primaryPosition.code != 'Gg'
+        );
       })
     );
   }

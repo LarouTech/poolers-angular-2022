@@ -1,4 +1,28 @@
 import { Component, Input, OnInit } from '@angular/core';
+import {
+  BehaviorSubject,
+  Observable,
+  map,
+  lastValueFrom,
+  tap,
+  take,
+} from 'rxjs';
+import { Player } from 'src/app/nhl/interfaces/player.interface';
+import { PlayersService } from 'src/app/nhl/players.service';
+import {
+  DEFENSEMEN_INIT_STATE,
+  GOALIE_INIT_STATE,
+  NavigationState,
+  ROOKIE_INIT_STATE,
+  SKATER_INIT_STATE,
+} from './stats-card-data';
+
+export enum StatsType {
+  'SKATERS' = 'skaters',
+  'GOALIES' = 'goalies',
+  'DEFENSEMEN' = 'defensemen',
+  'ROOKIE' = 'rookie',
+}
 
 @Component({
   selector: 'stats-card',
@@ -8,13 +32,63 @@ import { Component, Input, OnInit } from '@angular/core';
 export class StatsCardComponent implements OnInit {
   @Input('title') title!: string;
   @Input('icon') icon!: string;
-  @Input('navigatorMenuItems') navigatorMenuItems: string[] = [
-    'points',
-    'goals',
-    'assists',
-  ];
+  @Input('navigatorMenuItems') navigatorMenuItems!: string[];
+  @Input('statsType') statsType!: StatsType;
+  players$!: Observable<Player[]>;
 
-  constructor() {}
+  private _navigationState = new BehaviorSubject<NavigationState[]>(null!);
 
-  ngOnInit(): void {}
+  get navigationState$(): Observable<NavigationState[]> {
+    return this._navigationState.asObservable();
+  }
+
+  constructor(private playerService: PlayersService) {}
+
+  ngOnInit(): void {
+    this.getPlayersData();
+  }
+
+  getPlayersData(): void {
+    switch (this.statsType) {
+      case StatsType.SKATERS:
+        this.players$ = this.playerService.getSkaters();
+        this._navigationState.next(SKATER_INIT_STATE);
+        break;
+      case StatsType.GOALIES:
+        this.players$ = this.playerService.getGoalies();
+        this._navigationState.next(GOALIE_INIT_STATE);
+        break;
+      case StatsType.DEFENSEMEN:
+        this.players$ = this.playerService.getDefensemen();
+        this._navigationState.next(DEFENSEMEN_INIT_STATE);
+        break;
+      case StatsType.ROOKIE:
+        this.players$ = this.playerService.getRookieSkaters();
+        this._navigationState.next(ROOKIE_INIT_STATE);
+        break;
+      default:
+        break;
+    }
+  }
+
+  onChangeTab(item: string): void {
+    const updatedState$ = this.navigationState$.pipe(
+      take(1),
+      map((navigationState) => {
+        const updatedState = navigationState.map((state) => {
+          if (state.name === item) {
+            state.state = true;
+          } else {
+            state.state = false;
+          }
+          return state;
+        });
+
+        return updatedState;
+      }),
+      tap((data) => this._navigationState.next(data))
+    );
+
+    lastValueFrom(updatedState$);
+  }
 }

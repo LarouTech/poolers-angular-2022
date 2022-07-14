@@ -1,0 +1,161 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  height: 100%;
+  width: 100%;
+
+  &__left {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  &__right {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.list {
+  list-style: none;
+  height: 100%;
+  width: 100%;
+  padding-right: 3rem;
+
+  &__item:hover {
+    font-weight: 500;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 0rem;
+    cursor: pointer;
+    width: 100%;
+
+    &--box {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      width: 100%;
+    }
+
+    &--rank {
+      text-align: left;
+      width: 3rem;
+    }
+
+    &--top-rank {
+      font-weight: 600;
+      color: var(--primary800);
+    }
+
+    &--name {
+      letter-spacing: 0.05rem;
+    }
+  }
+}
+
+.leader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  position: relative;
+  width: 72%;
+}
+
+.avatar {
+  transform: translateY(-1.5rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  &__img {
+    width: 15rem;
+    border-radius: 10rem;
+    min-width: 5rem;
+    margin-bottom: 3rem;
+  }
+}
+
+.logo {
+  position: absolute;
+  min-width: 5rem;
+  bottom: 15rem;
+  right: 4.5rem;
+  width: 6rem;
+
+  &__logo-wrap {
+    position: absolute;
+    min-width: 5rem;
+    bottom: 13rem;
+    right: 9.5rem;
+    width: 6rem;
+  }
+}
+
+.info {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100%;
+  transform: translateY(-2rem);
+  padding-left: 5rem;
+  padding-right: 10rem;
+  margin-bottom: 0.5rem;
+
+  &__jersey {
+    font-size: 2.5rem;
+    margin-right: 1.5rem;
+    font-weight: 500;
+  }
+
+  &__name,
+  &__name:active,
+  &__name:link,
+  &__name:focus {
+    font-size: 1.6rem;
+    line-height: 1.2;
+    color: var(--dark800);
+  }
+}
+
+.team {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  transform: translateY(-2rem);
+
+  &__name {
+    font-size: 1.6rem;
+    margin-right: 0.5rem;
+    color: var(--dark800);
+  }
+
+  &__position {
+    font-size: 1.6rem;
+    font-weight: 500;
+  }
+}
+
+.stat {
+  text-align: center;
+  transform: translateY(-0.5rem);
+
+  &__name {
+    text-transform: uppercase;
+    font-size: 1.3rem;
+  }
+
+  &__value {
+    font-size: 4rem;
+    font-weight: 600;
+  }
+}

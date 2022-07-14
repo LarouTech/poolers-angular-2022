@@ -1,23 +1,39 @@
 <div class="container">
-  <div class="row">
+  <div class="row" [ngClass]="{ row__wrap: (innerWidth$ | async)! <= 1350 }">
     <div class="row__col row__col--1">
-      <stats-card title="skaters" icon="skate"></stats-card>
+      <stats-card
+        [navigatorMenuItems]="playerNavigatorItems"
+        title="skaters"
+        icon="skate"
+        [statsType]="skatersStatsType"
+      ></stats-card>
     </div>
     <div class="row__col row__col--2">
       <stats-card
         [navigatorMenuItems]="goaliesNavigatorItems"
         title="goalies"
         icon="goalie"
+        [statsType]="goalieStatsType"
       ></stats-card>
     </div>
   </div>
 
-  <div class="row">
+  <div class="row" [ngClass]="{ row__wrap: (innerWidth$ | async)! <= 1350 }">
     <div class="row__col row__col--3">
-      <stats-card title="defensemen" icon="shield"></stats-card>
+      <stats-card
+        [navigatorMenuItems]="playerNavigatorItems"
+        title="defensemen"
+        icon="shield"
+        [statsType]="defensemenStatsType"
+      ></stats-card>
     </div>
     <div class="row__col row__col--4">
-      <stats-card title="rookies" icon="baby"></stats-card>
+      <stats-card
+        [navigatorMenuItems]="playerNavigatorItems"
+        title="rookies"
+        icon="baby"
+        [statsType]="rookieStatsType"
+      ></stats-card>
     </div>
   </div>
 </div>
