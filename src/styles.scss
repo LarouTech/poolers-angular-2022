@@ -37,12 +37,3 @@ $pooler-ng-theme: mat.define-light-theme(
 @import "styles/test";
 @import "styles/default";
 @import "styles/mixins";
-
-html,
-body {
-  height: 100%;
-}
-body {
-  margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-}

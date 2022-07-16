@@ -6,9 +6,12 @@ import {
   lastValueFrom,
   tap,
   take,
+  switchMap,
+  of,
 } from 'rxjs';
 import { Player } from 'src/app/nhl/interfaces/player.interface';
 import { PlayersService } from 'src/app/nhl/players.service';
+import { ScheduleService } from 'src/app/schedule/schedule.service';
 import {
   DEFENSEMEN_INIT_STATE,
   GOALIE_INIT_STATE,
@@ -42,10 +45,15 @@ export class StatsCardComponent implements OnInit {
     return this._navigationState.asObservable();
   }
 
-  constructor(private playerService: PlayersService) {}
+  constructor(
+    private scheduleService: ScheduleService,
+    private playerService: PlayersService
+  ) {}
 
   ngOnInit(): void {
     this.getPlayersData();
+
+    this.players$.subscribe((data) => console.log(data));
   }
 
   getPlayersData(): void {

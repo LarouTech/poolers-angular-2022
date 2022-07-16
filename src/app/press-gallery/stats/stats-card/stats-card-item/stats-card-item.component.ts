@@ -1,7 +1,17 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Observable, map, take, BehaviorSubject } from 'rxjs';
+import {
+  Observable,
+  map,
+  take,
+  BehaviorSubject,
+  switchMap,
+  of,
+  tap,
+} from 'rxjs';
 import { FranchisesService } from 'src/app/nhl/franchises.service';
 import { Player } from 'src/app/nhl/interfaces/player.interface';
+import { PlayersService } from 'src/app/nhl/players.service';
+import { ScheduleService } from 'src/app/schedule/schedule.service';
 import { LayoutService } from 'src/app/services/layout.service';
 
 interface RenderedValue {
@@ -42,8 +52,9 @@ export class StatsCardItemComponent implements OnInit {
   renderingValue$!: Observable<RenderedValue[]>;
 
   constructor(
+    private playerService: PlayersService,
     private layoutService: LayoutService,
-    private franchiseService: FranchisesService
+    private scheduleService: ScheduleService
   ) {}
 
   ngOnInit(): void {

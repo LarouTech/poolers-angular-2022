@@ -25,6 +25,14 @@
     background-color: var(--grey50);
     border: solid 0.1rem var(--grey300);
 
+    @media screen and(max-width: 650px) {
+      height: 50rem;
+    }
+
+    @media screen and(max-width: 550px) {
+      height: 54rem;
+    }
+
     &--1 {
       margin-right: 2rem;
       margin-bottom: 2rem;

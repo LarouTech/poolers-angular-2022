@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -19,8 +19,10 @@ export class PlayersService {
 
   constructor(private http: HttpClient) {}
 
-  getPlayers(): Observable<Player[]> {
-    return this.http.get<Player[]>(`${this.url}/all`).pipe(
+  getPlayers(season?: number): Observable<Player[]> {
+    const params = new HttpParams().set('season', season!);
+
+    return this.http.get<Player[]>(`${this.url}/all`, { params }).pipe(
       map((players) => {
         return players;
       }),
@@ -54,7 +56,7 @@ export class PlayersService {
       map((players) => {
         return players.filter(
           (player) =>
-            player.rookie === true && player.primaryPosition.code != 'Gg'
+            player.rookie === true && player.primaryPosition.code != 'G'
         );
       })
     );
