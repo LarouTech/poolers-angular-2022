@@ -1,8 +1,6 @@
 /// <reference lib="webworker" />
 
 import axios from 'axios';
-
-import { Player } from 'src/app/nhl/interfaces/player.interface';
 import { environment } from 'src/environments/environment';
 
 function shuffleFisherYates(array: any[]) {
@@ -14,17 +12,36 @@ function shuffleFisherYates(array: any[]) {
   return array;
 }
 
-function getPlayers() {
+function getPlayers(season?: number) {
   const url = `${environment.nhlApi}/players`;
 
-  return axios.get(`${url}/all`).then((res: any) => {
+  return axios
+    .get(`${url}/all`, { params: { season: season } })
+    .then((res: any) => {
+      return res.data;
+    });
+}
+
+function getCurrentSeason() {
+  const url = `${environment.nhlApi}/seasons`;
+
+  return axios.get(url).then((res: any) => {
     return res.data;
   });
 }
 
 addEventListener('message', ({ data }) => {
-  getPlayers().then((players) => {
-    const response = shuffleFisherYates(players);
-    postMessage(response);
-  });
+  getCurrentSeason()
+    .then((res) => {
+      const numberOfSeasons = res.length;
+      const currentSeason = res[numberOfSeasons - 1];
+
+      return currentSeason;
+    })
+    .then((currentSeason) => {
+      getPlayers(+currentSeason.seasonId).then((players) => {
+        const response = shuffleFisherYates(players);
+        postMessage(response);
+      });
+    });
 });

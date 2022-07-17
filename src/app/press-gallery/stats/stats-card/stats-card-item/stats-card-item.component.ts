@@ -1,4 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  Input,
+  NgZone,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import {
   Observable,
   map,
@@ -7,8 +14,9 @@ import {
   switchMap,
   of,
   tap,
+  distinctUntilChanged,
 } from 'rxjs';
-import { FranchisesService } from 'src/app/nhl/franchises.service';
+import { Router } from '@angular/router';
 import { Player } from 'src/app/nhl/interfaces/player.interface';
 import { PlayersService } from 'src/app/nhl/players.service';
 import { ScheduleService } from 'src/app/schedule/schedule.service';
@@ -31,10 +39,10 @@ interface RenderedValue {
   styleUrls: ['./stats-card-item.component.scss'],
 })
 export class StatsCardItemComponent implements OnInit {
-  @Input('players') players$!: Observable<Player[]>;
   @Input('sortBy') sortBy!: string;
   @Input('descending') decending!: boolean;
   @Input('filterName') filterName!: string;
+  @Input('players') players$!: Observable<Player[]>;
 
   innerWidth$!: Observable<number>;
 
@@ -54,20 +62,22 @@ export class StatsCardItemComponent implements OnInit {
   constructor(
     private playerService: PlayersService,
     private layoutService: LayoutService,
-    private scheduleService: ScheduleService
+    private changeDetector: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
     this.renderingValue$ = this.playersSorter();
     this.innerWidth$ = this.layoutService.innerWidth$;
+
+    this.renderingValue$.subscribe((data) => console.log(data));
   }
 
-  onHoverItem(event: Event, index: number) {
-    this._hoverIndex.next(index);
+  ngAfterViewInit(): void {
+    this.renderingValue$ = this.playersSorter();
   }
 
-  onLeaveItem() {
-    this._hoverIndex.next(this._selectedIndex.getValue());
+  ngAfterContentChecked(): void {
+    this.renderingValue$ = this.playersSorter();
   }
 
   onSelectPlayer(index: number) {
@@ -105,9 +115,11 @@ export class StatsCardItemComponent implements OnInit {
                 ? player.stats![0].splits[0].stat[this.sortBy]
                 : 0,
               imgUrl: player.image.headshot,
-              teamName: player.currentTeam ? player.currentTeam.name : 'N/A',
-              jerseyNumber: player.primaryNumber,
-              currentPosition: player.primaryPosition.code,
+              teamName: player.team ? player.team.name : 'n/a',
+              jerseyNumber: player.primaryNumber ? player.primaryNumber : 'n/a',
+              currentPosition: player.primaryPosition.code
+                ? player.primaryPosition.code
+                : 'n/a',
               teamId: player.currentTeam ? player.currentTeam.id : 0,
               playerId: player.id,
             } as RenderedValue;

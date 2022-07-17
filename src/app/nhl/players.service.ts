@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Player } from './interfaces/player.interface';
-import { tap, map } from 'rxjs';
+import { tap, map, take } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +14,7 @@ export class PlayersService {
   private _players = new BehaviorSubject<Player[]>(this.cachePlayers);
 
   get players$(): Observable<Player[]> {
-    return this._players.asObservable();
+    return this._players.asObservable().pipe(take(1));
   }
 
   constructor(private http: HttpClient) {}
@@ -53,6 +53,7 @@ export class PlayersService {
 
   getRookieSkaters() {
     return this.players$.pipe(
+      take(1),
       map((players) => {
         return players.filter(
           (player) =>

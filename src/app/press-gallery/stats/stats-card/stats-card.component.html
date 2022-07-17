@@ -24,11 +24,11 @@
   <div class="card__content">
     <div *ngFor="let item of navigationState$ | async" class="card__tab">
       <stats-card-item
-        [players]="players$"
         *ngIf="item.state"
         [sortBy]="item.sorter!"
         [descending]="item.descending"
         [filterName]="item.name"
+        [players]="players$"
       ></stats-card-item>
     </div>
   </div>
