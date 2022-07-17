@@ -13,6 +13,7 @@ import { StatsTeamsComponent } from './stats-teams/stats-teams.component';
 import { ScheduleService } from 'src/app/schedule/schedule.service';
 import { StatsCardItemComponent } from './stats-card/stats-card-item/stats-card-item.component';
 import { TeamLogoPipe } from './stats-card/stats-card-item/team-logo.pipe';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { TeamLogoPipe } from './stats-card/stats-card-item/team-logo.pipe';
     DefaultLayoutModule,
     SeasonPickerModule,
     MatIconModule,
+    RouterModule,
   ],
   providers: [ScheduleService],
   exports: [StatsComponent],

@@ -1,4 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import {
   BehaviorSubject,
   Observable,
@@ -8,9 +16,11 @@ import {
   take,
   switchMap,
   of,
+  isEmpty,
 } from 'rxjs';
 import { Player } from 'src/app/nhl/interfaces/player.interface';
 import { PlayersService } from 'src/app/nhl/players.service';
+import { SeasonsService } from 'src/app/nhl/seasons.service';
 import { ScheduleService } from 'src/app/schedule/schedule.service';
 import {
   DEFENSEMEN_INIT_STATE,
@@ -37,7 +47,7 @@ export class StatsCardComponent implements OnInit {
   @Input('icon') icon!: string;
   @Input('navigatorMenuItems') navigatorMenuItems!: string[];
   @Input('statsType') statsType!: StatsType;
-  players$!: Observable<Player[]>;
+  @Input('players') players$!: Observable<Player[]>;
 
   private _navigationState = new BehaviorSubject<NavigationState[]>(null!);
 
@@ -46,14 +56,16 @@ export class StatsCardComponent implements OnInit {
   }
 
   constructor(
-    private scheduleService: ScheduleService,
+    private changeDetector: ChangeDetectorRef,
     private playerService: PlayersService
   ) {}
 
   ngOnInit(): void {
     this.getPlayersData();
+  }
 
-    this.players$.subscribe((data) => console.log(data));
+  ngAfterContentChecked(): void {
+    this.getPlayersData();
   }
 
   getPlayersData(): void {

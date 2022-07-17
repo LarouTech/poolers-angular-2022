@@ -41,7 +41,7 @@ export interface Player {
     instagram?: [];
   };
   position?: string;
-  team?: string;
+  team?: Teams;
   image?: {
     headshot: string;
     actionshot: string;

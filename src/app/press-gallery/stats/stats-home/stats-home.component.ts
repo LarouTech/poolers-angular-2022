@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable, switchMap, tap, of, map } from 'rxjs';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Observable, switchMap, tap, of, map, BehaviorSubject } from 'rxjs';
 import { Player } from 'src/app/nhl/interfaces/player.interface';
 import { PlayersService } from 'src/app/nhl/players.service';
 import { SeasonsService } from 'src/app/nhl/seasons.service';
@@ -29,11 +29,26 @@ export class StatsHomeComponent implements OnInit {
     private seasonsService: SeasonsService,
     private scheduleService: ScheduleService,
     private layoutService: LayoutService,
-    private playerService: PlayersService
+    private playerService: PlayersService,
+    private changeDetector: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
-    // this.players$ = this.playerService.players$;
     this.innerWidth$ = this.layoutService.innerWidth$;
+
+    this.scheduleService.selectedSeason$
+      .pipe(
+        switchMap((season) => {
+          console.log(season);
+          if (season) {
+            return this.playerService.getPlayers(season.value);
+          } else {
+            return this.playerService.players$;
+          }
+        })
+      )
+      .subscribe();
+
+    this.changeDetector.detectChanges();
   }
 }
