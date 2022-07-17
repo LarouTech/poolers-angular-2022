@@ -21,6 +21,11 @@ import { Player } from 'src/app/nhl/interfaces/player.interface';
 import { PlayersService } from 'src/app/nhl/players.service';
 import { ScheduleService } from 'src/app/schedule/schedule.service';
 import { LayoutService } from 'src/app/services/layout.service';
+import {
+  SpinnerColor,
+  SpinnerSize,
+  SpinnerType,
+} from 'src/app/shared/components/load-awesome-spinner/load-awesome-spinner.enums';
 
 interface RenderedValue {
   name: string;
@@ -44,6 +49,11 @@ export class StatsCardItemComponent implements OnInit {
   @Input('filterName') filterName!: string;
   @Input('players') players$!: Observable<Player[]>;
 
+  isLoading$: Observable<boolean> = of(false);
+  spinnerType = SpinnerType['ball-spin-clockwise'];
+  spinnerSize = SpinnerSize['3x'];
+  spinnerColor = '#1c1f78';
+
   innerWidth$!: Observable<number>;
 
   _hoverIndex = new BehaviorSubject<number>(0);
@@ -61,15 +71,13 @@ export class StatsCardItemComponent implements OnInit {
 
   constructor(
     private playerService: PlayersService,
-    private layoutService: LayoutService,
-    private changeDetector: ChangeDetectorRef
+    private layoutService: LayoutService
   ) {}
 
   ngOnInit(): void {
     this.renderingValue$ = this.playersSorter();
     this.innerWidth$ = this.layoutService.innerWidth$;
-
-    this.renderingValue$.subscribe((data) => console.log(data));
+    this.isLoading$ = this.playerService.playerLoading$;
   }
 
   ngAfterViewInit(): void {

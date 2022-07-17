@@ -14,6 +14,7 @@ import { ScheduleService } from 'src/app/schedule/schedule.service';
 import { StatsCardItemComponent } from './stats-card/stats-card-item/stats-card-item.component';
 import { TeamLogoPipe } from './stats-card/stats-card-item/team-logo.pipe';
 import { RouterModule } from '@angular/router';
+import { LoadAwesomeSpinnerModule } from 'src/app/shared/components/load-awesome-spinner/load-awesome-spinner.module';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { RouterModule } from '@angular/router';
     SeasonPickerModule,
     MatIconModule,
     RouterModule,
+    LoadAwesomeSpinnerModule,
   ],
   providers: [ScheduleService],
   exports: [StatsComponent],

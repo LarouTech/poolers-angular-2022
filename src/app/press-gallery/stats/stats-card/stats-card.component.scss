@@ -37,6 +37,36 @@
     top: 0;
     left: 0;
   }
+
+  &__empty {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    padding: 0rem 8rem;
+
+    &--text {
+      font-size: 2.5rem;
+      line-height: 1.4;
+      text-align: center;
+      color: var(--dark800);
+    }
+
+    &--text-bold {
+      font-weight: 500;
+      text-transform: capitalize;
+    }
+
+    &--icon {
+      height: 5rem;
+      width: 5rem;
+      color: var(--primary500);
+      margin-bottom: 2rem;
+    }
+  }
 }
 
 .navigator {
