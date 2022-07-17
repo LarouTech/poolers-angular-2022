@@ -13,6 +13,12 @@ export class PlayersService {
   private url = `${environment.nhlApi}/players`;
   private _players = new BehaviorSubject<Player[]>(this.cachePlayers);
 
+  private _playersLoading = new BehaviorSubject<boolean>(false);
+
+  get playerLoading$(): Observable<boolean> {
+    return this._playersLoading.asObservable();
+  }
+
   get players$(): Observable<Player[]> {
     return this._players.asObservable().pipe(take(1));
   }
@@ -20,16 +26,27 @@ export class PlayersService {
   constructor(private http: HttpClient) {}
 
   getPlayers(season?: number): Observable<Player[]> {
+    this._playersLoading.next(true);
     const params = new HttpParams().set('season', season!);
 
     return this.http.get<Player[]>(`${this.url}/all`, { params }).pipe(
       map((players) => {
-        return players;
+        return this.shuffleFisherYates(players);
       }),
       tap((res) => {
+        this._playersLoading.next(false);
         this._players.next(res);
       })
     );
+  }
+
+  shuffleFisherYates(array: any[]) {
+    let i = array.length;
+    while (i--) {
+      const ri = Math.floor(Math.random() * i);
+      [array[i], array[ri]] = [array[ri], array[i]];
+    }
+    return array;
   }
 
   setPlayers(players: Player[]) {

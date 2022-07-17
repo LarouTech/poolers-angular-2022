@@ -4,7 +4,7 @@
     <span class="card__header--text">{{ title }}</span>
   </div>
 
-  <div class="navigator">
+  <div *ngIf="(players$ | async)!.length > 0" class="navigator">
     <ul class="navigator__list">
       <li
         (click)="onChangeTab(item.name)"
@@ -22,6 +22,16 @@
   </div>
 
   <div class="card__content">
+    <div *ngIf="(players$ | async)!.length <= 0" class="card__empty">
+      <mat-icon class="card__empty--icon" svgIcon="exclamation"></mat-icon>
+      <p class="card__empty--text">
+        There is no
+        <span class="card__empty--text-bold">{{ statsType }}</span> Data
+        Available for Season
+        {{ selectedSeason$ | async }}
+      </p>
+    </div>
+
     <div *ngFor="let item of navigationState$ | async" class="card__tab">
       <stats-card-item
         *ngIf="item.state"

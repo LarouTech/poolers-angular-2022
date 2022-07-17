@@ -1,8 +1,19 @@
-<div class="container">
+<div [ngClass]="{ spinner: isLoading$ | async }">
+  <load-awesome-spinner
+    *ngIf="isLoading$ | async"
+    [spinnerType]="spinnerType"
+    [size]="spinnerSize"
+    [color]="spinnerColor"
+  ></load-awesome-spinner>
+</div>
+
+<div *ngIf="!(isLoading$ | async)" class="container">
   <div class="container__left">
-    <span class="container__left--rank">{{
-      "# " + ((selectedIndex$ | async)! + 1 | number: "1.0-0")
-    }}</span>
+    <span
+      class="container__left--rank"
+      *ngIf="(players$ | async)!.length > 0"
+      >{{ "# " + ((selectedIndex$ | async)! + 1 | number: "1.0-0") }}</span
+    >
     <div class="leader">
       <div class="avatar">
         <img

@@ -1,5 +1,13 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { Observable, switchMap, tap, of, map, BehaviorSubject } from 'rxjs';
+import {
+  Observable,
+  switchMap,
+  tap,
+  of,
+  map,
+  BehaviorSubject,
+  lastValueFrom,
+} from 'rxjs';
 import { Player } from 'src/app/nhl/interfaces/player.interface';
 import { PlayersService } from 'src/app/nhl/players.service';
 import { SeasonsService } from 'src/app/nhl/seasons.service';
@@ -13,7 +21,6 @@ import { StatsType } from '../stats-card/stats-card.component';
   styleUrls: ['./stats-home.component.scss'],
 })
 export class StatsHomeComponent implements OnInit {
-  // players$!: Observable<Player[]>;
   skaters$!: Observable<Player[]>;
   innerWidth$!: Observable<number>;
   players$!: Observable<Player[]>;
@@ -25,6 +32,8 @@ export class StatsHomeComponent implements OnInit {
   defensemenStatsType = StatsType.DEFENSEMEN;
   rookieStatsType = StatsType.ROOKIE;
 
+  private _intialComponentLoaded = new BehaviorSubject<boolean>(false);
+
   constructor(
     private seasonsService: SeasonsService,
     private scheduleService: ScheduleService,
@@ -35,20 +44,31 @@ export class StatsHomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.innerWidth$ = this.layoutService.innerWidth$;
+    this.fetchPlayerOnChangeSeasonDetection();
+  }
 
-    this.scheduleService.selectedSeason$
-      .pipe(
-        switchMap((season) => {
-          console.log(season);
-          if (season) {
-            return this.playerService.getPlayers(season.value);
-          } else {
-            return this.playerService.players$;
-          }
-        })
-      )
-      .subscribe();
+  private fetchPlayerOnChangeSeasonDetection(): void {
+    const newPlayersSet$ = this.scheduleService.selectedSeason$.pipe(
+      switchMap((season) => {
+        return this.seasonsService.getCurrentSeason().pipe(
+          switchMap((currentSeason) => {
+            if (
+              season.value === +currentSeason.seasonId &&
+              this._intialComponentLoaded.getValue() === true
+            ) {
+              return this.playerService.getPlayers(season.value);
+            }
 
-    this.changeDetector.detectChanges();
+            if (season && season.value != +currentSeason.seasonId) {
+              this._intialComponentLoaded.next(true);
+              return this.playerService.getPlayers(season.value);
+            } else {
+              return this.playerService.players$;
+            }
+          })
+        );
+      })
+    );
+    lastValueFrom(newPlayersSet$);
   }
 }

@@ -19,6 +19,7 @@ import {
   isEmpty,
 } from 'rxjs';
 import { Player } from 'src/app/nhl/interfaces/player.interface';
+import { Season } from 'src/app/nhl/interfaces/seasons.interface';
 import { PlayersService } from 'src/app/nhl/players.service';
 import { SeasonsService } from 'src/app/nhl/seasons.service';
 import { ScheduleService } from 'src/app/schedule/schedule.service';
@@ -48,6 +49,7 @@ export class StatsCardComponent implements OnInit {
   @Input('navigatorMenuItems') navigatorMenuItems!: string[];
   @Input('statsType') statsType!: StatsType;
   @Input('players') players$!: Observable<Player[]>;
+  selectedSeason$!: Observable<string>;
 
   private _navigationState = new BehaviorSubject<NavigationState[]>(null!);
 
@@ -56,12 +58,18 @@ export class StatsCardComponent implements OnInit {
   }
 
   constructor(
-    private changeDetector: ChangeDetectorRef,
+    private scheduleService: ScheduleService,
+    private seasonService: SeasonsService,
     private playerService: PlayersService
   ) {}
 
   ngOnInit(): void {
     this.getPlayersData();
+    this.selectedSeason$ = this.scheduleService.selectedSeason$.pipe(
+      map((selectedSeason) => {
+        return selectedSeason.name;
+      })
+    );
   }
 
   ngAfterContentChecked(): void {
